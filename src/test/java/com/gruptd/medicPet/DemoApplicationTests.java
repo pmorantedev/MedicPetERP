@@ -1,4 +1,4 @@
-package com.gruptd.clinicPet;
+package com.gruptd.medicPet;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
