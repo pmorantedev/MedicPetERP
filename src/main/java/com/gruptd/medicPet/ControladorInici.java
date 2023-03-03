@@ -23,4 +23,9 @@ public class ControladorInici {
         return "login";
     }
 
+    @GetMapping("/registre")
+    public String registre() {
+        log.info("Executant el controlador de registre");
+        return "registre";
+    }
 }
