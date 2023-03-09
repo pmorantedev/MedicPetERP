@@ -1,6 +1,9 @@
 package com.gruptd.medicPet;
 
+import com.gruptd.medicPet.dao.ClientDAO;
+import com.gruptd.medicPet.models.Client;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -16,13 +19,21 @@ peticions HTTP
 @Controller
 @Slf4j  // Anotació que permet utilitzar l'API de Login
 public class ControladorInici {
-
+    
+    @Autowired
+    private ClientDAO clientDao;
+    
     @GetMapping("/")
     public String inici() {
         log.info("Executant el controlador d'inici");
+        Iterable<Client> personas = clientDao.findAll();
+        log.info(">>> Clientes de la BBDD:");
+        personas.forEach((t) -> {
+            log.info(t.getNomComplert());
+        });
         return "login";
     }
-
+    
     @GetMapping("/registre")
     public String registre() {
         log.info("Executant el controlador de registre");
