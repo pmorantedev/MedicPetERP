@@ -2,9 +2,13 @@ package com.gruptd.medicPet;
 
 import com.gruptd.medicPet.dao.ClientDAO;
 import com.gruptd.medicPet.dao.MascotaDAO;
+import com.gruptd.medicPet.dao.RolDAO;
+import com.gruptd.medicPet.dao.UsuariDAO;
 import com.gruptd.medicPet.dao.VisitaDAO;
 import com.gruptd.medicPet.models.Client;
 import com.gruptd.medicPet.models.Mascota;
+import com.gruptd.medicPet.models.Rol;
+import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.models.Visita;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +37,12 @@ public class ControladorInici {
     @Autowired
     private VisitaDAO visitaDao;
 
+    @Autowired
+    private RolDAO rolDao;
+
+    @Autowired
+    private UsuariDAO usuariDao;
+
     @GetMapping("/")
     public String inici() {
         log.info("Executant el controlador d'inici");
@@ -50,9 +60,23 @@ public class ControladorInici {
         });
 
         Iterable<Visita> visitas = visitaDao.findAll();
-        log.info(">>> Mascotes de la  de la BBDD:");
+        log.info(">>> Visites de la  de la BBDD:");
         visitas.forEach((v) -> {
             log.info(v.getDiagnostic());
+        });
+
+        Iterable<Rol> rols = rolDao.findAll();
+        log.info(">>> Rols de la  de la BBDD:");
+        rols.forEach((v) -> {
+            log.info(v.getNom());
+        });
+
+        
+        //el PrimaryKey no es ID Auto
+        Iterable<Usuari> usuaris = usuariDao.findAll();
+        log.info(">>> Usuaris de la  de la BBDD:");
+        usuaris.forEach((v) -> {
+            log.info(v.toString());
         });
         return "login";
     }
