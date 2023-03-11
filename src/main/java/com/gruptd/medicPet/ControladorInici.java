@@ -2,8 +2,10 @@ package com.gruptd.medicPet;
 
 import com.gruptd.medicPet.dao.ClientDAO;
 import com.gruptd.medicPet.dao.MascotaDAO;
+import com.gruptd.medicPet.dao.VisitaDAO;
 import com.gruptd.medicPet.models.Client;
 import com.gruptd.medicPet.models.Mascota;
+import com.gruptd.medicPet.models.Visita;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,9 @@ public class ControladorInici {
     @Autowired
     private MascotaDAO mascotaDao;
 
+    @Autowired
+    private VisitaDAO visitaDao;
+
     @GetMapping("/")
     public String inici() {
         log.info("Executant el controlador d'inici");
@@ -44,11 +49,11 @@ public class ControladorInici {
             log.info(m.getNom());
         });
 
-//        Iterable<Mascota> mascotas = mascotaDao.findAll();
-//        log.info(">>> Mascotes de la  de la BBDD:");
-//        mascotas.forEach((m) -> {
-//            log.info(m.getNom());
-//        });
+        Iterable<Visita> visitas = visitaDao.findAll();
+        log.info(">>> Mascotes de la  de la BBDD:");
+        visitas.forEach((v) -> {
+            log.info(v.getDiagnostic());
+        });
         return "login";
     }
 

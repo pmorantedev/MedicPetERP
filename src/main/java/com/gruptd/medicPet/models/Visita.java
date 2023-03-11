@@ -14,20 +14,19 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "Mascota")
-public class Mascota implements Serializable {
+@Table(name = "Visita")
+public class Visita implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id_mascota;
+    private Long id;
 
-    private String nom;
-    private String especie;
-    private String raca;
-    private String data_naixement;
-    private String sexe;
-    private Long client_id;
+    private String diagnostic;
+    private String medicacio;
+    private String data_visita;
+    private String treballador_id;
+    private String mascota_id;
+
 }
