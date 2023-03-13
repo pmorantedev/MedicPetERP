@@ -94,11 +94,7 @@ public class ControladorInici {
         return "facturacioMain";
     }
     
-    @GetMapping("/clients")
-    public String clientsMain() {
-        log.info("Executant el controlador de clients principal");
-        return "clientsMain";
-    }
+    
     
     @GetMapping("/rrhh")
     public String rrhhMain() {
