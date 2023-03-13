@@ -10,6 +10,36 @@
         border-color: red !important;
     }
 
+    th {
+        background-color: #666 !important;
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    h1.titulo {
+        font-size: 25px;
+        margin-top: 30px;
+        margin-left: 5%;
+    }
+
+    .table-responsive {
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 40px !important;
+
+    }
+
+    table {
+        text-align: center !important;
+        border: 3px solid #000;
+    }
+
+    .nav-link {
+        text-transform: uppercase;
+    }
+
 </style>
 
 <!doctype html>
@@ -23,11 +53,12 @@
     </head>
 
     <!-- BODY -->
-    <body style="background-color: #e1e1e1;">
+    <body style="background-color: bg-secondary-subtle;">
         <div class="container-fluid">
 
             <div class="row justify-content-center">
 
+                <!-- MENU -->
                 <header class="p-2 text-bg-dark">
                     <div class="container">
                         <div class="d-flex flex-wrap justify-content-between align-items-center">
@@ -48,7 +79,44 @@
                     </div>
                 </header>
 
-                <p1>PANTALLA TRACTAMENTS</p1>
+                <div>
+                    <h1 class="titulo">Llistat de tractaments</h1>
+                </div>
+
+
+                <!<!-- TABLA -->
+                <div class="container-tabla">
+                    <div class="table-responsive">
+                        <table class="table mx-auto">
+                            <thead>
+                                <tr>
+                                    <th style="background-color: black; color: white;">Id</th>
+                                    <th style="background-color: black; color: white;">Nom</th>
+                                    <th style="background-color: black; color: white;">Preu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0534</td>
+                                    <td>Penicilina</td>
+                                    <td>77.64€</td>
+                                </tr>
+                                <tr>
+                                    <td>0132</td>
+                                    <td>Estreptomicina</td>
+                                    <td>110.00€</td>
+                                </tr>
+                                <tr>
+                                    <td>015</td>
+                                    <td>Cirugia</td>
+                                    <td>3000.00€</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
