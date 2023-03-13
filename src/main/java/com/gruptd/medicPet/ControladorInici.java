@@ -52,12 +52,6 @@ public class ControladorInici {
         return "clientsMain";
     }
     
-    @GetMapping("/tractaments")
-    public String tractamentsMain() {
-        log.info("Executant el controlador de tractaments principal");
-        return "tractamentsMain";
-    }
-    
     @GetMapping("/rrhh")
     public String rrhhMain() {
         log.info("Executant el controlador de RRHH principal");
