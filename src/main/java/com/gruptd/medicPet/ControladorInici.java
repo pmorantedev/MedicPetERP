@@ -86,4 +86,22 @@ public class ControladorInici {
         log.info("Executant el controlador de registre");
         return "registre";
     }
+    
+    @GetMapping("/facturacio")
+    public String facturacioMain() {
+        log.info("Executant el controlador de facturacio principal");
+        return "facturacioMain";
+    }
+    
+    @GetMapping("/clients")
+    public String clientsMain() {
+        log.info("Executant el controlador de clients principal");
+        return "clientsMain";
+    }
+    
+    @GetMapping("/rrhh")
+    public String rrhhMain() {
+        log.info("Executant el controlador de RRHH principal");
+        return "rrhhMain";
+    }
 }
