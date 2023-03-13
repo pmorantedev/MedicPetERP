@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 //sobre @Slf4j: https://stackabuse.com/guide-to-logging-in-spring-boot/
 /*Anotació @RestController fa refèrencia a la classe RestController que accepta les
 peticions HTTP
+
 *que es fan des del navegador.
  */
 @Controller
