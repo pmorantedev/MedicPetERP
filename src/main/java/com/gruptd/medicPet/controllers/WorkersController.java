@@ -1,9 +1,9 @@
 package com.gruptd.medicPet.controllers;
 
-import com.gruptd.medicPet.dao.CarrecDAO;
-import com.gruptd.medicPet.dao.TreballadorDAO;
 import com.gruptd.medicPet.models.Carrec;
 import com.gruptd.medicPet.models.Treballador;
+import com.gruptd.medicPet.services.CarrecServices;
+import com.gruptd.medicPet.services.TreballadorServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,25 +13,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 public class WorkersController {
     @Autowired
-    private TreballadorDAO treballadorDao;
+    private TreballadorServices treballadorService;
     
     @Autowired
-    private CarrecDAO carrecDao;
+    private CarrecServices carrecService;
     
     @GetMapping("/treballadors")
     public String principalTreballadors() {
         log.info("Executant el controlador de treballador");
-        Iterable<Treballador> treballadors = treballadorDao.findAll();
+        Iterable<Treballador> treballadors = treballadorService.findAllTreballadors();
         log.info(">>> Treballadors de la BBDD:");
         treballadors.forEach((t) -> {
             log.info(t.getNomComplet());
         });
         
-        Iterable<Carrec> carrecs = carrecDao.findAll();
+        Iterable<Carrec> carrecs = carrecService.findAllCarrecs();
         log.info(">>> Carrcs de la BBDD:");
         carrecs.forEach((t) -> {
             log.info(t.getNom());
         });
-        return "login";
+        return "rrhhMain";
     }
 }
