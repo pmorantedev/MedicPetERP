@@ -39,7 +39,7 @@ public class ClientServices {
     }
 
     @Transactional
-    public void updateTreballador(Client c) {
+    public void updateClient(Client c) {
         Client clientBD = getClients(c);
         if (clientBD != null) {
             clientBD.setEmail(c.getEmail());

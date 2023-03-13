@@ -72,7 +72,6 @@ public class ControladorInici {
             log.info(v.getNom());
         });
 
-        
         //el PrimaryKey no es ID Auto
         Iterable<Usuari> usuaris = usuariDao.findAll();
         log.info(">>> Usuaris de la  de la BBDD:");
@@ -87,18 +86,11 @@ public class ControladorInici {
         log.info("Executant el controlador de registre");
         return "registre";
     }
-    
+
     @GetMapping("/facturacio")
     public String facturacioMain() {
         log.info("Executant el controlador de facturacio principal");
         return "facturacioMain";
     }
-    
-    
-    
-    @GetMapping("/rrhh")
-    public String rrhhMain() {
-        log.info("Executant el controlador de RRHH principal");
-        return "rrhhMain";
-    }
+
 }
