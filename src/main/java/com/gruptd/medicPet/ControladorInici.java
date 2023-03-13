@@ -77,7 +77,7 @@ public class ControladorInici {
         Iterable<Usuari> usuaris = usuariDao.findAll();
         log.info(">>> Usuaris de la  de la BBDD:");
         usuaris.forEach((v) -> {
-            log.info(v.toString());
+            log.info(v.getNom());
         });
         return "login";
     }

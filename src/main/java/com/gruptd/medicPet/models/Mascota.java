@@ -29,5 +29,8 @@ public class Mascota implements Serializable {
     private String raca;
     private String data_naixement;
     private String sexe;
-    private Long client_id;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client_id;
 }
