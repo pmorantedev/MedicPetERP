@@ -26,7 +26,13 @@ public class Visita implements Serializable {
     private String diagnostic;
     private String medicacio;
     private String data_visita;
-    private String treballador_id;
-    private String mascota_id;
+    
+    @OneToOne
+    @JoinColumn(name = "treballador_id")
+    private Treballador treballador_id;
+    
+    @OneToOne
+    @JoinColumn(name = "mascota_id")
+    private Mascota mascota_id;
 
 }

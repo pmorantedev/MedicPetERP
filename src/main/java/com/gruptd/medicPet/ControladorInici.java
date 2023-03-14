@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 //sobre @Slf4j: https://stackabuse.com/guide-to-logging-in-spring-boot/
 /*Anotació @RestController fa refèrencia a la classe RestController que accepta les
 peticions HTTP
+
 *que es fan des del navegador.
  */
 @Controller
@@ -71,12 +72,11 @@ public class ControladorInici {
             log.info(v.getNom());
         });
 
-        
         //el PrimaryKey no es ID Auto
         Iterable<Usuari> usuaris = usuariDao.findAll();
         log.info(">>> Usuaris de la  de la BBDD:");
         usuaris.forEach((v) -> {
-            log.info(v.toString());
+            log.info(v.getNom());
         });
         return "login";
     }
@@ -86,22 +86,11 @@ public class ControladorInici {
         log.info("Executant el controlador de registre");
         return "registre";
     }
-    
+
     @GetMapping("/facturacio")
     public String facturacioMain() {
         log.info("Executant el controlador de facturacio principal");
         return "facturacioMain";
     }
-    
-    @GetMapping("/clients")
-    public String clientsMain() {
-        log.info("Executant el controlador de clients principal");
-        return "clientsMain";
-    }
-    
-    @GetMapping("/rrhh")
-    public String rrhhMain() {
-        log.info("Executant el controlador de RRHH principal");
-        return "rrhhMain";
-    }
+
 }
