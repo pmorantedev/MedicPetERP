@@ -18,11 +18,11 @@ public class CustomersController {
     public String clientsMain() {
         log.info("Executant el controlador de clients");
         Iterable<Client> factures = clientService.findAllClients();
-        log.info(">>> Factures de la BBDD:");
+        log.info(">>> Clients de la BBDD:");
         factures.forEach((t) -> {
             log.info(t.getEmail());
         });
-
+        
         return "clientsMain";
     }
 }
