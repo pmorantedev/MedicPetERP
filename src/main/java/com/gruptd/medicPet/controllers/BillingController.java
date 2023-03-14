@@ -12,27 +12,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Slf4j
 public class BillingController {
+
     @Autowired
     private FacturaServices facturaService;
-    
+
     @Autowired
     private LiniaFacturaServices liniaFacturaService;
-    
-    @GetMapping("/facturacio")
+
+    @GetMapping("/factures")
     public String principalTreballadors() {
         log.info("Executant el controlador de factures");
-        Factura factura = new Factura();
         Iterable<Factura> factures = facturaService.findAllFactures();
         log.info(">>> Factures de la BBDD:");
         factures.forEach((t) -> {
             log.info(t.getMetodePagament());
         });
-        
+
         Iterable<LiniaFactura> linies = liniaFacturaService.findAllLiniesFactures();
         log.info(">>> Linia de factures de la BBDD:");
         linies.forEach((t) -> {
             log.info(t.getFactura().getMetodePagament());
         });
         return "facturacioMain";
+    }
+
+    @GetMapping("/detall-factura")
+    public String detallFactura() {
+        log.info("Executant el controlador de facturació: Detall de factura");
+        return "facturacioDetall";
     }
 }

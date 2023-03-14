@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author izan
  */
 @Service
-public class UserServices {
+public class UsuariServices {
 
     @Autowired
     private UsuariDAO usuariDao;
@@ -39,7 +39,7 @@ public class UserServices {
     @Transactional(readOnly = true)
     public Usuari getUsuari(Usuari client) {
         try {
-            return usuariDao.findById(Long.valueOf(client.getId())).orElse(null);
+            return usuariDao.findById(client.getId()).orElse(null);
         } catch (Exception e) {
             return null;
         }
