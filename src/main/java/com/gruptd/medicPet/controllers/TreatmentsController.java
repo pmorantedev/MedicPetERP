@@ -17,7 +17,7 @@ public class TreatmentsController {
     @GetMapping("/tractaments")
     public String principalTractament() {
         log.info("Executant el controlador de tractaments");
-        Iterable<Tractament> tractaments = tractamentService.findAllTractaments();
+        Iterable<Tractament> tractaments = tractamentService.findAll();
         log.info(">>> Tractaments de la BBDD:");
         tractaments.forEach((t) -> {
             log.info(t.getNom());

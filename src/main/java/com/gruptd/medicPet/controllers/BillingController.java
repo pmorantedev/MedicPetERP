@@ -18,16 +18,16 @@ public class BillingController {
     @Autowired
     private LiniaFacturaServices liniaFacturaService;
     
-    @GetMapping("/factures")
+    @GetMapping("/facturacio")
     public String principalTreballadors() {
         log.info("Executant el controlador de factures");
-        Iterable<Factura> factures = facturaService.findAllFactures();
+        Iterable<Factura> factures = facturaService.findAll();
         log.info(">>> Factures de la BBDD:");
         factures.forEach((t) -> {
             log.info(t.getMetodePagament());
         });
         
-        Iterable<LiniaFactura> linies = liniaFacturaService.findAllLiniesFactures();
+        Iterable<LiniaFactura> linies = liniaFacturaService.findAll();
         log.info(">>> Linia de factures de la BBDD:");
         linies.forEach((t) -> {
             log.info(t.getFactura().getMetodePagament());

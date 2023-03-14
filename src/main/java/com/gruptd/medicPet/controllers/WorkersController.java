@@ -18,10 +18,10 @@ public class WorkersController {
     @Autowired
     private CarrecServices carrecService;
     
-    @GetMapping("/treballadors")
+    @GetMapping("/rrhh")
     public String principalTreballadors() {
         log.info("Executant el controlador de treballador");
-        Iterable<Treballador> treballadors = treballadorService.findAllTreballadors();
+        Iterable<Treballador> treballadors = treballadorService.findAll();
         log.info(">>> Treballadors de la BBDD:");
         treballadors.forEach((t) -> {
             log.info(t.getNomComplet());

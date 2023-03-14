@@ -87,10 +87,4 @@ public class ControladorInici {
         return "registre";
     }
 
-    @GetMapping("/facturacio")
-    public String facturacioMain() {
-        log.info("Executant el controlador de facturacio principal");
-        return "facturacioMain";
-    }
-
 }
