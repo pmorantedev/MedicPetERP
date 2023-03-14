@@ -18,9 +18,10 @@ public class BillingController {
     @Autowired
     private LiniaFacturaServices liniaFacturaService;
     
-    @GetMapping("/factures")
+    @GetMapping("/facturacio")
     public String principalTreballadors() {
         log.info("Executant el controlador de factures");
+        Factura factura = new Factura();
         Iterable<Factura> factures = facturaService.findAllFactures();
         log.info(">>> Factures de la BBDD:");
         factures.forEach((t) -> {

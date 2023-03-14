@@ -39,7 +39,7 @@ public class UserServices {
     @Transactional(readOnly = true)
     public Usuari getUsuari(Usuari client) {
         try {
-            return usuariDao.findById(Long.valueOf(client.getToken())).orElse(null);
+            return usuariDao.findById(Long.valueOf(client.getId())).orElse(null);
         } catch (Exception e) {
             return null;
         }

@@ -18,7 +18,8 @@ import lombok.Data;
 public class Usuari implements Serializable {
 
     @Id
-    private String token;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
 
     private String nom;
     private String contrasenya;
