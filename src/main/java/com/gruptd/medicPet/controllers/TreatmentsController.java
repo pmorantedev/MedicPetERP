@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @Slf4j
 public class TreatmentsController {
-    
+
     @Autowired
     private TractamentServices tractamentService;
-    
+
     @GetMapping("/tractaments")
     public String principalTractament(Model model) {
         log.info("Executant el controlador de tractaments");
