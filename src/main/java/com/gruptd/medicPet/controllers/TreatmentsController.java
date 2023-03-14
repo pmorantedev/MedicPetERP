@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Slf4j
 public class TreatmentsController {
-    
+
     @Autowired
     private TractamentServices tractamentService;
-    
+
     @GetMapping("/tractaments")
     public String principalTractament() {
         log.info("Executant el controlador de tractaments");
@@ -24,5 +24,5 @@ public class TreatmentsController {
         });
         return "tractamentsMain";
     }
-    
+
 }
