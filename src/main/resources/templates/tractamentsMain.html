@@ -4,18 +4,24 @@
         padding-left: 30px !important;
     }
 
-    .btn-hover-red:hover {
-        background-color: red !important;
+    .btn-red {
+        border-color: red !important ;
+        color: red !important;
+        background-color: #333533 !important; 
+    }
+
+    .btn-red:hover {
+        background-color: #CF0000 !important;
         color: white !important;
-        border-color: red !important;
+        border-color: #CF0000 !important;
     }
 
     th {
-        background-color: #666 !important;
+        background-color: #333533 !important;
         color: white;
     }
     tr:nth-child(even) {
-        background-color: #f2f2f2;
+        background-color: #d6d6d6;
     }
 
     h1.titulo {
@@ -37,7 +43,12 @@
     }
 
     .nav-link {
-        text-transform: uppercase;
+        font-size: 17.5px !important;
+        font-weight: bold;
+    }
+
+    .nav li a:hover {
+        color: #ffd100 !important;
     }
 
 </style>
@@ -59,21 +70,23 @@
             <div class="row justify-content-center">
 
                 <!-- MENU -->
-                <header class="p-2 text-bg-dark">
+                <header class="p-2" style="background-color: #333533;">
                     <div class="container">
                         <div class="d-flex flex-wrap justify-content-between align-items-center">
-                            <img class="d-flex flex-wrap justify-content-between align-items-center" src="/logo.png" alt="MedicPet" width="40">
+                            <img class="d-flex flex-wrap justify-content-between align-items-center" src="/dogLogo3.png" alt="MedicPet" width="45">
 
-                            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 text-bg-dark text-white">
-                                <li><a href="/facturacio" class="nav-link px-2 text-white">Facturació</a></li>
-                                <li><a href="/clients" class="nav-link px-2 text-white">Clients</a></li>
-                                <li><a href="/tractaments" class="nav-link px-2 text-white">Tractaments</a></li>
-                                <li><a href="/rrhh" class="nav-link px-2 text-white">RRHH</a></li>
+                            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" style="background-color: #333533;">
+                                <li><a href="/facturacio" class="nav-link px-2" style="color: #FFF;">Facturació</a></li>
+                                <li><a href="/clients" class="nav-link px-2" style="color: #FFF;">Clients</a></li>
+                                <li><a href="/tractaments" class="nav-link px-2" style="color: #FFF;">Tractaments</a></li>
+                                <li><a href="/rrhh" class="nav-link px-2" style="color: #FFF;">RRHH</a></li>
                             </ul>
 
                             <div class="text-end">
                                 <a href="/entrar"><button type="button" class="btn btn-outline-light me-2">Perfil</button></a>
-                                <a href="/registre"><button type="button" class="btn btn-outline-light me-2 btn-hover-red">Sortir</button></a>
+                                <a href="/registre"><button class="btn btn-danger btn-red">Sortir</button>
+</a>
+                                
                             </div>
                         </div>
                     </div>
