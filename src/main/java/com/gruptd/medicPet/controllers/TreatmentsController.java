@@ -19,7 +19,7 @@ public class TreatmentsController {
     @GetMapping("/tractaments")
     public String principalTractament(Model model) {
         log.info("Executant el controlador de tractaments");
-        Iterable<Tractament> tractaments = tractamentService.findAllTractaments();
+        Iterable<Tractament> tractaments = tractamentService.findAll();
         log.info(">>> Tractaments de la BBDD:");
         tractaments.forEach((t) -> {
             log.info(t.getNom());
@@ -32,7 +32,7 @@ public class TreatmentsController {
     
     @PostMapping("/tractaments-fitxa/{id}")
     public String desarTractament(Tractament tractament) {
-        tractamentService.saveTractament(tractament);
+        tractamentService.save(tractament);
         
         return "redirect:/tractaments";
     }
@@ -45,13 +45,13 @@ public class TreatmentsController {
     
     @PostMapping("/eliminar/{id}")
     public String eliminar(Tractament tractament){
-        tractamentService.deleteTractament(tractament);
+        tractamentService.delete(tractament);
         return "redirect:/tractaments";
     }
     
     @PostMapping("/guardar")
     public String guardar(Tractament tractament){
-        tractamentService.saveTractament(tractament);
+        tractamentService.save(tractament);
         return "redirect:/tractaments";
     }
     

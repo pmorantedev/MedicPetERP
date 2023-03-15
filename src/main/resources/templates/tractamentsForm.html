@@ -53,29 +53,28 @@
                 </ol>
             </nav>
 
-            <!-- Botons -->
-            <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Afegir tractament</button>
-            </div>
-            <button type="button" class="btn btn-primary">Descartar</button>
-
             <!-- Detalls factura -->
 
             <!-- Form -->
-            <form id="demoForm" method="POST" th:action="@{/guardar}" th:field="${tractament}">
+            <form id="demoForm" method="POST" th:action="@{/guardar}" th:object="${tractament}">
                 <div class="mb-3">
                     <label class="form-label">Product name</label>
-                    <input type="text" class="form-control" name="name" />
+                    <input type="text" class="form-control" name="name" th:field="*{nom}" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Price</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="text" class="form-control" name="price" />
+                        <input type="text" class="form-control" name="price" th:field="*{preu}" />
                     </div>
                 </div>
 
+                <!-- Botons -->
+                <div class="mb-3">
+                    <button type="submit" name="guardar" class="btn btn-primary">Afegir tractament</button>
+                </div>
+                <button type="button" class="btn btn-primary">Descartar</button>
 
             </form>
 
