@@ -44,40 +44,9 @@ public class ControladorInici {
     @Autowired
     private UsuariDAO usuariDao;
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String inici() {
         log.info("Executant el controlador d'inici");
-
-        Iterable<Client> personas = clientDao.findAll();
-        log.info(">>> Clientes de la BBDD:");
-        personas.forEach((t) -> {
-            log.info(t.getNomComplert());
-        });
-
-        Iterable<Mascota> mascotas = mascotaDao.findAll();
-        log.info(">>> Mascotes de la  de la BBDD:");
-        mascotas.forEach((m) -> {
-            log.info(m.getNom());
-        });
-
-        Iterable<Visita> visitas = visitaDao.findAll();
-        log.info(">>> Visites de la  de la BBDD:");
-        visitas.forEach((v) -> {
-            log.info(v.getDiagnostic());
-        });
-
-        Iterable<Rol> rols = rolDao.findAll();
-        log.info(">>> Rols de la  de la BBDD:");
-        rols.forEach((v) -> {
-            log.info(v.getNom());
-        });
-
-        //el PrimaryKey no es ID Auto
-        Iterable<Usuari> usuaris = usuariDao.findAll();
-        log.info(">>> Usuaris de la  de la BBDD:");
-        usuaris.forEach((v) -> {
-            log.info(v.getNom());
-        });
         return "login";
     }
 
