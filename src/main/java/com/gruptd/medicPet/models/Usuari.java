@@ -23,6 +23,7 @@ public class Usuari implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String username;
     private String nom;
     private String contrasenya;
 

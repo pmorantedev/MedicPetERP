@@ -16,7 +16,7 @@ public class TreatmentsController {
     @Autowired
     private TractamentServices tractamentService;
 
-    @GetMapping("/tractaments")
+    @GetMapping("/medicpet/tractaments")
     public String principalTractament(Model model) {
         log.info("Executant el controlador de tractaments");
         Iterable<Tractament> tractaments = tractamentService.findAll();
@@ -30,26 +30,26 @@ public class TreatmentsController {
         return "tractamentsMain";
     }
     
-    @PostMapping("/tractaments-fitxa/{id}")
+    @PostMapping("/medicpet/tractaments-fitxa/{id}")
     public String desarTractament(Tractament tractament) {
         tractamentService.save(tractament);
         
         return "redirect:/tractaments";
     }
     
-    @GetMapping("/tractaments-fitxa")
+    @GetMapping("/medicpet/tractaments-fitxa")
     public String fitxaTractament(Tractament tractament) {
         
         return "tractamentsForm";
     }
     
-    @PostMapping("/eliminar/{id}")
+    @PostMapping("/medicpet/eliminar/{id}")
     public String eliminar(Tractament tractament){
         tractamentService.delete(tractament);
         return "redirect:/tractaments";
     }
     
-    @PostMapping("/guardar")
+    @PostMapping("/medicpet/guardar")
     public String guardar(Tractament tractament){
         tractamentService.save(tractament);
         return "redirect:/tractaments";

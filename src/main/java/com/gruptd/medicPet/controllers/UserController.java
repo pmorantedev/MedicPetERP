@@ -14,7 +14,7 @@ public class UserController {
     @Autowired
     private UsuariServices ususariServices;
 
-    @GetMapping("/perfil")
+    @GetMapping("/medicpet/perfil")
     public String rrhhMain() {
         log.info("Executant el controlador d'usuaris RRHH");
         Iterable<Usuari> factures = ususariServices.findAllUsuaris();

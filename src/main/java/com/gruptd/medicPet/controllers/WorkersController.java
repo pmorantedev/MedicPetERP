@@ -18,7 +18,7 @@ public class WorkersController {
     @Autowired
     private CarrecServices carrecService;
     
-    @GetMapping("/rrhh")
+    @GetMapping("/medicpet/rrhh")
     public String principalTreballadors() {
         log.info("Executant el controlador de treballador");
         Iterable<Treballador> treballadors = treballadorService.findAll();
