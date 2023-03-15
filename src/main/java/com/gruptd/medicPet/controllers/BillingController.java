@@ -19,7 +19,7 @@ public class BillingController {
     @Autowired
     private LiniaFacturaServices liniaFacturaService;
 
-    @GetMapping("/factures")
+    @GetMapping("/medicpet/factures")
     public String principalTreballadors() {
         log.info("Executant el controlador de factures");
         Iterable<Factura> factures = facturaService.findAll();
@@ -36,7 +36,7 @@ public class BillingController {
         return "facturacioMain";
     }
 
-    @GetMapping("/detall-factura")
+    @GetMapping("/medicpet/detall-factura")
     public String detallFactura() {
         log.info("Executant el controlador de facturació: Detall de factura");
         return "facturacioDetall";

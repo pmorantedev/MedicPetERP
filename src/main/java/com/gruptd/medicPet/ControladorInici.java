@@ -10,10 +10,14 @@ import com.gruptd.medicPet.models.Mascota;
 import com.gruptd.medicPet.models.Rol;
 import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.models.Visita;
+import com.gruptd.medicPet.services.UsuariServices;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -28,21 +32,12 @@ peticions HTTP
 @Controller
 @Slf4j  // Anotació que permet utilitzar l'API de Login
 public class ControladorInici {
-
+    
     @Autowired
-    private ClientDAO clientDao;
-
+    private UsuariServices usuariService;
+    
     @Autowired
-    private MascotaDAO mascotaDao;
-
-    @Autowired
-    private VisitaDAO visitaDao;
-
-    @Autowired
-    private RolDAO rolDao;
-
-    @Autowired
-    private UsuariDAO usuariDao;
+    private RolDAO RolDAO;
 
     @GetMapping("/login")
     public String inici() {
@@ -51,9 +46,18 @@ public class ControladorInici {
     }
 
     @GetMapping("/registre")
-    public String registre() {
+    public String registre(Usuari usuari) {
         log.info("Executant el controlador de registre");
         return "registre";
+    }
+    
+    @PostMapping("/nou-usuari")
+    public String guardar(Usuari usuari){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String testPasswordEncoded = passwordEncoder.encode(usuari.getContrasenya());
+        usuari.setContrasenya(testPasswordEncoded);
+        usuariService.saveUsuari(usuari);
+        return "redirect:/login";
     }
 
 }
