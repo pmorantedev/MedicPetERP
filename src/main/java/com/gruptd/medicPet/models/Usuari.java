@@ -17,8 +17,11 @@ import lombok.Data;
 @Table(name = "usuari")
 public class Usuari implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
-    private String token;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nom;
     private String contrasenya;

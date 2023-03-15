@@ -5,24 +5,54 @@ import com.gruptd.medicPet.models.Tractament;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Slf4j
 public class TreatmentsController {
-    
+
     @Autowired
     private TractamentServices tractamentService;
-    
+
     @GetMapping("/tractaments")
-    public String principalTractament() {
+    public String principalTractament(Model model) {
         log.info("Executant el controlador de tractaments");
         Iterable<Tractament> tractaments = tractamentService.findAllTractaments();
         log.info(">>> Tractaments de la BBDD:");
         tractaments.forEach((t) -> {
             log.info(t.getNom());
         });
+        
+        model.addAttribute("tractaments", tractaments);
+        
         return "tractamentsMain";
+    }
+    
+    @PostMapping("/tractaments-fitxa/{id}")
+    public String desarTractament(Tractament tractament) {
+        tractamentService.saveTractament(tractament);
+        
+        return "redirect:/tractaments";
+    }
+    
+    @GetMapping("/tractaments-fitxa")
+    public String fitxaTractament(Tractament tractament) {
+        
+        return "tractamentsForm";
+    }
+    
+    @PostMapping("/eliminar/{id}")
+    public String eliminar(Tractament tractament){
+        tractamentService.deleteTractament(tractament);
+        return "redirect:/tractaments";
+    }
+    
+    @PostMapping("/guardar")
+    public String guardar(Tractament tractament){
+        tractamentService.saveTractament(tractament);
+        return "redirect:/tractaments";
     }
     
 }
