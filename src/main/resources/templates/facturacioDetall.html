@@ -29,7 +29,7 @@
 
                     <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
                         <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="text-white align-middle">Chris Wood</span>
+                            <span class="text-white align-middle"></span>
                             <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Chris Wood">
                         </a>
                         <ul class="dropdown-menu text-small">
@@ -39,7 +39,7 @@
                                 <form id="logout-form" th:action="@{/logout}" method="post" th:style="'display: none;'">
                                     <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                 </form>
-                                <a class="dropdown-item" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
+                                <a class="dropdown-item text-danger" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
                                     Sortir
                                 </a>
                             </li>

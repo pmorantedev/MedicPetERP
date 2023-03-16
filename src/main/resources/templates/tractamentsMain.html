@@ -40,7 +40,7 @@
                                 <form id="logout-form" th:action="@{/logout}" method="post" th:style="'display: none;'">
                                     <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                 </form>
-                                <a class="dropdown-item" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
+                                <a class="dropdown-item text-danger" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
                                     Sortir
                                 </a>
                             </li>

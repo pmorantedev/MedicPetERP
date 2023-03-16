@@ -29,7 +29,7 @@
 
                     <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
                         <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="text-white align-middle">Chris Wood</span>
+                            <span class="text-white align-middle"></span>
                             <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Chris Wood">
                         </a>
                         <ul class="dropdown-menu text-small">
@@ -39,7 +39,7 @@
                                 <form id="logout-form" th:action="@{/logout}" method="post" th:style="'display: none;'">
                                     <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                 </form>
-                                <a class="dropdown-item" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
+                                <a class="dropdown-item text-danger" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
                                     Sortir
                                 </a>
                             </li>
@@ -50,52 +50,57 @@
         </header>
 
 
-        <!-- Page content-->
+        <!-- Contingut de la pàgina -->
         <div class="container">
 
-            <!-- Breadcrumb -->
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ol class="breadcrumb fs-4">
-                    <li class="breadcrumb-item">Pantalla de RRHH</li>
-                </ol>
-            </nav>
+            <!-- Llistat de tractaments en cas que n'hi hagi creats -->
+            <div th:if="${treballadors != null and !treballadors.empty}">
+                <!-- Breadcrumb -->
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb fs-4  mt-4">
+                        <li class="breadcrumb-item"><h2>Llistat de treballadors</h2></li>
+                    </ol>
+                </nav>
 
-            <!-- Botons -->
-            <a th:href="@{/tractaments-fitxa}" class="btn btn-primary">Crear</a>
+                <!-- Botons -->
+                <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success">Crear</a>
 
-            
-            <!-- Llistat -->
-            <!-- 
-            <div th:if="${tractaments != null and !tractaments.empty}">
-                <table class="table align-middle table-striped table-responsive-xl mt-5">
-
+                <!-- Taula -->
+                <table class="table align-middle table-striped table-responsive-xl mt-2">
                     <thead class="table-dark">
                         <tr class="text-center align-middle">
-                            <th scope="col">id</th>
-                            <th scope="col" class="col-5">Nom</th>
-                            <th scope="col">Preu</th>
+                            <th scope="col">Id</th>
+                            <th scope="col" class="col-3">Nom i cognoms</th>
+                            <th scope="col">Telèfon</th>
+                            <th scope="col" class="col-3">Email</th>
+                            <th scope="col" class="col-3">Adreça</th>
                             <th scope="col-3" colspan="3">Actions</th>          
                         </tr>  
                     </thead>
                     <tbody>                 
-                        <tr th:each="tractament: ${tractaments}" class="text-center">
-                            <td th:text="${tractament.getId}"></td>
-                            <td th:text="${tractament.getNom}"></td>
-                            <td th:text="${tractament.getPreu}"></td>
-                            <td><a class="btn-link" href="#" role="button">View</a></td>
+                        <tr th:each="treballador: ${treballadors}" class="text-center">
+                            <td th:text="${treballador.getId}"></td>
+                            <td th:text="${treballador.getNomComplet}"></td>
+                            <td th:text="${treballador.getTelefon}"></td>
+                            <td th:text="${treballador.getEmail}"></td>
+                            <td th:text="${treballador.getAdreca}"></td>
                             <td><a class="btn-link" href="#" role="button">Edit</a></td>
-                            <td><form method="post" th:action="@{/eliminar/{id}(id=${tractament.id})}" class="m-0">
-                                    <input type="submit" class="btn btn-danger" value="Delete">
+                            <td><form method="post" th:action="@{/medicpet/rrhh/eliminar/{id}(id=${treballador.id})}" class="m-0">
+                                    <input type="submit" class="btn btn-outline-danger" value="Delete">
                                 </form>
                             </td>
                         </tr>
                     </tbody>
                 </table> 
             </div>
-            <div th:if="${tractaments == null or tractaments.empty}">
-                <h1>Comença per afegir un tractament.</h1>
+
+            <!-- Si no hi ha tractaments creats, es mostrarà aquest missatge -->
+            <div th:if="${treballadors == null or treballadors.empty}" class="justify-content-center mt-5">
+                <div class="text-center">
+                    <h2 class="mx-auto">La taula de treballadors està buida. <br> Per afegir-ne, feu clic al botó 'Crear'.</h2>
+                    <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success mt-3">Crear</a>
+                </div>
             </div>
-            -->
 
         </div>
     </div>

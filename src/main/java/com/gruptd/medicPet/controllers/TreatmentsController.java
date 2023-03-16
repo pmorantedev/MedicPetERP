@@ -34,7 +34,7 @@ public class TreatmentsController {
     public String desarTractament(Tractament tractament) {
         tractamentService.save(tractament);
         
-        return "redirect:/tractaments";
+        return "redirect:/medicpet/tractaments";
     }
     
     @GetMapping("/medicpet/tractaments/fitxa")
