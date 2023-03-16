@@ -45,6 +45,11 @@ public class ControladorInici {
         return "login";
     }
 
+    @GetMapping("/")
+    public String arrel() {
+        return "redirect:/medicpet/tractaments";
+    }
+    
     @GetMapping("/registre")
     public String registre(Usuari usuari) {
         log.info("Executant el controlador de registre");

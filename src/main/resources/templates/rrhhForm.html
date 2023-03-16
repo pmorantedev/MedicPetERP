@@ -23,8 +23,8 @@
                     <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
                         <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" class="nav-link px-2 text-white">Facturació</a></li>
                         <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" class="nav-link px-2 text-white">Clients</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" class="nav-link px-2 text-warning">Tractaments</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" class="nav-link px-2 text-white">RRHH</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" class="nav-link px-2 text-white">Tractaments</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" class="nav-link px-2 text-warning">RRHH</a></li>
                     </ul>
 
                     <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
@@ -56,35 +56,58 @@
             <!-- Breadcrumb -->
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb fs-4">
-                    <li class="breadcrumb-item mt-3"><h2>Afegir tractament</h2></li>
+                    <li class="breadcrumb-item mt-3 mb-3"><h2>Afegir treballador</h2></li>
                 </ol>
             </nav>
 
             <!-- Detalls factura -->
 
             <!-- Form -->
-            <form id="demoForm" method="POST" th:action="@{/medicpet/tractaments/guardar}" th:object="${tractament}">
-                <div class="mb-3 col-sm-6">
-                    <label class="form-label align-items-center"><h5>Nom del tractament</h5></label>
-                    <input type="text" class="form-control align-items-center" name="name" th:field="*{nom}" required/>
-                </div>
-
-                <div class="mb-3 col-sm-3">
-                    <label class="form-label align-items-center"><h5>Preu del tractament</h5></label>
-                    <div class="input-group align-items-center">
-                        <span class="input-group-text">€</span>
-                        <input type="text" class="form-control" name="price" th:field="*{preu}" required/>
+            <form id="demoForm" method="POST" th:action="@{/medicpet/treballador/guardar}" th:object="${treballador}">
+                <form class="form-horizontal">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Nom del treballador</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input type="text" class="form-control" name="name" th:field="*{nomComplet}" required/>
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Telèfon</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input type="text" class="form-control" name="phone" th:field="*{telefon}" required/>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Correu electrònic</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input type="email" class="form-control" name="email" th:field="*{email}" required/>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Adreça</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input type="text" class="form-control" name="address" th:field="*{adreca}" required/>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Especialitat</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input type="text" class="form-control" name="carrec" th:field="*{carrecAux}" required/>
+                        </div>
+                    </div>
 
-                <!-- Botons -->
-                <div class="mb-3">
-                    <button type="submit" name="guardar" class="btn btn-outline-success mt-3 p-2">Afegir tractament</button>
-                    <a th:href="@{/medicpet/tractaments}"><button type="button" class="btn btn-outline-danger mt-3 mx-3 p-2">Descartar</button></a>
-                </div>
+                    <!-- Botons -->
+                    <div class="row justify-content-center mb-5">
+                        <div class="col-md-6 text-center">
+                            <button type="submit" name="guardar" class="btn btn-outline-success mt-5 p-2">Afegir treballador</button>
+                            <a th:href="@{/medicpet/rrhh}"><button type="button" class="btn btn-outline-danger mt-5 mx-3 p-2">Descartar</button></a>
+                        </div>
+                    </div>
+                </form>
+
 
             </form>
-            
+
             <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.min.js"></script>
             <script src="/vendors/formvalidation/dist/js/FormValidation.min.js"></script>
             <script src="/vendors/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
