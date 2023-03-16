@@ -4,9 +4,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Detall de factura</title>
+        <title>Llistat de clients</title>
         <!-- Favicon-->
-        <!-- <link rel="icon" type="image/x-icon" href="/favicon.ico" /> -->
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
 
@@ -50,58 +50,73 @@
         </header>
 
 
-        <!-- Page content-->
+        <!-- Continguts -->
         <div class="container">
 
-            <!-- Breadcrumb -->
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ol class="breadcrumb fs-4">
-                    <li class="breadcrumb-item">Llistat de clients</li>
-                </ol>
-            </nav>
+            <!-- Llistat de clients en cas que n'hi hagi de creats -->
+            <div th:if="${clients != null and !clients.empty}">
+                
+                <!-- Breadcrumb -->
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb fs-4  mt-4">
+                        <li class="breadcrumb-item"><h2>Llistat de clients</h2></li>
+                    </ol>
+                </nav>
 
-            <!-- Botons -->
-            <a th:href="@{/tractaments-fitxa}" class="btn btn-primary">Crear</a>
+                <!-- Botons -->
+                <a th:href="@{/medicpet/clients/fitxa}" class="btn btn-outline-success">Crear</a>
 
-            
-            <!-- Llistat -->
-            <!-- 
-            <div th:if="${tractaments != null and !tractaments.empty}">
-                <table class="table align-middle table-striped table-responsive-xl mt-5">
-
+                <!-- Taula -->
+                <table class="table align-middle table-striped table-responsive-xl mt-2">
                     <thead class="table-dark">
                         <tr class="text-center align-middle">
-                            <th scope="col">id</th>
-                            <th scope="col" class="col-5">Nom</th>
-                            <th scope="col">Preu</th>
-                            <th scope="col-3" colspan="3">Actions</th>          
+                            <th scope="col">Id</th>
+                            <th scope="col" class="col-3">Nom i cognoms</th>
+                            <th scope="col">Dni</th>
+                            <th scope="col" class="col-2">Telèfon</th>
+                            <th scope="col" class="col-2">Correu electrònic</th>
+                            <th scope="col">Adreça</th>
+                            <th scope="col" colspan="3" class="col-1">Accions</th>
                         </tr>  
                     </thead>
                     <tbody>                 
-                        <tr th:each="tractament: ${tractaments}" class="text-center">
-                            <td th:text="${tractament.getId}"></td>
-                            <td th:text="${tractament.getNom}"></td>
-                            <td th:text="${tractament.getPreu}"></td>
-                            <td><a class="btn-link" href="#" role="button">View</a></td>
-                            <td><a class="btn-link" href="#" role="button">Edit</a></td>
-                            <td><form method="post" th:action="@{/eliminar/{id}(id=${tractament.id})}" class="m-0">
-                                    <input type="submit" class="btn btn-danger" value="Delete">
+                        <tr th:each="client: ${clients}" class="text-center">
+                            <td th:text="${client.getIdclient}"></td>
+                            <td th:text="${client.getNomComplert}"></td>
+                            <td th:text="${client.getDni}"></td>                            
+                            <td th:text="${client.getTelefon}"></td>
+                            <td th:text="${client.getEmail}"></td>
+                            <td th:text="${client.getAdreca}"></td>
+                            <td>
+                                <form method="post" th:action="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" class="m-0">
+                                    <input type="submit" class="btn btn-outline-primary" value="Editar">
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" th:action="@{/medicpet/clients/eliminar/{idclient}(idclient=${client.getIdclient})}" class="m-0">
+                                    <input type="submit" class="btn btn-outline-danger" value="Eliminar">
                                 </form>
                             </td>
                         </tr>
                     </tbody>
                 </table> 
             </div>
-            <div th:if="${tractaments == null or tractaments.empty}">
-                <h1>Comença per afegir un tractament.</h1>
+
+            <!-- Si no hi ha clients creats, es mostrarà aquest missatge -->
+            <div th:if="${clients == null or clients.empty}" class="justify-content-center mt-5">
+                <div class="text-center">
+                    <h2 class="mx-auto">La taula de clients està buida. <br> Per afegir-ne un, feu clic al botó 'Crear'.</h2>
+                    <a th:href="@{/medicpet/clients/fitxa}" class="btn btn-outline-success mt-3">Crear</a>
+                </div>
             </div>
-            -->
 
         </div>
-    </div>
 
-    <!-- Javascript per mostrar DROPDOWNS, POPOVERS o TOOLTIPS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    </div>
+</div>
+
+<!-- Javascript per mostrar DROPDOWNS, POPOVERS o TOOLTIPS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 </body>
 </html>
