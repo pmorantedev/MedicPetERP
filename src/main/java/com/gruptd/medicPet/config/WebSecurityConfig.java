@@ -31,7 +31,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/medicpet/**").hasRole("USER")
-                .anyRequest().anonymous()
+                .requestMatchers("/**").permitAll()
                 )
                 .formLogin((form) -> form
                 .loginPage("/login")
