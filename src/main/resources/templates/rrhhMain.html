@@ -62,8 +62,13 @@
                     </ol>
                 </nav>
 
-                <!-- Botons -->
-                <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success">Crear</a>
+                <!-- Botons i cercador -->
+                <div class="d-flex justify-content-between">
+                    <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success">Crear</a>
+                    <div class="float-right search btn-group">
+                        <input class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off">
+                    </div>
+                </div>
 
                 <!-- Taula -->
                 <table class="table align-middle table-striped table-responsive-xl mt-2">
@@ -84,9 +89,12 @@
                             <td th:text="${treballador.getTelefon}"></td>
                             <td th:text="${treballador.getEmail}"></td>
                             <td th:text="${treballador.getAdreca}"></td>
-                            <td><a class="btn-link" href="#" role="button">Edit</a></td>
                             <td><form method="post" th:action="@{/medicpet/rrhh/eliminar/{id}(id=${treballador.id})}" class="m-0">
-                                    <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                    <input type="submit" class="btn btn-outline-primary" value="Editar">
+                                </form>
+                            </td>
+                            <td><form method="post" th:action="@{/medicpet/rrhh/eliminar/{id}(id=${treballador.id})}" class="m-0">
+                                    <input type="submit" class="btn btn-outline-danger" value="Eliminar">
                                 </form>
                             </td>
                         </tr>
