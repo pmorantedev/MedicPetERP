@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Aquesta clase crea totes les funcions del CRUD amb la BBDD sobre la clase
+ * Tractament. S'ha d'importar i es pot utilitzar per fer peticions i modificacions
+ * a la BBDD a la taula de Tractament 
  * @author pmorante
  */
 @Service

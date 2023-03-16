@@ -17,7 +17,7 @@ public class UserController {
     @GetMapping("/medicpet/perfil")
     public String rrhhMain() {
         log.info("Executant el controlador d'usuaris RRHH");
-        Iterable<Usuari> factures = ususariServices.findAllUsuaris();
+        Iterable<Usuari> factures = ususariServices.findAll();
         log.info(">>> Usuaris de la BBDD:");
         factures.forEach((t) -> {
             log.info(t.getNom());
