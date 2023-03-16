@@ -36,7 +36,17 @@ public class WebSecurityConfig {
                 .defaultSuccessUrl("/medicpet/tractaments", true)
                 )
                 .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login?logout"))
-                .csrf();
+                .csrf(); // Protecció contra atacs CSRF
+
+        // protecció per evitar que els atacants robin la sessió d'un usuari canviant l'ID de la sessió
+        http
+                .sessionManagement()
+                .sessionFixation().migrateSession();
+
+        // protecció per evitar que els atacants incloguin l'aplicació en un iframe i enganyi els usuaris perquè facin clic als botons ocults
+        http
+                .headers()
+                .frameOptions().sameOrigin();
 
         return http.build();
     }
