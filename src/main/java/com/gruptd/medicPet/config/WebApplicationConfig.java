@@ -16,7 +16,9 @@ public class WebApplicationConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/notFound").setViewName("forward:/medicpet/tractamentsMain.html");
+        registry.addViewController("/error").setViewName("404");
+        registry.addViewController("/error404").setViewName("404");
+
     }
 
     @Bean
