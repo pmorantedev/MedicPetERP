@@ -7,6 +7,7 @@ import com.gruptd.medicPet.services.TreballadorServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -20,19 +21,11 @@ public class WorkersController {
     private CarrecServices carrecService;
     
     @GetMapping("/medicpet/rrhh")
-    public String principalTreballadors() {
+    public String principalTreballadors(Model model) {
         log.info("Executant el controlador de treballador");
         Iterable<Treballador> treballadors = treballadorService.findAll();
-        log.info(">>> Treballadors de la BBDD:");
-        treballadors.forEach((t) -> {
-            log.info(t.getNomComplet());
-        });
+        model.addAttribute("treballadors", treballadors);
         
-        Iterable<Carrec> carrecs = carrecService.findAllCarrecs();
-        log.info(">>> Carrcs de la BBDD:");
-        carrecs.forEach((t) -> {
-            log.info(t.getNom());
-        });
         return "rrhhMain";
     }
     
@@ -56,7 +49,7 @@ public class WorkersController {
     }
     
     @PostMapping("/medicpet/rrhh/guardar")
-    public String guardar(Treballador treballador){
+    public String guardarTreballador(Treballador treballador){
         treballadorService.save(treballador);
         return "redirect:/medicpet/rrhh";
     }
