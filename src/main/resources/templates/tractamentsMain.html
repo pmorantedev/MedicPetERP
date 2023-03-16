@@ -36,7 +36,14 @@
                         <ul class="dropdown-menu text-small">
                             <li><a class="dropdown-item" href="#">Perfil</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="/registre">Sortir</a></li>
+                            <li>
+                                <form id="logout-form" th:action="@{/logout}" method="post" th:style="'display: none;'">
+                                    <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                </form>
+                                <a class="dropdown-item text-danger" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
+                                    Sortir
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
