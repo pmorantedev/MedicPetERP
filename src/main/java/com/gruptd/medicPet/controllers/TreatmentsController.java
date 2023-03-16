@@ -5,7 +5,9 @@ import com.gruptd.medicPet.models.Tractament;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Slf4j
@@ -14,27 +16,43 @@ public class TreatmentsController {
     @Autowired
     private TractamentServices tractamentService;
 
-    @GetMapping("/tractaments")
-    public String principalTractament() {
+    @GetMapping("/medicpet/tractaments")
+    public String principalTractament(Model model) {
         log.info("Executant el controlador de tractaments");
-        Tractament tractament = new Tractament();
-        tractament.setId(2L);
-        tractament.setNom("update");
-        tractament.setPreu(12.33f);
-        tractamentService.updateTreballador(tractament);
-//        tractamentService.saveTractament(tractament);
-//        Tractament tractament2 = new Tractament();
-//        tractament2.setId(3L);
-//        tractament2.setNom("Prueba4");
-//        tractament2.setPreu(6.73f);
-//        tractamentService.saveTractament(tractament2);
-//        tractamentService.deleteTractament(tractament2);
-        Iterable<Tractament> tractaments = tractamentService.findAllTractaments();
+        Iterable<Tractament> tractaments = tractamentService.findAll();
         log.info(">>> Tractaments de la BBDD:");
         tractaments.forEach((t) -> {
             log.info(t.getNom());
         });
+        
+        model.addAttribute("tractaments", tractaments);
+        
         return "tractamentsMain";
     }
-
+    
+    @PostMapping("/medicpet/tractaments/fitxa/{id}")
+    public String desarTractament(Tractament tractament) {
+        tractamentService.save(tractament);
+        
+        return "redirect:/medicpet/tractaments";
+    }
+    
+    @GetMapping("/medicpet/tractaments/fitxa")
+    public String fitxaTractament(Tractament tractament) {
+        
+        return "tractamentsForm";
+    }
+    
+    @PostMapping("/medicpet/tractaments/eliminar/{id}")
+    public String eliminar(Tractament tractament){
+        tractamentService.delete(tractament);
+        return "redirect:/medicpet/tractaments";
+    }
+    
+    @PostMapping("/medicpet/tractaments/guardar")
+    public String guardar(Tractament tractament){
+        tractamentService.save(tractament);
+        return "redirect:/medicpet/tractaments";
+    }
+    
 }

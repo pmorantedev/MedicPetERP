@@ -1,129 +1,109 @@
-<style>
-
-    ul {
-        padding-left: 30px !important;
-    }
-
-    .btn-hover-red:hover {
-        background-color: red !important;
-        color: white !important;
-        border-color: red !important;
-    }
-
-    th {
-        background-color: #666 !important;
-        color: white;
-    }
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    h1.titulo {
-        font-size: 25px;
-        margin-top: 30px;
-        margin-left: 5%;
-    }
-
-    .table-responsive {
-        width: 90%;
-        margin: 0 auto;
-        margin-top: 40px !important;
-
-    }
-
-    table {
-        text-align: center !important;
-        border: 3px solid #000;
-    }
-
-    .nav-link {
-        text-transform: uppercase;
-    }
-
-</style>
-
 <!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Iniciar sessió</title>
+        <title>Detall de factura</title>
+        <!-- Favicon-->
+        <!-- <link rel="icon" type="image/x-icon" href="/favicon.ico" /> -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
 
-    <!-- BODY -->
     <body style="background-color: bg-secondary-subtle;">
-        <div class="container-fluid">
 
-            <div class="row justify-content-center">
+        <!-- Menú de navegació -->
+        <header class="p-3 mb-3 border-bottom text-bg-dark">
+            <div class="container">
+                <div class="d-flex flex-wrap col-12 col-lg-auto align-items-center justify-content-center justify-content-lg-start">
+                    <a href="#" class="fs-4 d-flex align-items-center text-white text-decoration-none me-4">
+                        <img class="d-inline-block align-middle me-2" src="/logo.png" alt="MedicPet" width="40"  height="40" />
+                        Medic Pet
+                    </a>
 
-                <!-- MENU -->
-                <header class="p-2 text-bg-dark">
-                    <div class="container">
-                        <div class="d-flex flex-wrap justify-content-between align-items-center">
-                            <img class="d-flex flex-wrap justify-content-between align-items-center" src="/logo.png" alt="MedicPet" width="40">
+                    <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" class="nav-link px-2 text-white">Facturació</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" class="nav-link px-2 text-white">Clients</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" class="nav-link px-2 text-warning">Tractaments</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" class="nav-link px-2 text-white">RRHH</a></li>
+                    </ul>
 
-                            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 text-bg-dark text-white">
-                                <li><a href="/facturacio" class="nav-link px-2 text-white">Facturació</a></li>
-                                <li><a href="/clients" class="nav-link px-2 text-white">Clients</a></li>
-                                <li><a href="/tractaments" class="nav-link px-2 text-white">Tractaments</a></li>
-                                <li><a href="/rrhh" class="nav-link px-2 text-white">RRHH</a></li>
-                            </ul>
-
-                            <div class="text-end">
-                                <a href="/entrar"><button type="button" class="btn btn-outline-light me-2">Perfil</button></a>
-                                <a href="/registre"><button type="button" class="btn btn-outline-light me-2 btn-hover-red">Sortir</button></a>
-                            </div>
-                        </div>
-                    </div>
-                </header>
-
-                <div>
-                    <h1 class="titulo">Llistat de tractaments</h1>
-                </div>
-
-
-                <!<!-- TABLA -->
-                <div class="container-tabla">
-                    <div class="table-responsive">
-                        <table class="table mx-auto">
-                            <thead>
-                                <tr>
-                                    <th style="background-color: black; color: white;">Id</th>
-                                    <th style="background-color: black; color: white;">Nom</th>
-                                    <th style="background-color: black; color: white;">Preu</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>0534</td>
-                                    <td>Penicilina</td>
-                                    <td>77.64€</td>
-                                </tr>
-                                <tr>
-                                    <td>0132</td>
-                                    <td>Estreptomicina</td>
-                                    <td>110.00€</td>
-                                </tr>
-                                <tr>
-                                    <td>015</td>
-                                    <td>Cirugia</td>
-                                    <td>3000.00€</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="text-white align-middle"></span>
+                            <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Chris Wood">
+                        </a>
+                        <ul class="dropdown-menu text-small">
+                            <li><a class="dropdown-item" href="#">Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form id="logout-form" th:action="@{/logout}" method="post" th:style="'display: none;'">
+                                    <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                </form>
+                                <a class="dropdown-item text-danger" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
+                                    Sortir
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+            </div>
+        </header>
 
 
+        <!-- Contingut de la pàgina -->
+        <div class="container">
+
+            <!-- Llistat de tractaments en cas que n'hi hagi creats -->
+            <div th:if="${tractaments != null and !tractaments.empty}">
+                <!-- Breadcrumb -->
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb fs-4  mt-4">
+                        <li class="breadcrumb-item"><h2>Llistat de tractaments</h2></li>
+                    </ol>
+                </nav>
+
+                <!-- Botons -->
+                <a th:href="@{/medicpet/tractaments/fitxa}" class="btn btn-outline-success">Crear</a>
+
+                <!-- Taula -->
+                <table class="table align-middle table-striped table-responsive-xl mt-2">
+                    <thead class="table-dark">
+                        <tr class="text-center align-middle">
+                            <th scope="col">Id</th>
+                            <th scope="col" class="col-5">Nom</th>
+                            <th scope="col">Preu</th>
+                            <th scope="col-3" colspan="3">Actions</th>          
+                        </tr>  
+                    </thead>
+                    <tbody>                 
+                        <tr th:each="tractament: ${tractaments}" class="text-center">
+                            <td th:text="${tractament.getId}"></td>
+                            <td th:text="${tractament.getNom}"></td>
+                            <td th:text="${tractament.getPreu}"></td>
+                            <td><a class="btn-link" href="#" role="button">Edit</a></td>
+                            <td><form method="post" th:action="@{/medicpet/tractaments/eliminar/{id}(id=${tractament.id})}" class="m-0">
+                                    <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </div>
+
+            <!-- Si no hi ha tractaments creats, es mostrarà aquest missatge -->
+            <div th:if="${tractaments == null or tractaments.empty}" class="justify-content-center mt-5">
+                <div class="text-center">
+                    <h2 class="mx-auto">La taula de tractaments està buida. <br> Per afegir-ne, feu clic al botó 'Crear'.</h2>
+                    <a th:href="@{/medicpet/tractaments/fitxa}" class="btn btn-outline-success mt-3">Crear</a>
+                </div>
             </div>
 
         </div>
+    </div>
 
-        <!-- Javascript per mostrar DROPDOWNS, POPOVERS o TOOLTIPS -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>  
-
-    </body>
+    <!-- Javascript per mostrar DROPDOWNS, POPOVERS o TOOLTIPS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+</body>
 </html>

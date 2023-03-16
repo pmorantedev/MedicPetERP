@@ -21,21 +21,28 @@
                     </a>
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="#" class="nav-link px-2 link-secondary">Facturació</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="#" class="nav-link px-2 text-white">Clients</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="#" class="nav-link px-2 text-white">Tractaments</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="#" class="nav-link px-2 text-white">RRHH</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" class="nav-link px-2 text-warning">Facturació</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" class="nav-link px-2 text-white">Clients</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" class="nav-link px-2 text-white">Tractaments</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" class="nav-link px-2 text-white">RRHH</a></li>
                     </ul>
 
                     <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
                         <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="text-white align-middle">Chris Wood</span>
+                            <span class="text-white align-middle"></span>
                             <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Chris Wood">
                         </a>
                         <ul class="dropdown-menu text-small">
                             <li><a class="dropdown-item" href="#">Perfil</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/registre">Sortir</a></li>
+                            <li>
+                                <form id="logout-form" th:action="@{/logout}" method="post" th:style="'display: none;'">
+                                    <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                </form>
+                                <a class="dropdown-item text-danger" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
+                                    Sortir
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

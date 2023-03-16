@@ -10,10 +10,14 @@ import com.gruptd.medicPet.models.Mascota;
 import com.gruptd.medicPet.models.Rol;
 import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.models.Visita;
+import com.gruptd.medicPet.services.UsuariServices;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -28,63 +32,37 @@ peticions HTTP
 @Controller
 @Slf4j  // Anotació que permet utilitzar l'API de Login
 public class ControladorInici {
-
+    
     @Autowired
-    private ClientDAO clientDao;
-
+    private UsuariServices usuariService;
+    
     @Autowired
-    private MascotaDAO mascotaDao;
+    private RolDAO RolDAO;
 
-    @Autowired
-    private VisitaDAO visitaDao;
-
-    @Autowired
-    private RolDAO rolDao;
-
-    @Autowired
-    private UsuariDAO usuariDao;
-
-    @GetMapping("/")
+    @GetMapping("/login")
     public String inici() {
         log.info("Executant el controlador d'inici");
-
-        Iterable<Client> personas = clientDao.findAll();
-        log.info(">>> Clientes de la BBDD:");
-        personas.forEach((t) -> {
-            log.info(t.getNomComplert());
-        });
-
-        Iterable<Mascota> mascotas = mascotaDao.findAll();
-        log.info(">>> Mascotes de la  de la BBDD:");
-        mascotas.forEach((m) -> {
-            log.info(m.getNom());
-        });
-
-        Iterable<Visita> visitas = visitaDao.findAll();
-        log.info(">>> Visites de la  de la BBDD:");
-        visitas.forEach((v) -> {
-            log.info(v.getDiagnostic());
-        });
-
-        Iterable<Rol> rols = rolDao.findAll();
-        log.info(">>> Rols de la  de la BBDD:");
-        rols.forEach((v) -> {
-            log.info(v.getNom());
-        });
-
-        //el PrimaryKey no es ID Auto
-        Iterable<Usuari> usuaris = usuariDao.findAll();
-        log.info(">>> Usuaris de la  de la BBDD:");
-        usuaris.forEach((v) -> {
-            log.info(v.getNom());
-        });
         return "login";
     }
 
+    @GetMapping("/")
+    public String arrel() {
+        return "redirect:/medicpet/tractaments";
+    }
+    
     @GetMapping("/registre")
-    public String registre() {
+    public String registre(Usuari usuari) {
         log.info("Executant el controlador de registre");
         return "registre";
+    }
+    
+    @PostMapping("/nou-usuari")
+    public String guardar(Usuari usuari){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String testPasswordEncoded = passwordEncoder.encode(usuari.getContrasenya());
+        usuari.setContrasenya(testPasswordEncoded);
+        usuariService.saveUsuari(usuari);
+        return "redirect:/login";
     }
 
 }
