@@ -1,5 +1,7 @@
 package com.gruptd.medicPet;
 
+//spring-boot.run.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=n,adsress=${jpda.address} jpda.listen=true
+
 import com.gruptd.medicPet.dao.ClientDAO;
 import com.gruptd.medicPet.dao.MascotaDAO;
 import com.gruptd.medicPet.dao.RolDAO;
