@@ -7,12 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -28,6 +24,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
                 .authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/medicpet/**").hasRole("USER")
@@ -38,7 +35,18 @@ public class WebSecurityConfig {
                 .permitAll()
                 .defaultSuccessUrl("/medicpet/tractaments", true)
                 )
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login?logout"))
+                .csrf(); // Protecció contra atacs CSRF
+
+        // protecció per evitar que els atacants robin la sessió d'un usuari canviant l'ID de la sessió
+        http
+                .sessionManagement()
+                .sessionFixation().migrateSession();
+
+        // protecció per evitar que els atacants incloguin l'aplicació en un iframe i enganyi els usuaris perquè facin clic als botons ocults
+        http
+                .headers()
+                .frameOptions().sameOrigin();
 
         return http.build();
     }
@@ -52,16 +60,4 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user
-//                = User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("password")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }
