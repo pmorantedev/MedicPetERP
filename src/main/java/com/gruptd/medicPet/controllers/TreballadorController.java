@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Slf4j
-public class WorkersController {
+public class TreballadorController {
     @Autowired
     private TreballadorServices treballadorService;
     
