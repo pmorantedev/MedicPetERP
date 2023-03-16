@@ -2,43 +2,51 @@ package com.gruptd.medicPet.services;
 
 import com.gruptd.medicPet.dao.TreballadorDAO;
 import com.gruptd.medicPet.models.Treballador;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
+/* 
+ * Aquesta clase crea totes les funcions del CRUD amb la BBDD sobre la clase
+ * Treballador. S'ha d'importar i es pot utilitzar per fer peticions i modificacions
+ * a la BBDD a la taula de Treballador *
  *
  * @author pmorante
  */
 @Service
-public class TreballadorServices {
+public class TreballadorServices implements ServicesInterface<Treballador> {
+
     @Autowired
     private TreballadorDAO treballadorDao;
-    
+
     @Transactional(readOnly = true)
-    public List<Treballador> findAllTreballadors() {
-        return (List<Treballador>) treballadorDao.findAll();
+    @Override
+    public Iterable<Treballador> findAll() {
+        return treballadorDao.findAll();
     }
-    
+
     @Transactional
-    public void saveTreballador(Treballador t) {
+    @Override
+    public void save(Treballador t) {
         treballadorDao.save(t);
     }
-    
+
     @Transactional
-    public void deleteTreballador(Treballador t) {
+    @Override
+    public void delete(Treballador t) {
         treballadorDao.delete(t);
     }
-    
+
     @Transactional(readOnly = true)
-    public Treballador getTreballador(Treballador treballador) {
+    @Override
+    public Treballador getOne(Treballador treballador) {
         return treballadorDao.findById(treballador.getId()).orElse(null);
     }
-    
+
     @Transactional
-    public void updateTreballador(Treballador t) {
-        Treballador treballadorBD = getTreballador(t);
+    @Override
+    public void update(Treballador t) {
+        Treballador treballadorBD = getOne(t);
         if (treballadorBD != null) {
             treballadorBD.setAdreca(t.getAdreca());
             treballadorBD.setCarrec(t.getCarrec());
@@ -46,8 +54,8 @@ public class TreballadorServices {
             treballadorBD.setEmail(t.getEmail());
             treballadorBD.setNomComplet(t.getNomComplet());
             treballadorBD.setTelefon(t.getTelefon());
-            
-            saveTreballador(treballadorBD);
+
+            save(treballadorBD);
         } else {
             System.out.println("El treballador no existeix.");
         }

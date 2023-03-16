@@ -14,10 +14,10 @@ public class CustomersController {
     @Autowired
     private ClientServices clientService;
     
-    @GetMapping("/clients")
+    @GetMapping("/medicpet/clients")
     public String clientsMain() {
         log.info("Executant el controlador de clients");
-        Iterable<Client> factures = clientService.findAllClients();
+        Iterable<Client> factures = clientService.findAll();
         log.info(">>> Clients de la BBDD:");
         factures.forEach((t) -> {
             log.info(t.getEmail());

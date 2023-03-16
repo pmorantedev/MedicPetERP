@@ -2,48 +2,56 @@ package com.gruptd.medicPet.services;
 
 import com.gruptd.medicPet.dao.FacturaDAO;
 import com.gruptd.medicPet.models.Factura;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * * Aquesta clase crea totes les funcions del CRUD amb la BBDD sobre la clase
+ * Factura. S'ha d'importar i es pot utilitzar per fer peticions i modificacions
+ * a la BBDD a la taula de Farctura
  *
  * @author pmorante
  */
 @Service
-public class FacturaServices {
+public class FacturaServices implements ServicesInterface<Factura> {
+
     @Autowired
     private FacturaDAO facturaDao;
-    
+
     @Transactional(readOnly = true)
-    public List<Factura> findAllFactures() {
-        return (List<Factura>) facturaDao.findAll();
+    @Override
+    public Iterable<Factura> findAll() {
+        return facturaDao.findAll();
     }
-    
+
     @Transactional
-    public void saveFactura(Factura f) {
+    @Override
+    public void save(Factura f) {
         facturaDao.save(f);
     }
-    
+
     @Transactional
-    public void deleteFactura(Factura f) {
+    @Override
+    public void delete(Factura f) {
         facturaDao.delete(f);
     }
-    
+
     @Transactional(readOnly = true)
-    public Factura getFactura(Factura factura) {
+    @Override
+    public Factura getOne(Factura factura) {
         return facturaDao.findById(factura.getId()).orElse(null);
     }
-    
+
     @Transactional
-    public void updateTreballador(Factura f) {
-        Factura facturaBD = getFactura(f);
+    @Override
+    public void update(Factura f) {
+        Factura facturaBD = getOne(f);
         if (facturaBD != null) {
             facturaBD.setDataPagament(f.getDataPagament());
             facturaBD.setMetodePagament(f.getMetodePagament());
-            
-            saveFactura(facturaBD);
+
+            save(facturaBD);
         } else {
             System.out.println("La factura no existeix.");
         }

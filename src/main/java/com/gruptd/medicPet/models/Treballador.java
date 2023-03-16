@@ -26,4 +26,7 @@ public class Treballador implements Serializable {
     @ManyToOne
     @JoinColumn(name = "carrec_id")
     private Carrec carrec;
+    @OneToOne
+    @JoinColumn(name = "usuari_id")
+    private Usuari usuari;
 }

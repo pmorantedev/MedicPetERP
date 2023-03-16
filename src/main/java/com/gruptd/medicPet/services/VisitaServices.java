@@ -6,46 +6,53 @@ package com.gruptd.medicPet.services;
 
 import com.gruptd.medicPet.dao.VisitaDAO;
 import com.gruptd.medicPet.models.Visita;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * Aquesta clase crea totes les funcions del CRUD amb la BBDD sobre la clase
+ * Vista. S'ha d'importar i es pot utilitzar per fer peticions i modificacions a
+ * la BBDD a la taula de Visita
+ *
  *
  * @author izan
  */
-public class VisitaServices {
+public class VisitaServices implements ServicesInterface<Visita> {
 
     @Autowired
     private VisitaDAO visitaDao;
 
     @Transactional(readOnly = true)
-    public List<Visita> findAllVisites() {
-        return (List<Visita>) visitaDao.findAll();
+    @Override
+    public Iterable<Visita> findAll() {
+        return visitaDao.findAll();
     }
 
     @Transactional
-    public void saveVisita(Visita v) {
+    @Override
+    public void save(Visita v) {
         visitaDao.save(v);
     }
 
     @Transactional
-    public void deleteVisita(Visita v) {
+    @Override
+    public void delete(Visita v) {
         visitaDao.delete(v);
     }
 
     @Transactional(readOnly = true)
-    public Visita getVisita(Visita visita) {
+    public Visita getOne(Visita visita) {
         return visitaDao.findById(visita.getId()).orElse(null);
     }
 
     @Transactional
-    public void updateVisita(Visita v) {
-        Visita visitaDB = getVisita(v);
+
+    @Override
+    public void update(Visita v) {
+        Visita visitaDB = getOne(v);
         if (visitaDB != null) {
             visitaDB.setData_visita(v.getData_visita());
-
-            saveVisita(visitaDB);
+            save(visitaDB);
         } else {
             System.out.println("La visita no existeix.");
         }
