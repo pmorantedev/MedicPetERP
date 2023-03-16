@@ -30,29 +30,29 @@ public class TreatmentsController {
         return "tractamentsMain";
     }
     
-    @PostMapping("/medicpet/tractaments-fitxa/{id}")
+    @PostMapping("/medicpet/tractaments/fitxa/{id}")
     public String desarTractament(Tractament tractament) {
         tractamentService.save(tractament);
         
         return "redirect:/tractaments";
     }
     
-    @GetMapping("/medicpet/tractaments-fitxa")
+    @GetMapping("/medicpet/tractaments/fitxa")
     public String fitxaTractament(Tractament tractament) {
         
         return "tractamentsForm";
     }
     
-    @PostMapping("/medicpet/eliminar/{id}")
+    @PostMapping("/medicpet/tractaments/eliminar/{id}")
     public String eliminar(Tractament tractament){
         tractamentService.delete(tractament);
-        return "redirect:/tractaments";
+        return "redirect:/medicpet/tractaments";
     }
     
-    @PostMapping("/medicpet/guardar")
+    @PostMapping("/medicpet/tractaments/guardar")
     public String guardar(Tractament tractament){
         tractamentService.save(tractament);
-        return "redirect:/tractaments";
+        return "redirect:/medicpet/tractaments";
     }
     
 }
