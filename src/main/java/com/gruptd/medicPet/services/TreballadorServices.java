@@ -39,14 +39,14 @@ public class TreballadorServices implements ServicesInterface<Treballador> {
 
     @Transactional(readOnly = true)
     @Override
-    public Treballador getOne(Treballador treballador) {
-        return treballadorDao.findById(treballador.getId()).orElse(null);
+    public Treballador getOne(Long id) {
+        return treballadorDao.findById(id).orElse(null);
     }
 
     @Transactional
     @Override
     public void update(Treballador t) {
-        Treballador treballadorBD = getOne(t);
+        Treballador treballadorBD = getOne(t.getId());
         if (treballadorBD != null) {
             treballadorBD.setAdreca(t.getAdreca());
             treballadorBD.setCarrec(t.getCarrec());

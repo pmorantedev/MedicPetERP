@@ -39,14 +39,14 @@ public class TractamentServices implements ServicesInterface<Tractament> {
     
     @Transactional(readOnly = true)
     @Override
-    public Tractament getOne(Tractament tractament) {
-        return tractamentDao.findById(tractament.getId()).orElse(null);
+    public Tractament getOne(Long id) {
+        return tractamentDao.findById(id).orElse(null);
     }
     
     @Transactional
     @Override
     public void update(Tractament t) {
-        Tractament tractamentBD = getOne(t);
+        Tractament tractamentBD = getOne(t.getId());
         if (tractamentBD != null) {
             tractamentBD.setNom(t.getNom());
             tractamentBD.setPreu(t.getPreu());
