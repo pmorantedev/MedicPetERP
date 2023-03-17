@@ -66,5 +66,10 @@ public class ControladorInici {
         usuariService.save(usuari);
         return "redirect:/login";
     }
+    
+    @GetMapping("/error/error403")
+    public String noAutoritzat() {
+        return "error403";
+    }
 
 }
