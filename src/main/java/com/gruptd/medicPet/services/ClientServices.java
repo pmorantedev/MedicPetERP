@@ -41,14 +41,14 @@ public class ClientServices implements ServicesInterface<Client> {
 
     @Transactional(readOnly = true)
     @Override
-    public Client getOne(Client client) {
-        return clientDao.findById(client.getIdclient()).orElse(null);
+    public Client getOne(Long id) {
+        return clientDao.findById(id).orElse(null);
     }
 
     @Transactional
     @Override
     public void update(Client c) {
-        Client clientBD = getOne(c);
+        Client clientBD = getOne(c.getIdclient());
         if (clientBD != null) {
             clientBD.setEmail(c.getEmail());
 

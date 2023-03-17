@@ -41,15 +41,15 @@ public class VisitaServices implements ServicesInterface<Visita> {
     }
 
     @Transactional(readOnly = true)
-    public Visita getOne(Visita visita) {
-        return visitaDao.findById(visita.getId()).orElse(null);
+    public Visita getOne(Long id) {
+        return visitaDao.findById(id).orElse(null);
     }
 
     @Transactional
 
     @Override
     public void update(Visita v) {
-        Visita visitaDB = getOne(v);
+        Visita visitaDB = getOne(v.getId());
         if (visitaDB != null) {
             visitaDB.setData_visita(v.getData_visita());
             save(visitaDB);
