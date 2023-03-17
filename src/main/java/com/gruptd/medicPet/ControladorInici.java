@@ -1,22 +1,19 @@
 package com.gruptd.medicPet;
 
 //spring-boot.run.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=n,adsress=${jpda.address} jpda.listen=true
-
-import com.gruptd.medicPet.dao.ClientDAO;
-import com.gruptd.medicPet.dao.MascotaDAO;
-import com.gruptd.medicPet.dao.RolDAO;
-import com.gruptd.medicPet.dao.UsuariDAO;
-import com.gruptd.medicPet.dao.VisitaDAO;
-import com.gruptd.medicPet.models.Client;
-import com.gruptd.medicPet.models.Mascota;
 import com.gruptd.medicPet.models.Rol;
 import com.gruptd.medicPet.models.Usuari;
-import com.gruptd.medicPet.models.Visita;
+import com.gruptd.medicPet.services.RolServices;
 import com.gruptd.medicPet.services.UsuariServices;
-import java.util.Optional;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,12 +31,12 @@ peticions HTTP
 @Controller
 @Slf4j  // Anotació que permet utilitzar l'API de Login
 public class ControladorInici {
-    
+
     @Autowired
     private UsuariServices usuariService;
-    
+
     @Autowired
-    private RolDAO RolDAO;
+    private RolServices rolService;
 
     @GetMapping("/login")
     public String inici() {
@@ -51,20 +48,40 @@ public class ControladorInici {
     public String arrel() {
         return "redirect:/medicpet/tractaments";
     }
-    
+
     @GetMapping("/registre")
     public String registre(Usuari usuari) {
         log.info("Executant el controlador de registre");
         return "registre";
     }
-    
+
     @PostMapping("/nou-usuari")
-    public String guardar(Usuari usuari){
+    public String guardar(Usuari usuari) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String testPasswordEncoded = passwordEncoder.encode(usuari.getContrasenya());
         usuari.setContrasenya(testPasswordEncoded);
+        Rol rol = rolService.getOne(2L);
+        usuari.setRol_id(rol);
         usuariService.save(usuari);
         return "redirect:/login";
+    }
+
+    @GetMapping("/error/error403")
+    public String noAutoritzat() {
+        return "error403";
+    }
+
+    @GetMapping("/error/tornar")
+    public String tornarInici(Authentication auth) {
+        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        for (GrantedAuthority authority : authorities) {
+            System.out.println(authority.getAuthority());
+            if (authority.getAuthority().equals("ADMIN")) {
+                return "redirect:/registre";
+            }
+        }
+        return "redirect:/medicpet/tractaments";
+
     }
 
 }

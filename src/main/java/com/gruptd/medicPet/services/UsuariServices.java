@@ -44,9 +44,9 @@ public class UsuariServices implements ServicesInterface<Usuari> {
 
     @Transactional(readOnly = true)
     @Override
-    public Usuari getOne(Usuari client) {
+    public Usuari getOne(Long id) {
         try {
-            return usuariDao.findById(client.getId()).orElse(null);
+            return usuariDao.findById(id).orElse(null);
         } catch (Exception e) {
             return null;
         }
@@ -55,7 +55,7 @@ public class UsuariServices implements ServicesInterface<Usuari> {
     @Transactional
     @Override
     public void update(Usuari u) {
-        Usuari usuariBD = getOne(u);
+        Usuari usuariBD = getOne(u.getId());
         if (usuariBD != null) {
             usuariBD.setNom(u.getNom());
 
