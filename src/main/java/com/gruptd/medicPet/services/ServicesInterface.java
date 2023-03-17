@@ -12,7 +12,7 @@ public interface ServicesInterface<T> {
     
     public void delete(T item);
     
-    public T getOne(T item);
+    public T getOne(Long id);
     
     public void update(T item);
     

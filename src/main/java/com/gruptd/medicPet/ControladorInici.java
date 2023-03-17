@@ -2,18 +2,10 @@ package com.gruptd.medicPet;
 
 //spring-boot.run.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=n,adsress=${jpda.address} jpda.listen=true
 
-import com.gruptd.medicPet.dao.ClientDAO;
-import com.gruptd.medicPet.dao.MascotaDAO;
-import com.gruptd.medicPet.dao.RolDAO;
-import com.gruptd.medicPet.dao.UsuariDAO;
-import com.gruptd.medicPet.dao.VisitaDAO;
-import com.gruptd.medicPet.models.Client;
-import com.gruptd.medicPet.models.Mascota;
 import com.gruptd.medicPet.models.Rol;
 import com.gruptd.medicPet.models.Usuari;
-import com.gruptd.medicPet.models.Visita;
+import com.gruptd.medicPet.services.RolServices;
 import com.gruptd.medicPet.services.UsuariServices;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,7 +31,7 @@ public class ControladorInici {
     private UsuariServices usuariService;
     
     @Autowired
-    private RolDAO RolDAO;
+    private RolServices rolService;
 
     @GetMapping("/login")
     public String inici() {
@@ -63,6 +55,8 @@ public class ControladorInici {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String testPasswordEncoded = passwordEncoder.encode(usuari.getContrasenya());
         usuari.setContrasenya(testPasswordEncoded);
+        Rol rol = rolService.getOne(2L);
+        usuari.setRol_id(rol);
         usuariService.save(usuari);
         return "redirect:/login";
     }

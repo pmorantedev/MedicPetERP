@@ -43,14 +43,14 @@ public class MascotaServices implements ServicesInterface<Mascota> {
 
     @Transactional(readOnly = true)
     @Override
-    public Mascota getOne(Mascota mascota) {
-        return mascotaDao.findById(mascota.getId_mascota()).orElse(null);
+    public Mascota getOne(Long id) {
+        return mascotaDao.findById(id).orElse(null);
     }
 
     @Transactional
     @Override
     public void update(Mascota m) {
-        Mascota mascotaDB = getOne(m);
+        Mascota mascotaDB = getOne(m.getId_mascota());
         if (mascotaDB != null) {
             mascotaDB.setNom(m.getNom());
 
