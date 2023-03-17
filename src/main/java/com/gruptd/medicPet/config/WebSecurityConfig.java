@@ -50,6 +50,7 @@ public class WebSecurityConfig {
                 .logout((logout) -> logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/login?logout"))
+                .exceptionHandling(x -> x.accessDeniedPage("/error404"))
                 .csrf(); // Protecció contra atacs CSRF
 
         // protecció per evitar que els atacants robin la sessió d'un usuari canviant l'ID de la sessió
