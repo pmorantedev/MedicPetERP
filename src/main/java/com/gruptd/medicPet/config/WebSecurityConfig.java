@@ -33,7 +33,8 @@ public class WebSecurityConfig {
 
         http
                 .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/medicpet/**").hasRole("USER")
+                    .requestMatchers("/medicpet/**").hasAnyRole("ADMINSTRATIU", "VETERINARI")
+                    .requestMatchers("/registre").hasRole("ADMIN")
                     .requestMatchers("/**").permitAll()
                 )
                 .formLogin((form) -> form
@@ -50,6 +51,8 @@ public class WebSecurityConfig {
                 .logout((logout) -> logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/login?logout"))
+                .exceptionHandling( (ex) -> ex
+                .accessDeniedPage("/error/error403"))
                 .csrf(); // Protecció contra atacs CSRF
 
         // protecció per evitar que els atacants robin la sessió d'un usuari canviant l'ID de la sessió
