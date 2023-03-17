@@ -85,7 +85,7 @@
                         <tr th:each="tractament: ${tractaments}" class="text-center">
                             <td th:text="${tractament.getId}"></td>
                             <td th:text="${tractament.getNom}"></td>
-                            <td th:text="${tractament.getPreu}"></td>
+                            <td th:text="${T(java.lang.String).format('%.2f €', tractament.getPreu())}"></td>
                             <td><form method="post" th:action="@{/medicpet/tractaments/eliminar/{id}(id=${tractament.id})}" class="m-0">
                                     <input type="submit" class="btn btn-outline-primary" value="Editar">
                                 </form>
