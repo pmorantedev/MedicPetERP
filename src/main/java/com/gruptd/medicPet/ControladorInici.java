@@ -57,8 +57,6 @@ public class ControladorInici {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String testPasswordEncoded = passwordEncoder.encode(usuari.getContrasenya());
         usuari.setContrasenya(testPasswordEncoded);
-        Rol rol = rolService.getOne(2L);
-        usuari.setRol_id(rol);
         usuariService.save(usuari);
         return "redirect:/login";
     }

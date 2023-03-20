@@ -27,7 +27,7 @@ public class Usuari implements Serializable {
     private String nom;
     private String contrasenya;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "rol_id")
     private Rol rol_id;
 
