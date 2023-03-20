@@ -5,15 +5,12 @@ import com.gruptd.medicPet.models.Rol;
 import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.services.RolServices;
 import com.gruptd.medicPet.services.UsuariServices;
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,8 +57,6 @@ public class ControladorInici {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String testPasswordEncoded = passwordEncoder.encode(usuari.getContrasenya());
         usuari.setContrasenya(testPasswordEncoded);
-        Rol rol = rolService.getOne(2L);
-        usuari.setRol_id(rol);
         usuariService.save(usuari);
         return "redirect:/login";
     }
