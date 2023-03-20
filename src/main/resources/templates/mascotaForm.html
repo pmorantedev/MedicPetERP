@@ -6,6 +6,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Fitxa de la mascota</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        
+        <script languague="javascript">
+            
+            function mostrar() {
+                div = document.getElementById('btns_edicio');
+                div.style.display = '';
+                div = document.getElementById('btn_editar');
+                div.style.display = 'none';
+                document.getElementById('nom').disabled = false;
+                document.getElementById('nom').style="background-color: white;";
+                document.getElementById('dataNaixement').disabled = false;
+                document.getElementById('dataNaixement').style="background-color: white;";
+                document.getElementById('sexeMascota').disabled = false;
+                document.getElementById('sexeMascota').style="background-color: white;";
+                document.getElementById('especie').disabled = false;
+                document.getElementById('especie').style="background-color: white;";
+                document.getElementById('raça').disabled = false;
+                document.getElementById('raça').style="background-color: white;";
+            }  
+            
+        </script>
+        
     </head>
 
     <body class="bg-secondary-subtle">
@@ -52,20 +74,30 @@
         <div class="container">
 
             <!-- Breadcrumb -->
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ol class="breadcrumb fs-4 mt-4">
-                    <li th:if="${mascota.id_mascota != null}" class="breadcrumb-item"><h2>Dades mascota</h2></li>
-                    <li th:if="${mascota.id_mascota == null}" class="breadcrumb-item"><h2>Crear mascota</h2></li>
-                    <!--TO-DO: detectar rol veterinari 
-                    <li th:if="${user.rol.id == 3}" class="breadcrumb-item mt-3 mb-3"><h2>Fitxa mascota</h2></li>-->
-                </ol>
-            </nav>
+            <div class="d-flex">
+                <h2 class="mt-4">
+                    <a th:href="@{/medicpet/clients}" class="text-decoration-none text-dark">Llistat de clients</a>
+                    <span> / </span>                        
+                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="text-decoration-none text-dark ml-2">Fitxa de client</a>
+                    <span> / </span>
+                    <span th:if="${mascota.id_mascota != null}" class="text-muted ml-2">Dades mascota</span>                 
+                    <span th:if="${mascota.id_mascota == null}" class="text-muted ml-2">Crear mascota</span>                 
+                </h2>
+            </div>
+
 
             <!-- Botons -->
-            <button th:if="${mascota.id_mascota != null}" form="mascotaForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
-            <button th:if="${mascota.id_mascota == null}" form="mascotaForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
-            <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}"><button type="button" class="btn btn-outline-danger p-2">Descartar</button></a>
-
+            <div class="mt-4">
+                <div id="btn_editar">
+                    <a id="btn_editar" href="javascript:mostrar();" name="Desar" class="btn btn-outline-primary p-2 me-3">Editar</a>
+                </div>
+                <div id="btns_edicio" style="display:none;">
+                    <button th:if="${mascota.id_mascota != null}" form="mascotaForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
+                    <button th:if="${mascota.id_mascota == null}" form="mascotaForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
+                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="btn btn-outline-danger p-2" >Descartar</a>
+                </div>
+            </div>
+            
             <!-- Formulari -->
             <form id="mascotaForm" method="POST" th:action="@{/medicpet/clients/fitxa/{client_id}/mascotes/desar(client_id=${mascota.client_id.getIdclient})}" th:object="${mascota}" class="form-horizontal mt-5">
                 <!-- necessari per actualitzar canvis en mode EDITAR -->
@@ -74,20 +106,20 @@
                     <div class="form-group row align-items-center">
                         <label class="col-sm-2 control-label"><h5>Nom</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input type="text" class="form-control" name="nom" th:field="*{nom}" required/>
+                            <input id="nom" name="nom" type="text" class="form-control" style="background: none;" th:field="*{nom}" required disabled />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Data de naixement</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input type="date" class="form-control" name="data_naixement" th:field="*{data_naixement}" required/>
+                            <input id="dataNaixement" name="data_naixement" type="date" class="form-control" style="background: none;" th:field="*{data_naixement}" required disabled />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Sexe</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input type="text" class="form-control" name="sexe" th:field="*{sexe}" th:if="${mascota.id_mascota != null}"/>
-                            <select class="form-select" id="sexeMascota" name="sexeMascota" th:field="*{sexe}" required th:if="${mascota.id_mascota == null}">
+                            <!--<input type="text" class="form-control" name="sexe" th:field="*{sexe}" th:if="${mascota.id_mascota != null}"/>-->
+                            <select id="sexeMascota" name="sexe" class="form-select" style="background: none;" th:field="*{sexe}" required disabled >
                                 <option value="">Seleccionar...</option>
                                 <option value="Mascle">Mascle</option>
                                 <option value="Femella">Femella</option>
@@ -98,13 +130,13 @@
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Espècie</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input type="text" class="form-control" name="especie" th:field="*{especie}" required/>
+                            <input id="especie" name="especie" type="text" class="form-control" style="background: none;" th:field="*{especie}" required disabled />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Raça</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input type="text" class="form-control" name="raça" th:field="*{raca}" required/>
+                            <input id="raça" name="raça" type="text" class="form-control" style="background: none;" th:field="*{raca}" required disabled />
                         </div>
                     </div>
             </form>
