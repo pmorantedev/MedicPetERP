@@ -33,6 +33,12 @@
                                     <input type="text" name="Name" th:field="*{nom}" class="form-control mb-2 border-0" placeholder="Nom i cognoms" required autofocus="">
                                     <input type="text" name="userName" th:field="*{username}" class="form-control mb-2 border-0" placeholder="Nom d'usuari">
                                     <input type="password" name="userPassword" th:field="*{contrasenya}" class="form-control border-0" placeholder="Contrassenya" required> 
+                                    <label>Rol</label>
+                                    <select class="form-select" id="rol_usuari" name="rol_id" th:field="*{rol_id}" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option value="2">Administratiu</option>
+                                        <option value="3">Veterinari</option>
+                                    </select>
 
                                     <div class="col-12 checkbox my-3 text-start" style="font-size: 0.85rem;">
                                         <label>
