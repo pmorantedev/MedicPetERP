@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -51,6 +52,8 @@ public class WebSecurityConfig {
                 )
                 .authorizeHttpRequests((requests) -> requests
                     .requestMatchers("/registre").hasAuthority("ADMIN")
+                    .requestMatchers("/medicpet/tractaments/fitxa", "/medicpet/tractaments/eliminar/**", "/medicpet/tractaments/guardar").hasAuthority("ADMINISTRATIU")
+                    .requestMatchers("/medicpet/rrhh/fitxa", "/medicpet/rrhh/eliminar/**", "/medicpet/rrhh/guardar").hasAuthority("ADMINISTRATIU")
                     .requestMatchers("/medicpet/**").hasAnyAuthority("ADMINISTRATIU", "VETERINARI")
                     .requestMatchers("/**").permitAll()
                 )
