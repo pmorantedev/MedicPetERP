@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @Slf4j
-public class UserController {
+public class UsuariController {
 
     @Autowired
     private UsuariServices ususariServices;
@@ -17,7 +17,7 @@ public class UserController {
     @GetMapping("/medicpet/perfil")
     public String rrhhMain() {
         log.info("Executant el controlador d'usuaris RRHH");
-        Iterable<Usuari> factures = ususariServices.findAllUsuaris();
+        Iterable<Usuari> factures = ususariServices.findAll();
         log.info(">>> Usuaris de la BBDD:");
         factures.forEach((t) -> {
             log.info(t.getNom());

@@ -12,43 +12,8 @@
 
     <body style="background-color: bg-secondary-subtle;">
 
-        <header class="p-3 mb-3 border-bottom text-bg-dark">
-            <div class="container">
-                <div class="d-flex flex-wrap col-12 col-lg-auto align-items-center justify-content-center justify-content-lg-start">
-                    <a href="#" class="fs-4 d-flex align-items-center text-white text-decoration-none me-4">
-                        <img class="d-inline-block align-middle me-2" src="/logo.png" alt="MedicPet" width="40"  height="40" />
-                        Medic Pet
-                    </a>
-
-                    <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" class="nav-link px-2 text-white">Facturació</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" class="nav-link px-2 text-white">Clients</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" class="nav-link px-2 text-white">Tractaments</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" class="nav-link px-2 text-warning">RRHH</a></li>
-                    </ul>
-
-                    <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
-                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="text-white align-middle"></span>
-                            <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Chris Wood">
-                        </a>
-                        <ul class="dropdown-menu text-small">
-                            <li><a class="dropdown-item" href="#">Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form id="logout-form" th:action="@{/logout}" method="post" th:style="'display: none;'">
-                                    <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                                </form>
-                                <a class="dropdown-item text-danger" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
-                                    Sortir
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </header>
-
+        <!-- Menú de navegació -->
+        <div th:include="fragments/barraNavegacio :: header"></div>
 
         <!-- Page content-->
         <div class="container">
@@ -56,7 +21,7 @@
             <!-- Breadcrumb -->
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb fs-4">
-                    <li class="breadcrumb-item mt-3 mb-3"><h2>Afegir treballador</h2></li>
+                    <li class="breadcrumb-item mt-3 mb-3"><h2>Crear treballador</h2></li>
                 </ol>
             </nav>
 
@@ -99,7 +64,7 @@
                     <!-- Botons -->
                     <div class="row justify-content-center mb-5">
                         <div class="col-md-6 text-center">
-                            <button type="submit" name="guardar" class="btn btn-outline-success mt-5 p-2">Afegir treballador</button>
+                            <button type="submit" name="guardar" class="btn btn-outline-success mt-5 p-2">Desar</button>
                             <a th:href="@{/medicpet/rrhh}"><button type="button" class="btn btn-outline-danger mt-5 mx-3 p-2">Descartar</button></a>
                         </div>
                     </div>
