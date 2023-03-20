@@ -73,6 +73,10 @@ public class ControladorInici {
 
     @GetMapping("/error/tornar")
     public String tornarInici(Authentication auth) {
+        if (auth == null) {
+            return "redirect:/login";
+        }
+        
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
         for (GrantedAuthority authority : authorities) {
             System.out.println(authority.getAuthority());
@@ -81,7 +85,6 @@ public class ControladorInici {
             }
         }
         return "redirect:/medicpet/tractaments";
-
     }
 
 }
