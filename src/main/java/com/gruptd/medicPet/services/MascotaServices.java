@@ -53,6 +53,11 @@ public class MascotaServices implements ServicesInterface<Mascota> {
         Mascota mascotaDB = getOne(m.getId_mascota());
         if (mascotaDB != null) {
             mascotaDB.setNom(m.getNom());
+            mascotaDB.setEspecie(m.getEspecie());
+            mascotaDB.setRaca(m.getRaca());
+            mascotaDB.setData_naixement(m.getData_naixement());
+            mascotaDB.setSexe(m.getSexe());
+            mascotaDB.setClient_id(m.getClient_id());
 
             save(mascotaDB);
         } else {
