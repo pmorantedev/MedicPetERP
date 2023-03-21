@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @Slf4j
-public class CustomersController {
+public class ClientController {
 
     @Autowired
     private ClientServices clientService;

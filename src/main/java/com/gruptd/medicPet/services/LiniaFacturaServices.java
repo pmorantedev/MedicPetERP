@@ -38,8 +38,7 @@ public class LiniaFacturaServices implements ServicesInterface<LiniaFactura> {
     }
 
     @Transactional(readOnly = true)
-    @Override
-    public LiniaFactura getOne(LiniaFactura liniaFactura) {
+    public LiniaFactura getOneFactura(LiniaFactura liniaFactura) {
 
         return liniaFacturaDao.findByNumeroDeLineaAndFactura(liniaFactura.getNumeroDeLinea(), liniaFactura.getFactura());
     }
@@ -47,7 +46,7 @@ public class LiniaFacturaServices implements ServicesInterface<LiniaFactura> {
     @Transactional
     @Override
     public void update(LiniaFactura lf) {
-        LiniaFactura liniaFacturaBD = getOne(lf);
+        LiniaFactura liniaFacturaBD = getOneFactura(lf);
         if (liniaFacturaBD != null) {
             liniaFacturaBD.setQuantitat(lf.getQuantitat());
             liniaFacturaBD.setTotal(lf.getTotal());
@@ -57,6 +56,11 @@ public class LiniaFacturaServices implements ServicesInterface<LiniaFactura> {
         } else {
             System.out.println("La línia de factura no existeix.");
         }
+    }
+
+    @Override
+    public LiniaFactura getOne(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

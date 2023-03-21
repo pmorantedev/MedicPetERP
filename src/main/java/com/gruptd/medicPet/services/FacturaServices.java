@@ -39,14 +39,14 @@ public class FacturaServices implements ServicesInterface<Factura> {
 
     @Transactional(readOnly = true)
     @Override
-    public Factura getOne(Factura factura) {
-        return facturaDao.findById(factura.getId()).orElse(null);
+    public Factura getOne(Long id) {
+        return facturaDao.findById(id).orElse(null);
     }
 
     @Transactional
     @Override
     public void update(Factura f) {
-        Factura facturaBD = getOne(f);
+        Factura facturaBD = getOne(f.getId());
         if (facturaBD != null) {
             facturaBD.setDataPagament(f.getDataPagament());
             facturaBD.setMetodePagament(f.getMetodePagament());
