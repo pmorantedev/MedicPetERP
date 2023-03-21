@@ -51,7 +51,13 @@ public class VisitaServices implements ServicesInterface<Visita> {
     public void update(Visita v) {
         Visita visitaDB = getOne(v.getId());
         if (visitaDB != null) {
+            visitaDB.setDiagnostic(v.getDiagnostic());
+            visitaDB.setMedicacio(v.getMedicacio());
             visitaDB.setData_visita(v.getData_visita());
+
+            visitaDB.setTreballador_id(v.getTreballador_id());
+            visitaDB.setMascota_id(v.getMascota_id());
+
             save(visitaDB);
         } else {
             System.out.println("La visita no existeix.");
