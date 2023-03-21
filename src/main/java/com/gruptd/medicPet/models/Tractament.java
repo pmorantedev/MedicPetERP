@@ -1,6 +1,8 @@
 package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -18,6 +20,9 @@ public class Tractament implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotEmpty
     private String nom;
+    @NotEmpty
+    @Min(value = (long) 0.01)
     private Float preu;
 }

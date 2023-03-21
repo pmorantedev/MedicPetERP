@@ -7,6 +7,8 @@ package com.gruptd.medicPet.models;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import lombok.Data;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 /**
  *
@@ -23,10 +25,16 @@ public class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idclient;
 
+    @NotEmpty
     private String nomComplert;
+    @NotEmpty
     private String dni;
+    @NotEmpty
+    @Size(max = 14)
     private String telefon;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String adreca;
 
 }

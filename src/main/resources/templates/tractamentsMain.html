@@ -23,13 +23,13 @@
                 <!-- Breadcrumb -->
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb fs-4  mt-4">
-                        <li class="breadcrumb-item"><h2>Llistat de tractaments</h2></li>
+                        <li class="breadcrumb-item"><h2>[[#{tractaments.llistatTitol}]]</h2></li>
                     </ol>
                 </nav>
 
                 <!-- Botons i cercador -->
                 <div class="d-flex justify-content-between">
-                    <a th:href="@{/medicpet/tractaments/fitxa}" class="btn btn-outline-success">Crear tractament</a>
+                    <a th:href="@{/medicpet/tractaments/fitxa}" class="btn btn-outline-success">[[#{tractaments.botoCrear}]]</a>
                     <div class="float-right search btn-group">
                         <input class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off">
                     </div>

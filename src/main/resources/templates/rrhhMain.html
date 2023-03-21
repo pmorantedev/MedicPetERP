@@ -23,7 +23,7 @@
                 <!-- Breadcrumb -->
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb fs-4  mt-4">
-                        <li class="breadcrumb-item"><h2>Llistat de treballadors</h2></li>
+                        <li class="breadcrumb-item"><h2>[[#{rrhh.llistatTitol}]]Llistat de treballadors</h2></li>
                     </ol>
                 </nav>
 
@@ -70,7 +70,8 @@
             <!-- Si no hi ha tractaments creats, es mostrarà aquest missatge -->
             <div th:if="${treballadors == null or treballadors.empty}" class="justify-content-center mt-5">
                 <div class="text-center">
-                    <h2 class="mx-auto">La taula de treballadors està buida. <br> Per afegir-ne, feu clic al botó 'Crear'.</h2>
+                    <h2 class="mx-auto">[[#{rrhh.taulaBuida1}]]</h2>
+                    <h2 class="mx-auto">[[#{rrhh.taulaBuida2}]]</h2>
                     <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success mt-3">Crear</a>
                 </div>
             </div>

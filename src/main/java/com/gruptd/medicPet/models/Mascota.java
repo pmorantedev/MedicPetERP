@@ -5,6 +5,7 @@
 package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -24,13 +25,18 @@ public class Mascota implements Serializable {
     @Column(name = "id")
     private Long id_mascota;
 
+    @NotEmpty
     private String nom;
+    @NotEmpty
     private String especie;
     private String raca;
+    @NotEmpty
     private String data_naixement;
+    @NotEmpty
     private String sexe;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @NotEmpty
     private Client client_id;
 }
