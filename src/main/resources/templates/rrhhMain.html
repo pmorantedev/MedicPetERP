@@ -12,43 +12,8 @@
 
     <body style="background-color: bg-secondary-subtle;">
 
-        <header class="p-3 mb-3 border-bottom text-bg-dark">
-            <div class="container">
-                <div class="d-flex flex-wrap col-12 col-lg-auto align-items-center justify-content-center justify-content-lg-start">
-                    <a href="#" class="fs-4 d-flex align-items-center text-white text-decoration-none me-4">
-                        <img class="d-inline-block align-middle me-2" src="/logo.png" alt="MedicPet" width="40"  height="40" />
-                        Medic Pet
-                    </a>
-
-                    <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" class="nav-link px-2 text-white">Facturació</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" class="nav-link px-2 text-white">Clients</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" class="nav-link px-2 text-white">Tractaments</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" class="nav-link px-2 text-warning">RRHH</a></li>
-                    </ul>
-
-                    <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
-                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="text-white align-middle"></span>
-                            <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Chris Wood">
-                        </a>
-                        <ul class="dropdown-menu text-small">
-                            <li><a class="dropdown-item" href="#">Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form id="logout-form" th:action="@{/logout}" method="post" th:style="'display: none;'">
-                                    <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                                </form>
-                                <a class="dropdown-item text-danger" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
-                                    Sortir
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </header>
-
+        <!-- Menú de navegació -->
+        <div th:include="fragments/barraNavegacio :: header"></div>
 
         <!-- Contingut de la pàgina -->
         <div class="container">
@@ -62,8 +27,13 @@
                     </ol>
                 </nav>
 
-                <!-- Botons -->
-                <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success">Crear</a>
+                <!-- Botons i cercador -->
+                <div class="d-flex justify-content-between">
+                    <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success">Crear treballador</a>
+                    <div class="float-right search btn-group">
+                        <input class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off">
+                    </div>
+                </div>
 
                 <!-- Taula -->
                 <table class="table align-middle table-striped table-responsive-xl mt-2">
@@ -74,7 +44,7 @@
                             <th scope="col">Telèfon</th>
                             <th scope="col" class="col-3">Email</th>
                             <th scope="col" class="col-3">Adreça</th>
-                            <th scope="col-3" colspan="3">Actions</th>          
+                            <th scope="col-3" colspan="3">Accions</th>          
                         </tr>  
                     </thead>
                     <tbody>                 
@@ -84,9 +54,12 @@
                             <td th:text="${treballador.getTelefon}"></td>
                             <td th:text="${treballador.getEmail}"></td>
                             <td th:text="${treballador.getAdreca}"></td>
-                            <td><a class="btn-link" href="#" role="button">Edit</a></td>
                             <td><form method="post" th:action="@{/medicpet/rrhh/eliminar/{id}(id=${treballador.id})}" class="m-0">
-                                    <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                    <input type="submit" class="btn btn-outline-primary" value="Editar">
+                                </form>
+                            </td>
+                            <td><form method="post" th:action="@{/medicpet/rrhh/eliminar/{id}(id=${treballador.id})}" class="m-0">
+                                    <input type="submit" class="btn btn-outline-danger" value="Eliminar">
                                 </form>
                             </td>
                         </tr>

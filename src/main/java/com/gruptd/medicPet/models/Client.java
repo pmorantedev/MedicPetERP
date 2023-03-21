@@ -6,11 +6,12 @@ package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 
 /**
  *
- * @author izan
+ * @author izan, txell
  */
 @Data
 @Entity
@@ -23,10 +24,13 @@ public class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idclient;
 
+    @Column()
     private String nomComplert;
     private String dni;
     private String telefon;
     private String email;
     private String adreca;
-
+    
+    @OneToMany(mappedBy = "client_id", cascade = CascadeType.ALL)
+    private List<Mascota> mascotes;
 }

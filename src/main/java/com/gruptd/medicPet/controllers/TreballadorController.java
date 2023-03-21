@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Slf4j
-public class WorkersController {
+public class TreballadorController {
     @Autowired
     private TreballadorServices treballadorService;
     
@@ -30,7 +30,7 @@ public class WorkersController {
     }
     
     @PostMapping("/medicpet/rrhh/fitxa/{id}")
-    public String desarTreballador(Treballador treballador) {
+    public String modificarTreballador(Treballador treballador) {
         treballadorService.save(treballador);
         
         return "redirect:/medicpet/rrhh";
@@ -49,7 +49,7 @@ public class WorkersController {
     }
     
     @PostMapping("/medicpet/rrhh/guardar")
-    public String guardarTreballador(Treballador treballador){
+    public String guardar(Treballador treballador){
         treballadorService.save(treballador);
         return "redirect:/medicpet/rrhh";
     }

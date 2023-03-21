@@ -1,15 +1,153 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Fitxa de la mascota</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        
+        <script languague="javascript">
+            
+            function mostrar() {
+                div = document.getElementById('btns_edicio');
+                div.style.display = '';
+                div = document.getElementById('btn_editar');
+                div.style.display = 'none';
+                document.getElementById('nom').disabled = false;
+                document.getElementById('nom').style="background-color: white;";
+                document.getElementById('dataNaixement').disabled = false;
+                document.getElementById('dataNaixement').style="background-color: white;";
+                document.getElementById('sexeMascota').disabled = false;
+                document.getElementById('sexeMascota').style="background-color: white;";
+                document.getElementById('especie').disabled = false;
+                document.getElementById('especie').style="background-color: white;";
+                document.getElementById('raça').disabled = false;
+                document.getElementById('raça').style="background-color: white;";
+            }  
+            
+        </script>
+        
     </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+
+    <body class="bg-secondary-subtle">
+
+        <header class="p-3 mb-3 border-bottom text-bg-dark">
+            <div class="container">
+                <div class="d-flex flex-wrap col-12 col-lg-auto align-items-center justify-content-center justify-content-lg-start">
+                    <a href="#" class="fs-4 d-flex align-items-center text-white text-decoration-none me-4">
+                        <img class="d-inline-block align-middle me-2" src="/logo.png" alt="MedicPet" width="40"  height="40" />
+                        Medic Pet
+                    </a>
+
+                    <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" class="nav-link px-2 text-white">Facturació</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" class="nav-link px-2 text-warning">Clients</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" class="nav-link px-2 text-white">Tractaments</a></li>
+                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" class="nav-link px-2 text-white">RRHH</a></li>
+                    </ul>
+
+                    <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="text-white align-middle"></span>
+                            <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Chris Wood">
+                        </a>
+                        <ul class="dropdown-menu text-small">
+                            <li><a class="dropdown-item" href="#">Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form id="logout-form" th:action="@{/logout}" method="post" th:style="'display: none;'">
+                                    <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                </form>
+                                <a class="dropdown-item text-danger" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
+                                    Sortir
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- Continguts -->
+        <div class="container">
+
+            <!-- Breadcrumb -->
+            <div class="d-flex">
+                <h2 class="mt-4">
+                    <a th:href="@{/medicpet/clients}" class="text-decoration-none text-dark">Llistat de clients</a>
+                    <span> / </span>                        
+                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="text-decoration-none text-dark ml-2">Fitxa de client</a>
+                    <span> / </span>
+                    <span th:if="${mascota.id_mascota != null}" class="text-muted ml-2">Dades mascota</span>                 
+                    <span th:if="${mascota.id_mascota == null}" class="text-muted ml-2">Crear mascota</span>                 
+                </h2>
+            </div>
+
+
+            <!-- Botons -->
+            <div class="mt-4">
+                <div id="btn_editar">
+                    <a id="btn_editar" href="javascript:mostrar();" name="Desar" class="btn btn-outline-primary p-2 me-3">Editar</a>
+                </div>
+                <div id="btns_edicio" style="display:none;">
+                    <button th:if="${mascota.id_mascota != null}" form="mascotaForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
+                    <button th:if="${mascota.id_mascota == null}" form="mascotaForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
+                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="btn btn-outline-danger p-2" >Descartar</a>
+                </div>
+            </div>
+            
+            <!-- Formulari -->
+            <form id="mascotaForm" method="POST" th:action="@{/medicpet/clients/fitxa/{client_id}/mascotes/desar(client_id=${mascota.client_id.getIdclient})}" th:object="${mascota}" class="form-horizontal mt-5">
+                <!-- necessari per actualitzar canvis en mode EDITAR -->
+                <input type="hidden" name="id_mascota" th:field="*{id_mascota}">
+                
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Nom</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="nom" name="nom" type="text" class="form-control" style="background: none;" th:field="*{nom}" required disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Data de naixement</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="dataNaixement" name="data_naixement" type="date" class="form-control" style="background: none;" th:field="*{data_naixement}" required disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Sexe</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <!--<input type="text" class="form-control" name="sexe" th:field="*{sexe}" th:if="${mascota.id_mascota != null}"/>-->
+                            <select id="sexeMascota" name="sexe" class="form-select" style="background: none;" th:field="*{sexe}" required disabled >
+                                <option value="">Seleccionar...</option>
+                                <option value="Mascle">Mascle</option>
+                                <option value="Femella">Femella</option>
+                                <option value="Desconegut">Desconegut</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Espècie</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="especie" name="especie" type="text" class="form-control" style="background: none;" th:field="*{especie}" required disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Raça</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="raça" name="raça" type="text" class="form-control" style="background: none;" th:field="*{raca}" required disabled />
+                        </div>
+                    </div>
+            </form>
+
+            <!-- Script de validació pels camps del formulari -->
+
+        </div>
+    </div>
+
+    <!-- Javascript per mostrar DROPDOWNS, POPOVERS o TOOLTIPS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+</body>
 </html>

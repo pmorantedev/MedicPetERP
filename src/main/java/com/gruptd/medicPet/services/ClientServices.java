@@ -1,4 +1,3 @@
-
 package com.gruptd.medicPet.services;
 
 import com.gruptd.medicPet.dao.ClientDAO;
@@ -8,43 +7,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-///**
-// *
-// * @author izan
-// */
+/**
+ * Aquesta clase crea totes les funcions del CRUD amb la BBDD sobre la clase
+ * Client. S'ha d'importar i es pot utilitzar per fer peticions i modificacions
+ * a la BBDD a la taula de Client
+ *
+ *
+ * @author izan
+ */
 @Service
-public class ClientServices {
+public class ClientServices implements ServicesInterface<Client> {
 
     @Autowired
     private ClientDAO clientDao;
 
     @Transactional(readOnly = true)
-    public List<Client> findAllClients() {
-        return (List<Client>) clientDao.findAll();
+    @Override
+    public Iterable<Client> findAll() {
+        return clientDao.findAll();
     }
 
     @Transactional
-    public void saveClients(Client c) {
+    @Override
+    public void save(Client c) {
         clientDao.save(c);
     }
 
     @Transactional
-    public void deleteClients(Client c) {
+    @Override
+    public void delete(Client c) {
         clientDao.delete(c);
     }
 
     @Transactional(readOnly = true)
-    public Client getClients(Client client) {
-        return clientDao.findById(client.getIdclient()).orElse(null);
+    @Override
+    public Client getOne(Long id) {
+        return clientDao.findById(id).orElse(null);
     }
 
     @Transactional
-    public void updateClient(Client c) {
-        Client clientBD = getClients(c);
+    @Override
+    public void update(Client c) {
+        Client clientBD = getOne(c.getIdclient());
         if (clientBD != null) {
             clientBD.setEmail(c.getEmail());
 
-            saveClients(clientBD);
+            save(clientBD);
         } else {
             System.out.println("El client no existeix.");
         }
