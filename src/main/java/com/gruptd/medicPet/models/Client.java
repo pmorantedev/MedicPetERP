@@ -6,13 +6,14 @@ package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 /**
  *
- * @author izan
+ * @author izan, txell
  */
 @Data
 @Entity
@@ -36,5 +37,7 @@ public class Client implements Serializable {
     private String email;
     @NotEmpty
     private String adreca;
-
+    
+    @OneToMany(mappedBy = "client_id", cascade = CascadeType.ALL)
+    private List<Mascota> mascotes;
 }

@@ -34,6 +34,13 @@ public class Mascota implements Serializable {
     private String data_naixement;
     @NotEmpty
     private String sexe;
+//    public enum SexeMascota {
+//        MASCLE,
+//        FEMELLA,
+//        DESCONEGUT
+//    }
+//
+//    private SexeMascota sexeMascota;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
