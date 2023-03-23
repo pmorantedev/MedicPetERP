@@ -31,7 +31,7 @@ public class Usuari implements Serializable {
     @NotEmpty
     private String contrasenya;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "rol_id")
     @NotEmpty
     private Rol rol_id;
