@@ -18,8 +18,6 @@ public class MascotaController {
     @Autowired
     private MascotaServices mascotaService;
 
-    @Autowired
-    private ClientServices clientService;
 
 //    @GetMapping("/medicpet/clients/fitxa/{client_id}")
 //    public String principalMascotes(Model model) {

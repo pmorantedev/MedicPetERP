@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.gruptd.medicPet.services;
 
 import com.gruptd.medicPet.dao.MascotaDAO;
@@ -50,6 +54,11 @@ public class MascotaServices implements ServicesInterface<Mascota> {
         Mascota mascotaDB = getOne(m.getId_mascota());
         if (mascotaDB != null) {
             mascotaDB.setNom(m.getNom());
+            mascotaDB.setEspecie(m.getEspecie());
+            mascotaDB.setRaca(m.getRaca());
+            mascotaDB.setData_naixement(m.getData_naixement());
+            mascotaDB.setSexe(m.getSexe());
+            mascotaDB.setClient_id(m.getClient_id());
 
             save(mascotaDB);
         } else {
