@@ -33,7 +33,7 @@
     <body>
 
         <!-- Menú de navegació -->
-        <div th:include="fragments/barraNavegacio :: header"></div>
+        <div th:include="fragments/barraNavegacio :: header(user=${userName})"/>
 
         <!-- Continguts -->
         <div class="container">
