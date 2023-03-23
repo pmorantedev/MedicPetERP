@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class RolServices implements ServicesInterface<Rol> {
-    
+
     @Autowired
     private RolDAO rolDao;
 
@@ -43,7 +43,13 @@ public class RolServices implements ServicesInterface<Rol> {
     @Transactional(readOnly = true)
     @Override
     public void update(Rol r) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Rol rolBD = getOne(r.getId());
+        if (rolBD != null) {
+            rolBD.setNom(r.getNom());
+            save(rolBD);
+        } else {
+            System.out.println("El tractament no existeix.");
+        }
     }
-    
+
 }

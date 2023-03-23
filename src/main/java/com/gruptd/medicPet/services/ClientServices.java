@@ -50,7 +50,11 @@ public class ClientServices implements ServicesInterface<Client> {
     public void update(Client c) {
         Client clientBD = getOne(c.getIdclient());
         if (clientBD != null) {
+            clientBD.setNomComplert(c.getNomComplert());
+            clientBD.setDni(c.getDni());
+            clientBD.setTelefon(c.getTelefon());
             clientBD.setEmail(c.getEmail());
+            clientBD.setAdreca(c.getAdreca());
 
             save(clientBD);
         } else {

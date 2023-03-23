@@ -57,7 +57,11 @@ public class UsuariServices implements ServicesInterface<Usuari> {
     public void update(Usuari u) {
         Usuari usuariBD = getOne(u.getId());
         if (usuariBD != null) {
+
+            usuariBD.setUsername(u.getUsername());
             usuariBD.setNom(u.getNom());
+            usuariBD.setContrasenya(u.getContrasenya());
+            usuariBD.setRol_id(u.getRol_id());
 
             save(usuariBD);
         } else {
