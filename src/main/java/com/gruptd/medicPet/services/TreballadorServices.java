@@ -2,6 +2,7 @@ package com.gruptd.medicPet.services;
 
 import com.gruptd.medicPet.dao.TreballadorDAO;
 import com.gruptd.medicPet.models.Treballador;
+import com.gruptd.medicPet.models.Usuari;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,5 +60,12 @@ public class TreballadorServices implements ServicesInterface<Treballador> {
         } else {
             System.out.println("El treballador no existeix.");
         }
+    }
+    
+    @Transactional
+    public Treballador getByUserId(Usuari user) {
+        Treballador treballadorBD = treballadorDao.findByUsuari(user).orElse(null);
+        
+        return treballadorBD;
     }
 }
