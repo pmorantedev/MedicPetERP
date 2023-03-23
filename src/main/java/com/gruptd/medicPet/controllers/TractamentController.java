@@ -30,11 +30,12 @@ public class TractamentController {
         return "tractamentsMain";
     }
     
-    @PostMapping("/medicpet/tractaments/fitxa/{id}")
-    public String desarTractament(Tractament tractament) {
-        tractamentService.save(tractament);
+    @GetMapping("/medicpet/tractaments/fitxa/{id}")
+    public String desarTractament(Tractament tractament, Model model) {
+        tractament = tractamentService.getOne(tractament.getId());
+        model.addAttribute("tractament", tractament);
         
-        return "redirect:/medicpet/tractaments";
+        return "tractamentsForm";
     }
     
     @GetMapping("/medicpet/tractaments/fitxa")

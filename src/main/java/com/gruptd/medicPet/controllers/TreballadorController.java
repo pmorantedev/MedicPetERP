@@ -29,11 +29,12 @@ public class TreballadorController {
         return "rrhhMain";
     }
     
-    @PostMapping("/medicpet/rrhh/fitxa/{id}")
-    public String modificarTreballador(Treballador treballador) {
-        treballadorService.save(treballador);
+    @GetMapping("/medicpet/rrhh/fitxa/{id}")
+    public String modificarTreballador(Treballador treballador, Model model) {
+        treballador = treballadorService.getOne(treballador.getId());
+        model.addAttribute("treballador", treballador);
         
-        return "redirect:/medicpet/rrhh";
+        return "rrhhForm";
     }
     
     @GetMapping("/medicpet/rrhh/fitxa")
