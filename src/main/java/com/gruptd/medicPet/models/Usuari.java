@@ -28,12 +28,12 @@ public class Usuari implements Serializable {
     private String username;
     @NotEmpty
     private String nom;
-    @NotEmpty
+//    @NotEmpty
     private String contrasenya;
 
     @ManyToOne
     @JoinColumn(name = "rol_id")
-    @NotEmpty
+//    @NotEmpty
     private Rol rol_id;
 
 }

@@ -14,16 +14,12 @@
                 div.style.display = '';
                 div = document.getElementById('btn_editar');
                 div.style.display = 'none';
-                document.getElementById('nomComplet').disabled = false;
-                document.getElementById('nomComplet').style = "background-color: white;";
-                document.getElementById('telefon').disabled = false;
-                document.getElementById('telefon').style = "background-color: white;";
-                document.getElementById('email').disabled = false;
-                document.getElementById('email').style = "background-color: white;";
-                document.getElementById('adreca').disabled = false;
-                document.getElementById('adreca').style = "background-color: white;";
-                document.getElementById('carrecAux').disabled = false;
-                document.getElementById('carrecAux').style = "background-color: white;";
+                document.getElementById('username').disabled = false;
+                document.getElementById('username').style = "background-color: white;";
+                document.getElementById('nom').disabled = false;
+                document.getElementById('nom').style = "background-color: white;";
+                document.getElementById('rol_id').disabled = false;
+                document.getElementById('rol_id').style = "background-color: white;";
             }
 
         </script>
@@ -33,7 +29,7 @@
     <body>
 
         <!-- Menú de navegació -->
-        <div th:include="fragments/barraNavegacio :: header"/>
+        <div th:include="fragments/barraNavegacio :: header(user=${userName})"/>
 
         <!-- Continguts -->
         <div class="container">
@@ -51,45 +47,33 @@
                 </div>
                 <div id="btns_edicio" style="display:none;">
                     <button th:if="${treballador.id != null}" form="treballadorForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
-                    <a th:href="@{/medicpet/rrhh}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
+                    <a th:href="@{/medicpet/perfil}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
                 </div>
             </div>
 
             <!-- Formulari: Detalls factura -->
             <div <div class="p-5 mt-4 bg-light rounded-3">
 
-                <form id="treballadorForm" method="POST" th:action="@{/medicpet/rrhh/guardar}" th:object="${treballador}" class="form-horizontal">
+                <form id="treballadorForm" method="POST" th:action="@{/medicpet/perfil/guardar}" th:object="${treballador}" class="form-horizontal">
 
                     <input type="hidden" name="id" th:field="*{id}">
 
                     <div class="form-group row align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Nom i cognoms</h5></label>
+                        <label class="col-sm-2 control-label"><h5>Username</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="nomComplet" name="name" type="text" class="form-control" style="background: none;" th:field="*{nomComplet}" required disabled />
+                            <input id="username" name="username" type="text" class="form-control" style="background: none;" th:field="*{username}" required disabled />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Telèfon</h5></label>
+                        <label class="col-sm-2 control-label"><h5>Nom</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="telefon" name="phone" type="text" class="form-control" style="background: none;" th:field="*{telefon}" required disabled />
+                            <input id="nom" name="nom" type="text" class="form-control" style="background: none;" th:field="*{nom}" required disabled />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Correu electrònic</h5></label>
+                        <label class="col-sm-2 control-label"><h5>Rol</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="email" name="email" type="email" class="form-control" style="background: none;" th:field="*{email}" required disabled />
-                        </div>
-                    </div>
-                    <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Adreça</h5></label>
-                        <div class="col-sm-10 align-items-center">
-                            <input id="adreca" name="address" type="text" class="form-control" style="background: none;" th:field="*{adreca}" required disabled />
-                        </div>
-                    </div>
-                    <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Especialitat</h5></label>
-                        <div class="col-sm-10 align-items-center">
-                            <input id="carrecAux" name="dni" type="text" class="form-control" style="background: none;" th:field="*{carrecAux}" required disabled />
+                            <input id="rol_id" name="rol_id" type="text" class="form-control" style="background: none;" th:field="*{rol_id}" required disabled />
                         </div>
                     </div>
                     <!-- <div class="form-group row mt-3 align-items-center">
@@ -108,6 +92,11 @@
 
                 </form> 
 
+            </div>
+            <div class="d-flex">
+                <h2 class="mt-4">                    
+                    <span th:if="${treballador.id != null}" class="text-muted ml-2">Canviar contrasenya</span>                
+                </h2>
             </div>
         </div>
     </div>
