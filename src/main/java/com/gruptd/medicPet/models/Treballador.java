@@ -30,7 +30,7 @@ public class Treballador implements Serializable {
     private String carrecAux;
     @ManyToOne
     @JoinColumn(name = "carrec_id")
-    @NotEmpty
+    //@NotEmpty
     private Carrec carrec;
     @OneToOne
     @JoinColumn(name = "usuari_id")

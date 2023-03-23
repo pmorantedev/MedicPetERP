@@ -54,7 +54,7 @@
                             <td th:text="${treballador.getTelefon}"></td>
                             <td th:text="${treballador.getEmail}"></td>
                             <td th:text="${treballador.getAdreca}"></td>
-                            <td><form method="post" th:action="@{/medicpet/rrhh/eliminar/{id}(id=${treballador.id})}" class="m-0">
+                            <td><form method="get" th:action="@{/medicpet/rrhh/fitxa/} + ${treballador.getId}" class="m-0">
                                     <input type="submit" class="btn btn-outline-primary" value="Editar">
                                 </form>
                             </td>
