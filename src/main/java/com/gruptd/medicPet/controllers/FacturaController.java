@@ -6,7 +6,9 @@ import com.gruptd.medicPet.models.LiniaFactura;
 import com.gruptd.medicPet.models.Factura;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -20,7 +22,9 @@ public class FacturaController {
     private LiniaFacturaServices liniaFacturaService;
 
     @GetMapping("/medicpet/factures")
-    public String principalTreballadors() {
+    public String principalFactures(Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("userName", username);
         log.info("Executant el controlador de factures");
         Iterable<Factura> factures = facturaService.findAll();
         log.info(">>> Factures de la BBDD:");
