@@ -4,6 +4,7 @@ import com.gruptd.medicPet.services.TractamentServices;
 import com.gruptd.medicPet.models.Tractament;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +19,10 @@ public class TractamentController {
 
     @GetMapping("/medicpet/tractaments")
     public String principalTractament(Model model) {
-        log.info("Executant el controlador de tractaments");
         Iterable<Tractament> tractaments = tractamentService.findAll();
-        log.info(">>> Tractaments de la BBDD:");
-        tractaments.forEach((t) -> {
-            log.info(t.getNom());
-        });
-        
         model.addAttribute("tractaments", tractaments);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("userName", username);
         
         return "tractamentsMain";
     }
@@ -34,12 +31,16 @@ public class TractamentController {
     public String desarTractament(Tractament tractament, Model model) {
         tractament = tractamentService.getOne(tractament.getId());
         model.addAttribute("tractament", tractament);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("userName", username);
         
         return "tractamentsForm";
     }
     
     @GetMapping("/medicpet/tractaments/fitxa")
-    public String fitxaTractament(Tractament tractament) {
+    public String fitxaTractament(Tractament tractament, Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("userName", username);
         
         return "tractamentsForm";
     }
