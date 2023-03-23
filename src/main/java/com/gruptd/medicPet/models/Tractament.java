@@ -1,8 +1,8 @@
 package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -22,7 +22,6 @@ public class Tractament implements Serializable {
     
     @NotEmpty
     private String nom;
-    @NotEmpty
-    @Min(value = (long) 0.01)
+    @Positive
     private Float preu;
 }
