@@ -5,6 +5,7 @@
 package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -25,14 +26,17 @@ public class Visita implements Serializable {
 
     private String diagnostic;
     private String medicacio;
+    @NotEmpty
     private String data_visita;
     
     @OneToOne
     @JoinColumn(name = "treballador_id")
+    @NotEmpty
     private Treballador treballador_id;
     
     @OneToOne
     @JoinColumn(name = "mascota_id")
+    @NotEmpty
     private Mascota mascota_id;
 
 }

@@ -4,9 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Detall de factura</title>
-        <!-- Favicon-->
-        <!-- <link rel="icon" type="image/x-icon" href="/favicon.ico" /> -->
+        <title>Llistat de treballadors</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
 
@@ -23,7 +21,7 @@
                 <!-- Breadcrumb -->
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb fs-4  mt-4">
-                        <li class="breadcrumb-item"><h2>Llistat de treballadors</h2></li>
+                        <li class="breadcrumb-item"><h2>[[#{rrhh.llistatTitol}]]</h2></li>
                     </ol>
                 </nav>
 
@@ -54,7 +52,7 @@
                             <td th:text="${treballador.getTelefon}"></td>
                             <td th:text="${treballador.getEmail}"></td>
                             <td th:text="${treballador.getAdreca}"></td>
-                            <td><form method="post" th:action="@{/medicpet/rrhh/eliminar/{id}(id=${treballador.id})}" class="m-0">
+                            <td><form method="get" th:action="@{/medicpet/rrhh/fitxa/} + ${treballador.getId}" class="m-0">
                                     <input type="submit" class="btn btn-outline-primary" value="Editar">
                                 </form>
                             </td>
@@ -70,7 +68,8 @@
             <!-- Si no hi ha tractaments creats, es mostrarà aquest missatge -->
             <div th:if="${treballadors == null or treballadors.empty}" class="justify-content-center mt-5">
                 <div class="text-center">
-                    <h2 class="mx-auto">La taula de treballadors està buida. <br> Per afegir-ne, feu clic al botó 'Crear'.</h2>
+                    <h2 class="mx-auto">[[#{rrhh.taulaBuida1}]]</h2>
+                    <h2 class="mx-auto">[[#{rrhh.taulaBuida2}]]</h2>
                     <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success mt-3">Crear</a>
                 </div>
             </div>
@@ -78,8 +77,8 @@
         </div>
     </div>
 
-    <!-- Javascript per mostrar DROPDOWNS, POPOVERS o TOOLTIPS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    <!-- Peu de pàgina -->
+    <div th:include="fragments/peuPagina :: footer"/>
+
 </body>
 </html>
