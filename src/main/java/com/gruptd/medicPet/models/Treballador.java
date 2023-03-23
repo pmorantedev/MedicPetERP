@@ -1,6 +1,7 @@
 package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -18,13 +19,18 @@ public class Treballador implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotEmpty
     private String nomComplet;
+    @NotEmpty
     private String telefon;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String adreca;
     private String carrecAux;
     @ManyToOne
     @JoinColumn(name = "carrec_id")
+    //@NotEmpty
     private Carrec carrec;
     @OneToOne
     @JoinColumn(name = "usuari_id")

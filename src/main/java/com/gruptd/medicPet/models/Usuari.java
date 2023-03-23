@@ -5,6 +5,7 @@
 package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -23,12 +24,16 @@ public class Usuari implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String nom;
+    @NotEmpty
     private String contrasenya;
 
     @OneToOne
     @JoinColumn(name = "rol_id")
+    @NotEmpty
     private Rol rol_id;
 
 }
