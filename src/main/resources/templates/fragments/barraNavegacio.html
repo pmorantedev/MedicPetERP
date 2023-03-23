@@ -9,7 +9,7 @@
          es faci un 'th:include="fragments/barraNavegacio :: header"'.
          ======================================================================= -->
         <div th:fragment="header">
-            <header class="p-3 mb-3 border-bottom text-bg-dark">
+            <header class="p-3 mb-5 border-bottom text-bg-dark">
                 <div class="container">
                     <div class="d-flex flex-wrap col-12 col-lg-auto align-items-center justify-content-center justify-content-lg-start">
                         <a href="#" class="fs-4 d-flex align-items-center text-white text-decoration-none me-4">
@@ -26,8 +26,8 @@
 
                         <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
                             <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="text-white align-middle"></span>
-                                <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Chris Wood">
+                                <span class="mx-1 text-white align-middle" th:text="${user}"></span>
+                                <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Foto de perfil">
                             </a>
                             <ul class="dropdown-menu text-small">
                                 <li><a class="dropdown-item" href="#">Perfil</a></li>

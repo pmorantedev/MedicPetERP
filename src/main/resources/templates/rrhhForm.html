@@ -4,145 +4,122 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Detall de factura</title>
-        <!-- Favicon-->
-        <!-- <link rel="icon" type="image/x-icon" href="/favicon.ico" /> -->
+        <title>Detall del treballador</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+        <script languague="javascript">
+
+            function mostrar() {
+                div = document.getElementById('btns_edicio');
+                div.style.display = '';
+                div = document.getElementById('btn_editar');
+                div.style.display = 'none';
+                document.getElementById('nomComplet').disabled = false;
+                document.getElementById('nomComplet').style = "background-color: white;";
+                document.getElementById('telefon').disabled = false;
+                document.getElementById('telefon').style = "background-color: white;";
+                document.getElementById('email').disabled = false;
+                document.getElementById('email').style = "background-color: white;";
+                document.getElementById('adreca').disabled = false;
+                document.getElementById('adreca').style = "background-color: white;";
+                document.getElementById('carrecAux').disabled = false;
+                document.getElementById('carrecAux').style = "background-color: white;";
+            }
+
+        </script>
+
     </head>
 
-    <body style="background-color: bg-secondary-subtle;">
+    <body>
 
         <!-- Menú de navegació -->
-        <div th:include="fragments/barraNavegacio :: header"></div>
+        <div th:include="fragments/barraNavegacio :: header(user=${userName})"/>
 
-        <!-- Page content-->
+        <!-- Continguts -->
         <div class="container">
 
             <!-- Breadcrumb -->
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ol class="breadcrumb fs-4">
-                    <li class="breadcrumb-item mt-3 mb-3"><h2>Crear treballador</h2></li>
-                </ol>
-            </nav>
+            <div class="d-flex">
+                <h2 class="mt-4">
+                    <a th:href="@{/medicpet/rrhh}" class="text-decoration-none text-dark">Llistat de treballadors</a>
+                    <span> / </span>                        
+                    <span th:if="${treballador.id != null}" class="text-muted ml-2">Fitxa de treballador</span>
+                    <span th:if="${treballador.id == null}" class="text-muted ml-2">Crear treballador</span>
+                    <!-- TO-DO: detectar rol veterinari 
+                    <li th:if="${user.rol.id == 3}" class="breadcrumb-item mt-3 mb-3"><h2>Fitxa client</h2></li>-->                    
+                </h2>
+            </div>
+            <!-- Botons -->
+            <div class="mt-4">
+                <div id="btn_editar">
+                    <a id="btn_editar" href="javascript:mostrar();" name="Desar" class="btn btn-outline-primary p-2 me-3">Editar</a>
+                </div>
+                <div id="btns_edicio" style="display:none;">
+                    <button th:if="${treballador.id != null}" form="treballadorForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
+                    <button th:if="${treballador.id == null}" form="treballadorForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
+                    <a th:href="@{/medicpet/rrhh}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
+                </div>
+            </div>
 
-            <!-- Detalls factura -->
+            <!-- Formulari: Detalls factura -->
+            <div <div class="p-5 mt-4 bg-light rounded-3">
 
-            <!-- Form -->
-            <form id="demoForm" method="POST" th:action="@{/medicpet/rrhh/guardar}" th:object="${treballador}">
-                <form class="form-horizontal">
+                <form id="treballadorForm" method="POST" th:action="@{/medicpet/rrhh/guardar}" th:object="${treballador}" class="form-horizontal">
+
+                    <input type="hidden" name="id" th:field="*{id}">
+
                     <div class="form-group row align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Nom del treballador</h5></label>
+                        <label class="col-sm-2 control-label"><h5>Nom i cognoms</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input type="text" class="form-control" name="name" th:field="*{nomComplet}" required/>
+                            <input id="nomComplet" name="name" type="text" class="form-control" style="background: none;" th:field="*{nomComplet}" required disabled />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Telèfon</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input type="text" class="form-control" name="phone" th:field="*{telefon}" required/>
+                            <input id="telefon" name="phone" type="text" class="form-control" style="background: none;" th:field="*{telefon}" required disabled />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Correu electrònic</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input type="email" class="form-control" name="email" th:field="*{email}" required/>
+                            <input id="email" name="email" type="email" class="form-control" style="background: none;" th:field="*{email}" required disabled />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Adreça</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input type="text" class="form-control" name="address" th:field="*{adreca}" required/>
+                            <input id="adreca" name="address" type="text" class="form-control" style="background: none;" th:field="*{adreca}" required disabled />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Especialitat</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input type="text" class="form-control" name="carrec" th:field="*{carrecAux}" required/>
+                            <input id="carrecAux" name="dni" type="text" class="form-control" style="background: none;" th:field="*{carrecAux}" required disabled />
                         </div>
                     </div>
-
-                    <!-- Botons -->
-                    <div class="row justify-content-center mb-5">
-                        <div class="col-md-6 text-center">
-                            <button type="submit" name="guardar" class="btn btn-outline-success mt-5 p-2">Desar</button>
-                            <a th:href="@{/medicpet/rrhh}"><button type="button" class="btn btn-outline-danger mt-5 mx-3 p-2">Descartar</button></a>
+                    <!-- <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Càrrec</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="carrec" name="dni" type="text" class="form-control" style="background: none;" th:field="*{carrec}" required disabled />
                         </div>
                     </div>
-                </form>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Usuari</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="usuari" name="dni" type="text" class="form-control" style="background: none;" th:field="*{usuari}" required disabled />
+                        </div>
+                    </div> -->
 
 
-            </form>
+                </form> 
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.min.js"></script>
-            <script src="/vendors/formvalidation/dist/js/FormValidation.min.js"></script>
-            <script src="/vendors/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function (e) {
-                    FormValidation.formValidation(document.getElementById('demoForm'), {
-                        fields: {
-                            name: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'The name is required',
-                                    },
-                                    stringLength: {
-                                        min: 6,
-                                        max: 30,
-                                        message: 'The name must be more than 6 and less than 30 characters long',
-                                    },
-                                    regexp: {
-                                        regexp: /^[a-zA-Z0-9_]+$/,
-                                        message: 'The name can only consist of alphabetical, number and underscore',
-                                    },
-                                },
-                            },
-                            price: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'The price is required',
-                                    },
-                                    numeric: {
-                                        message: 'The price must be a number',
-                                    },
-                                },
-                            },
-                            'size[]': {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'The size is required',
-                                    },
-                                },
-                            },
-                            availability: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'The availability option is required',
-                                    },
-                                },
-                            },
-                        },
-                        plugins: {
-                            trigger: new FormValidation.plugins.Trigger(),
-                            bootstrap5: new FormValidation.plugins.Bootstrap5({
-                                rowSelector: '.mb-3',
-                            }),
-                            submitButton: new FormValidation.plugins.SubmitButton(),
-                            icon: new FormValidation.plugins.Icon({
-                                valid: 'fa fa-check',
-                                invalid: 'fa fa-times',
-                                validating: 'fa fa-refresh',
-                            }),
-                        },
-                    });
-                });
-            </script>
-
+            </div>
         </div>
     </div>
 
-    <!-- Javascript per mostrar DROPDOWNS, POPOVERS o TOOLTIPS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    <!-- Peu de pàgina -->
+    <div th:include="fragments/peuPagina :: footer"/>
+
 </body>
 </html>

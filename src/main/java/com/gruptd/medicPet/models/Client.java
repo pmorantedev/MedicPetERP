@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 /**
  *
@@ -24,11 +26,16 @@ public class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idclient;
 
-    @Column()
+    @NotEmpty
     private String nomComplert;
+    @NotEmpty
     private String dni;
+    @NotEmpty
+    @Size(max = 14)
     private String telefon;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String adreca;
     
     @OneToMany(mappedBy = "client_id", cascade = CascadeType.ALL)

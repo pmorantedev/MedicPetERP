@@ -6,6 +6,8 @@ import com.gruptd.medicPet.services.CarrecServices;
 import com.gruptd.medicPet.services.TreballadorServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,19 +27,26 @@ public class TreballadorController {
         log.info("Executant el controlador de treballador");
         Iterable<Treballador> treballadors = treballadorService.findAll();
         model.addAttribute("treballadors", treballadors);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("userName", username);
         
         return "rrhhMain";
     }
     
-    @PostMapping("/medicpet/rrhh/fitxa/{id}")
-    public String modificarTreballador(Treballador treballador) {
-        treballadorService.save(treballador);
+    @GetMapping("/medicpet/rrhh/fitxa/{id}")
+    public String modificarTreballador(Treballador treballador, Model model) {
+        treballador = treballadorService.getOne(treballador.getId());
+        model.addAttribute("treballador", treballador);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("userName", username);
         
-        return "redirect:/medicpet/rrhh";
+        return "rrhhForm";
     }
     
     @GetMapping("/medicpet/rrhh/fitxa")
-    public String fitxaTractament(Treballador treballador) {
+    public String fitxaTractament(Treballador treballador, Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("userName", username);
         
         return "rrhhForm";
     }
