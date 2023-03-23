@@ -40,13 +40,8 @@
 
             <!-- Breadcrumb -->
             <div class="d-flex">
-                <h2 class="mt-4">
-                    <a th:href="@{/medicpet/rrhh}" class="text-decoration-none text-dark">Llistat de treballadors</a>
-                    <span> / </span>                        
-                    <span th:if="${treballador.id != null}" class="text-muted ml-2">Fitxa de treballador</span>
-                    <span th:if="${treballador.id == null}" class="text-muted ml-2">Crear treballador</span>
-                    <!-- TO-DO: detectar rol veterinari 
-                    <li th:if="${user.rol.id == 3}" class="breadcrumb-item mt-3 mb-3"><h2>Fitxa client</h2></li>-->                    
+                <h2 class="mt-4">                    
+                    <span th:if="${treballador.id != null}" class="text-muted ml-2">Perfil d'usuari</span>                
                 </h2>
             </div>
             <!-- Botons -->
@@ -56,7 +51,6 @@
                 </div>
                 <div id="btns_edicio" style="display:none;">
                     <button th:if="${treballador.id != null}" form="treballadorForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
-                    <button th:if="${treballador.id == null}" form="treballadorForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
                     <a th:href="@{/medicpet/rrhh}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
                 </div>
             </div>
