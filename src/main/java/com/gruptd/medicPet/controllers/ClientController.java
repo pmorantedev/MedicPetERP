@@ -4,6 +4,7 @@ import com.gruptd.medicPet.models.Client;
 import com.gruptd.medicPet.models.Mascota;
 import com.gruptd.medicPet.services.ClientServices;
 import com.gruptd.medicPet.services.MascotaServices;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,11 +59,10 @@ public class ClientController {
     }
     
     @PostMapping("/medicpet/clients/eliminar/{idclient}")                       // URL 'DELETE' client (FORM)
-    public String eliminar(Client client){
-        log.info("Executant el controlador de clients: CLIENT ("+client.getIdclient()+") ELIMINAT");
+    public String eliminar(Client client, Model model){
+        log.info("Executant el controlador de clients: CLIENT ("+client.getIdclient()+") ELIMINAT");       
         
-        clientService.delete(client);
-        
+        clientService.delete(client);        
         return "redirect:/medicpet/clients";
     }
     

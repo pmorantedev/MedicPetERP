@@ -9,21 +9,26 @@
 
         <script languague="javascript">
             
+            function formEditable() {
+                var form = document.getElementById("clientForm");
+                var elements = form.elements;
+                for (var i = 0, len = elements.length; i < len; ++i) {
+                    elements[i].disabled = false;
+                }
+                document.getElementById('nomComplert').style="background-color: white;";
+                document.getElementById('dni').style="background-color: white;";
+                document.getElementById('email').style="background-color: white;";
+                document.getElementById('telefon').style="background-color: white;";
+                document.getElementById('adreça').style="background-color: white;";
+            }
+            
             function mostrar() {
                 div = document.getElementById('btns_edicio');
                 div.style.display = '';
                 div = document.getElementById('btn_editar');
                 div.style.display = 'none';
-                document.getElementById('nomComplert').disabled = false;
-                document.getElementById('nomComplert').style="background-color: white;";
-                document.getElementById('dni').disabled = false;
-                document.getElementById('dni').style="background-color: white;";
-                document.getElementById('email').disabled = false;
-                document.getElementById('email').style="background-color: white;";
-                document.getElementById('telefon').disabled = false;
-                document.getElementById('telefon').style="background-color: white;";
-                document.getElementById('adreça').disabled = false;
-                document.getElementById('adreça').style="background-color: white;";
+                
+                formEditable();
             }  
             
         </script>
@@ -85,10 +90,28 @@
                 </h2>
             </div>
 
-            <!-- Botons -->
-            <div class="mt-4">
+            <!-- Botons per CLIENT NOU -->
+            <div class="mt-4" th:if="${client.idclient == null}">
+                <script th:inline="javascript">
+
+                    var filtre = [[${client.idclient == null}]]; // Si el client és nou...
+                    window.onload = function() {
+                        if(!filtre)
+                            return; // Exit/Return si la variable és 'false'
+                        formEditable(); // ...torno inputs del formulari editables
+                    };
+
+                </script>                
+                <div id="btns_edicio">
+                    <button th:if="${client.idclient != null}" form="clientForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
+                    <button th:if="${client.idclient == null}" form="clientForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
+                    <a th:href="@{/medicpet/clients}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
+                </div>
+            </div>
+            <!-- Botons EDITAR CLIENT -->            
+            <div class="mt-4" th:if="${client.idclient != null}">
                 <div id="btn_editar">
-                    <a id="btn_editar" href="javascript:mostrar();" name="Desar" class="btn btn-outline-primary p-2 me-3">Editar</a>
+                    <a href="javascript:mostrar();" name="Desar" class="btn btn-outline-primary p-2 me-3">Editar</a>
                 </div>
                 <div id="btns_edicio" style="display:none;">
                     <button th:if="${client.idclient != null}" form="clientForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
@@ -96,6 +119,7 @@
                     <a th:href="@{/medicpet/clients}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
                 </div>
             </div>
+
 
             <!-- Formulari: Detalls client -->
             <div <div class="p-5 mt-4 bg-light rounded-3">

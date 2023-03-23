@@ -99,7 +99,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form method="post" th:action="@{/medicpet/clients/eliminar/{idclient}(idclient=${client.getIdclient})}" class="m-0">
+                                <form method="post" th:action="@{/medicpet/clients/eliminar/} + ${client.getIdclient}" class="m-0">
                                     <input type="submit" class="btn btn-outline-danger" value="Eliminar">
                                 </form>
                             </td>
