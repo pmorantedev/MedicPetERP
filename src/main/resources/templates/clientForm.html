@@ -8,71 +8,41 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
         <script languague="javascript">
-            
+
+            function formEditable() {
+                var form = document.getElementById("clientForm");
+                var elements = form.elements;
+                for (var i = 0, len = elements.length; i < len; ++i) {
+                    elements[i].disabled = false;
+                }
+                document.getElementById('nomComplert').style = "background-color: white;";
+                document.getElementById('dni').style = "background-color: white;";
+                document.getElementById('email').style = "background-color: white;";
+                document.getElementById('telefon').style = "background-color: white;";
+                document.getElementById('adreça').style = "background-color: white;";
+            }
+
             function mostrar() {
                 div = document.getElementById('btns_edicio');
                 div.style.display = '';
                 div = document.getElementById('btn_editar');
                 div.style.display = 'none';
-                document.getElementById('nomComplert').disabled = false;
-                document.getElementById('nomComplert').style="background-color: white;";
-                document.getElementById('dni').disabled = false;
-                document.getElementById('dni').style="background-color: white;";
-                document.getElementById('email').disabled = false;
-                document.getElementById('email').style="background-color: white;";
-                document.getElementById('telefon').disabled = false;
-                document.getElementById('telefon').style="background-color: white;";
-                document.getElementById('adreça').disabled = false;
-                document.getElementById('adreça').style="background-color: white;";
-            }  
-            
+
+                formEditable();
+            }
+
         </script>
-        
+
     </head>
 
-    <body>
+    <body class="bg-secondary-subtle">
 
-        <header class="p-3 mb-3 border-bottom text-bg-dark">
-            <div class="container">
-                <div class="d-flex flex-wrap col-12 col-lg-auto align-items-center justify-content-center justify-content-lg-start">
-                    <a href="#" class="fs-4 d-flex align-items-center text-white text-decoration-none me-4">
-                        <img class="d-inline-block align-middle me-2" src="/logo.png" alt="MedicPet" width="40"  height="40" />
-                        Medic Pet
-                    </a>
-
-                    <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" class="nav-link px-2 text-white">Facturació</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" class="nav-link px-2 text-warning">Clients</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" class="nav-link px-2 text-white">Tractaments</a></li>
-                        <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" class="nav-link px-2 text-white">RRHH</a></li>
-                    </ul>
-
-                    <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
-                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="text-white align-middle"></span>
-                            <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Chris Wood">
-                        </a>
-                        <ul class="dropdown-menu text-small">
-                            <li><a class="dropdown-item" href="#">Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form id="logout-form" th:action="@{/logout}" method="post" th:style="'display: none;'">
-                                    <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                                </form>
-                                <a class="dropdown-item text-danger" href="#" th:onclick="'event.preventDefault(); document.getElementById(\'logout-form\').submit();'">
-                                    Sortir
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </header>
-
+        <!-- Menú de navegació -->
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName})}"></div>
 
         <!-- Continguts -->
         <div class="container">
-            
+
             <!-- Breadcrumb -->
             <div class="d-flex">
                 <h2 class="mt-4">
@@ -85,62 +55,80 @@
                 </h2>
             </div>
 
-            <!-- Botons -->
-            <div class="mt-4">
+            <!-- Botons per CLIENT NOU -->
+            <div class="mt-4" th:if="${client.idclient == null}">
+                <script th:inline="javascript">
+
+                    var filtre = [[${client.idclient == null}
+                    ]]; // Si el client és nou...
+                    window.onload = function () {
+                        if (!filtre)
+                            return; // Exit/Return si la variable és 'false'
+                        formEditable(); // ...torno inputs del formulari editables
+                    };
+
+                </script>                
+                <div id="btns_edicio">
+                    <button form="clientForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
+                    <a th:href="@{/medicpet/clients}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
+                </div>
+            </div>
+            <!-- Botons EDITAR CLIENT -->            
+            <div class="mt-4" th:if="${client.idclient != null}">
                 <div id="btn_editar">
-                    <a id="btn_editar" href="javascript:mostrar();" name="Desar" class="btn btn-outline-primary p-2 me-3">Editar</a>
+                    <a href="javascript:mostrar();" name="Editar" class="btn btn-outline-primary p-2 me-3">Editar</a>
                 </div>
                 <div id="btns_edicio" style="display:none;">
-                    <button th:if="${client.idclient != null}" form="clientForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
-                    <button th:if="${client.idclient == null}" form="clientForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
+                    <button form="clientForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
                     <a th:href="@{/medicpet/clients}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
                 </div>
             </div>
 
+
             <!-- Formulari: Detalls client -->
-            <div <div class="p-5 mt-4 bg-light rounded-3">
-                
+            <div class="p-5 mt-4 bg-light rounded-3">
+
                 <form id="clientForm" method="POST" th:action="@{/medicpet/clients/desar}" th:object="${client}" class="form-horizontal">
-                    
+
                     <input type="hidden" name="idclient" th:field="*{idclient}">
 
-                        <div class="form-group row align-items-center">
-                            <label class="col-sm-2 control-label"><h5>Nom i cognoms</h5></label>
-                            <div class="col-sm-10 align-items-center">
-                                <input id="nomComplert" name="name" type="text" class="form-control" style="background: none;" th:field="*{nomComplert}" required disabled />
-                            </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Nom i cognoms</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="nomComplert" name="name" type="text" class="form-control" style="background: none;" th:field="*{nomComplert}" required disabled />
                         </div>
-                        <div class="form-group row mt-3 align-items-center">
-                            <label class="col-sm-2 control-label"><h5>Dni</h5></label>
-                            <div class="col-sm-10 align-items-center">
-                                <input id="dni" name="dni" type="text" class="form-control" style="background: none;" th:field="*{dni}" required disabled />
-                            </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Dni</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="dni" name="dni" type="text" class="form-control" style="background: none;" th:field="*{dni}" required disabled />
                         </div>
-                        <div class="form-group row mt-3 align-items-center">
-                            <label class="col-sm-2 control-label"><h5>Telèfon</h5></label>
-                            <div class="col-sm-10 align-items-center">
-                                <input id="telefon" name="phone" type="text" class="form-control" style="background: none;" th:field="*{telefon}" required disabled />
-                            </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Telèfon</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="telefon" name="phone" type="text" class="form-control" style="background: none;" th:field="*{telefon}" required disabled />
                         </div>
-                        <div class="form-group row mt-3 align-items-center">
-                            <label class="col-sm-2 control-label"><h5>Correu electrònic</h5></label>
-                            <div class="col-sm-10 align-items-center">
-                                <input id="email" name="email" type="email" class="form-control" style="background: none;" th:field="*{email}" required disabled />
-                            </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Correu electrònic</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="email" name="email" type="email" class="form-control" style="background: none;" th:field="*{email}" required disabled />
                         </div>
-                        <div class="form-group row mt-3 align-items-center">
-                            <label class="col-sm-2 control-label"><h5>Adreça</h5></label>
-                            <div class="col-sm-10 align-items-center">
-                                <input id="adreça" name="address" type="text" class="form-control" style="background: none;" th:field="*{adreca}" required disabled />
-                            </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Adreça</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="adreça" name="address" type="text" class="form-control" style="background: none;" th:field="*{adreca}" required disabled />
                         </div>
+                    </div>
                 </form>
-                
+
             </div>
-            
+
             <!-- Llistat de mascotes en cas que n'hi hagi de creades -->
             <div th:if="${client.mascotes != null and !client.mascotes.empty}">
-                
+
                 <!-- Mascotes -->
                 <h2 class="mt-5">Llistat de mascotes</h2>
 
@@ -175,7 +163,7 @@
                                     <input type="submit" class="btn btn-outline-primary" value="Editar">
                                 </form>-->
                                 <a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa/{idmascota}/editar(idclient=${client.getIdclient}, idmascota=${mascota.getId_mascota})}" class="btn btn-outline-primary m-0">
-                                    Editar
+                                    Mostrar
                                 </a>
                             </td>
                             <td>
@@ -195,18 +183,11 @@
                     <a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa(idclient=${client.idclient})}" class="btn btn-outline-danger mt-3" >Crear</a>
                 </div>
             </div>
-      
-    </div>
-
-
-
-            
 
         </div>
-    </div>
 
-    <!-- Javascript per mostrar DROPDOWNS, POPOVERS o TOOLTIPS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
-</body>
+        <!-- Peu de pàgina -->
+        <div th:insert="~{fragments/peuPagina :: footer}"/>
+
+    </body>
 </html>

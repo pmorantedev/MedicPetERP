@@ -46,7 +46,7 @@
     <body>
 
         <!-- Menú de navegació -->
-        <div th:include="fragments/barraNavegacio :: header(user=${userName})"></div>
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName})}"></div>
 
         <!-- Continguts -->
         <div class="container">
@@ -102,10 +102,9 @@
             </div> 
 
         </div>
-    </div>
 
-    <!-- Peu de pàgina -->
-    <div th:include="fragments/peuPagina :: footer"/>
-    
-</body>
+        <!-- Peu de pàgina -->
+        <div th:insert="~{fragments/peuPagina :: footer}"/>
+
+    </body>
 </html>
