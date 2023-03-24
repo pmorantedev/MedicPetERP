@@ -26,7 +26,7 @@ public class UsuariController {
     private RolServices rolServices;
     
     @GetMapping("/medicpet/perfil")
-    public String perfilUsuari(Model model, @RequestParam(name = "incorrecta", required = false) Boolean incorrecta, @RequestParam(name = "novaInvalida", required = false) Boolean novaInvalida) {
+    public String perfilUsuari(Model model, @RequestParam(name = "incorrecta", required = false) Boolean incorrecta, @RequestParam(name = "novaInvalida", required = false) Boolean novaInvalida, @RequestParam(name = "correcta", required = false) Boolean correcta) {
         
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuari usuari = usuariServices.getByUsername(username);
@@ -37,11 +37,14 @@ public class UsuariController {
         model.addAttribute("rol", rol);
         model.addAttribute("contrasenya", password);
         
-        if (incorrecta != null) {
+        if (incorrecta != null && incorrecta == true) {
             model.addAttribute("incorrecta", incorrecta);
-        }
-        if (novaInvalida != null) {
+        } 
+        if (novaInvalida != null && novaInvalida == true) {
             model.addAttribute("novaInvalida", novaInvalida);
+        } 
+        if (correcta != null && correcta == true) {
+            model.addAttribute("correcta", correcta);
         }
         
         return "perfil";
@@ -69,8 +72,7 @@ public class UsuariController {
                 String contrasenyaNova = passwordEncoder.encode(password.getContraNova());
                 usuari.setContrasenya(contrasenyaNova);
                 usuariServices.update(usuari);
-                redirectAtr.addAttribute("novaInvalida", false);
-                redirectAtr.addAttribute("incorrecta", false);
+                redirectAtr.addAttribute("correcta", true);
             } else {
                 redirectAtr.addAttribute("novaInvalida", true);
             }
