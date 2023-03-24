@@ -58,11 +58,10 @@ public class ClientController {
     }
     
     @PostMapping("/medicpet/clients/eliminar/{idclient}")                       // URL 'DELETE' client (FORM)
-    public String eliminar(Client client){
-        log.info("Executant el controlador de clients: CLIENT ("+client.getIdclient()+") ELIMINAT");
+    public String eliminar(Client client, Model model){
+        log.info("Executant el controlador de clients: CLIENT ("+client.getIdclient()+") ELIMINAT");       
         
-        clientService.delete(client);
-        
+        clientService.delete(client);        
         return "redirect:/medicpet/clients";
     }
     

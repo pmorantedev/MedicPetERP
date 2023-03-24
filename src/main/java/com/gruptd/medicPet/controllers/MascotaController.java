@@ -2,7 +2,6 @@ package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.models.Client;
 import com.gruptd.medicPet.models.Mascota;
-import com.gruptd.medicPet.services.ClientServices;
 import com.gruptd.medicPet.services.MascotaServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
