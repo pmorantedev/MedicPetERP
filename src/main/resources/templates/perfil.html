@@ -21,7 +21,7 @@
                 document.getElementById('rol_id').disabled = false;
                 document.getElementById('rol_id').style = "background-color: white;";
             }
-            
+
             function mostrarContrasenya() {
                 div = document.getElementById('btns_edicioCon');
                 div.style.display = '';
@@ -42,7 +42,7 @@
     <body>
 
         <!-- Menú de navegació -->
-        <div th:include="fragments/barraNavegacio :: header(user=${userName})"/>
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName})}"></div>
 
         <!-- Continguts -->
         <div class="container">
@@ -120,7 +120,7 @@
                     <a th:href="@{/medicpet/perfil}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
                 </div>
             </div>
-            <div <div class="p-5 mt-4 bg-light rounded-3">
+            <div class="p-5 mt-4 bg-light rounded-3">
 
                 <form id="contrasenyaForm" method="POST" th:action="@{/medicpet/perfical/canviarContrasenya}" th:object="${contrasenya}" class="form-horizontal">
                     <div class="form-group row align-items-center">
@@ -144,10 +144,9 @@
                 </form>
             </div>
         </div>
-    </div>
 
-    <!-- Peu de pàgina -->
-    <div th:include="fragments/peuPagina :: footer"/>
+        <!-- Peu de pàgina -->
+        <div th:insert="~{fragments/peuPagina :: footer}"/>
 
-</body>
+    </body>
 </html>
