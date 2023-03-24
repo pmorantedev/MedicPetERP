@@ -60,7 +60,7 @@ public class UsuariServices implements ServicesInterface<Usuari> {
 
             usuariBD.setUsername(u.getUsername());
             usuariBD.setNom(u.getNom());
-            if (!u.getContrasenya().isEmpty()) {
+            if (u.getContrasenya() != null) {
                 usuariBD.setContrasenya(u.getContrasenya());
             }
             //usuariBD.setRol_id(u.getRol_id());
