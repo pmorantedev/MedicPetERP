@@ -1,17 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import lombok.Data;
 
 /**
  *
- * @author izan
+ * @author izan, txell
  */
 @Data
 @Entity
@@ -34,16 +31,9 @@ public class Mascota implements Serializable {
     private String data_naixement;
     @NotEmpty
     private String sexe;
-//    public enum SexeMascota {
-//        MASCLE,
-//        FEMELLA,
-//        DESCONEGUT
-//    }
-//
-//    private SexeMascota sexeMascota;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    @NotEmpty
+    @NotNull
     private Client client_id;
 }
