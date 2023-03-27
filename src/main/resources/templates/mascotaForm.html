@@ -35,7 +35,7 @@
 
     </head>
 
-    <body class="bg-secondary-subtle">
+    <body>
 
         <!-- Menú de navegació -->
         <div th:insert="~{fragments/barraNavegacio :: header(user=${userName})}"></div>
@@ -46,9 +46,9 @@
             <!-- Breadcrumb -->
             <div class="d-flex">
                 <h2 class="mt-4">
-                    <a th:href="@{/medicpet/clients}" class="text-decoration-none text-dark">Llistat de clients</a>
+                    <a th:href="@{/medicpet/clients}" class="text-dark">Llistat de clients</a>
                     <span> / </span>                        
-                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="text-decoration-none text-dark ml-2">Fitxa de client</a>
+                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="text-dark ml-2">Fitxa de client</a>
                     <span> / </span>
                     <span th:if="${mascota.id_mascota != null}" class="text-muted ml-2">Dades mascota</span>                 
                     <span th:if="${mascota.id_mascota == null}" class="text-muted ml-2">Crear mascota</span>                 

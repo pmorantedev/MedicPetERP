@@ -31,7 +31,7 @@ public class Client implements Serializable {
     @NotEmpty
     private String dni;
     @NotEmpty
-    @Size(max = 14)
+    @Size(max = 15)
     private String telefon;
     @NotEmpty
     private String email;
