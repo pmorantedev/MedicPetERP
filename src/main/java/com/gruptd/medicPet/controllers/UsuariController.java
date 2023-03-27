@@ -1,6 +1,7 @@
 package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.models.CanviContrasenya;
+import com.gruptd.medicPet.models.ImageData;
 import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.services.RolServices;
 import com.gruptd.medicPet.services.UsuariServices;
