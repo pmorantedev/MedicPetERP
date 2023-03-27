@@ -60,7 +60,9 @@ public class UsuariServices implements ServicesInterface<Usuari> {
 
             usuariBD.setUsername(u.getUsername());
             usuariBD.setNom(u.getNom());
-            //usuariBD.setContrasenya(u.getContrasenya());
+            if (u.getContrasenya() != null) {
+                usuariBD.setContrasenya(u.getContrasenya());
+            }
             //usuariBD.setRol_id(u.getRol_id());
 
             save(usuariBD);
@@ -68,11 +70,11 @@ public class UsuariServices implements ServicesInterface<Usuari> {
             System.out.println("L'usuari no existeix.");
         }
     }
-    
+
     @Transactional
     public Usuari getByUsername(String username) {
         Usuari usuariBD = usuariDao.findByUsername(username).orElse(null);
-        
+
         return usuariBD;
     }
 }

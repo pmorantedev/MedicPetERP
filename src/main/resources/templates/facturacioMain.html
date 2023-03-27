@@ -5,85 +5,19 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Detall de factura</title>
-        <!-- Favicon-->
-        <!-- <link rel="icon" type="image/x-icon" href="/favicon.ico" /> -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
 
-    <body style="background-color: bg-secondary-subtle;">
+    <body class="bg-secondary-subtle">
 
         <!-- Menú de navegació -->
-        <div th:include="fragments/barraNavegacio :: header"></div>
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName})}"></div>
 
-        <!-- Page content-->
-        <div class="container">
+        <!-- Continguts -->
+        <div th:insert="~{fragments/enConstruccio :: construccio}"/>
 
-            <!-- Breadcrumb -->
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ol class="breadcrumb fs-4">
-                    <li class="breadcrumb-item">Llistat de factures</li>
-                </ol>
-            </nav>
+        <!-- Peu de pàgina -->
+        <div th:insert="~{fragments/peuPagina :: footer}"/>
 
-            <!-- Botons -->
-            <button type="button" class="btn btn-primary">Crear</button>
-
-            <!-- Detalls factura -->
-
-            <!-- Llistat -->
-            <table class="table align-middle table-striped table-responsive-xl mt-5">
-
-                <thead class="table-dark">
-                    <tr class="text-center align-middle">
-                        <th scope="col">id</th>
-                        <th scope="col" class="col-3">Client</th>
-                        <th scope="col">Data expedició</th>
-                        <th scope="col">Data pagament</th>
-                        <th scope="col">Mètode pagament</th>
-                        <th scope="col">IVA</th>
-                        <th scope="col" class="col-2">Total</th>
-                        <th scope="col-3" colspan="3">Actions</th>          
-                    </tr>  
-                </thead>
-                <tbody>                 
-                    <tr class="text-center">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a class="btn-link" href="#" role="button">View</a></td>
-                        <td><a class="btn-link" href="#" role="button">Edit</a></td>
-                        <td><form method="" action=""  class="m-0">
-                                <input type="submit" class="btn btn-danger" value="Delete">
-                            </form>
-                        </td>
-                    </tr>
-                    <tr class="text-center">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a class="btn-link" href="#" role="button">View</a></td>
-                        <td><a class="btn-link" href="#" role="button">Edit</a></td>
-                        <td><form method="" action="" class="m-0">
-                                <input type="submit" class="btn btn-danger align-middle" value="Delete">
-                            </form>
-                        </td>
-                    </tr>
-                </tbody>
-            </table> 
-
-        </div>
-    </div>
-
-    <!-- Peu de pàgina -->
-    <div th:include="fragments/peuPagina :: footer"/>
-
-</body>
+    </body>
 </html>
