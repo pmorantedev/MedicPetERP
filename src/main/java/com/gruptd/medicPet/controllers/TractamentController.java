@@ -23,6 +23,7 @@ public class TractamentController {
         model.addAttribute("tractaments", tractaments);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "Tractaments");
         
         return "tractamentsMain";
     }
@@ -33,6 +34,7 @@ public class TractamentController {
         model.addAttribute("tractament", tractament);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "Tractaments");
         
         return "tractamentsForm";
     }
@@ -41,6 +43,7 @@ public class TractamentController {
     public String fitxaTractament(Tractament tractament, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "Tractaments");
         
         return "tractamentsForm";
     }

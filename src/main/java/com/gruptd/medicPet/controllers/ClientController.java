@@ -29,12 +29,14 @@ public class ClientController {
         
         model.addAttribute("clients", clients);
         model.addAttribute("mascotes", mascotes);
+        model.addAttribute("pagina", "Clients");
         
         return "clientsMain";
     }
     
     @GetMapping("/medicpet/clients/fitxa")                                      // URL fitxa client (FORM)
-    public String fitxaClient(Client client) {
+    public String fitxaClient(Client client, Model model) {
+        model.addAttribute("pagina", "Clients");
         log.info("Executant el controlador de clients: OBRIR FITXA NOVA...");
         return "clientForm";
     }
@@ -53,6 +55,7 @@ public class ClientController {
         
         client = clientService.getOne(client.getIdclient());
         model.addAttribute("client", client );
+        model.addAttribute("pagina", "Clients");
         
         return "clientForm";
     }

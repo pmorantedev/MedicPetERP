@@ -29,6 +29,7 @@ public class TreballadorController {
         model.addAttribute("treballadors", treballadors);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "RRHH");
         
         return "rrhhMain";
     }
@@ -39,6 +40,7 @@ public class TreballadorController {
         model.addAttribute("treballador", treballador);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "RRHH");
         
         return "rrhhForm";
     }
@@ -47,6 +49,7 @@ public class TreballadorController {
     public String fitxaTractament(Treballador treballador, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "RRHH");
         
         return "rrhhForm";
     }

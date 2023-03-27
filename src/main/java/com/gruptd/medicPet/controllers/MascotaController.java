@@ -30,6 +30,7 @@ public class MascotaController {
     @GetMapping("/medicpet/clients/fitxa/{client_id}/mascotes/fitxa")            // URL fitxa mascota (FORM)
     public String fitxaMascota(Mascota mascota, Client client, Model model) {
         log.info("Executant el controlador de mascotes: FORMULARI OBERT...");
+        model.addAttribute("pagina", "Clients");
 
         return "mascotaForm";
     }
@@ -51,6 +52,7 @@ public class MascotaController {
 
         mascota = mascotaService.getOne(mascota.getId_mascota());
         model.addAttribute("mascota", mascota);
+        model.addAttribute("pagina", "Clients");
         
         // amb això comentat recupero dades al formulari d'edició...
 //        client = clientService.getOne(client.getIdclient());
