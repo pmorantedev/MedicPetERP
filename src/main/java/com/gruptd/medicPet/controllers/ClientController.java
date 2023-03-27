@@ -6,6 +6,7 @@ import com.gruptd.medicPet.services.ClientServices;
 import com.gruptd.medicPet.services.MascotaServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,16 +27,22 @@ public class ClientController {
         log.info("Executant el controlador de clients: LLISTAT");
         Iterable<Client> clients = clientService.findAll();
         Iterable<Mascota> mascotes = mascotaService.findAll();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         
         model.addAttribute("clients", clients);
         model.addAttribute("mascotes", mascotes);
+        model.addAttribute("userName", username);
         
         return "clientsMain";
     }
     
     @GetMapping("/medicpet/clients/fitxa")                                      // URL fitxa client (FORM)
-    public String fitxaClient(Client client) {
+    public String fitxaClient(Client client, Model model) {
         log.info("Executant el controlador de clients: OBRIR FITXA NOVA...");
+        
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("userName", username);
+        
         return "clientForm";
     }
     
@@ -54,14 +61,24 @@ public class ClientController {
         client = clientService.getOne(client.getIdclient());
         model.addAttribute("client", client );
         
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("userName", username);
+        
         return "clientForm";
     }
     
     @PostMapping("/medicpet/clients/eliminar/{idclient}")                       // URL 'DELETE' client (FORM)
-    public String eliminar(Client client, Model model){
-        log.info("Executant el controlador de clients: CLIENT ("+client.getIdclient()+") ELIMINAT");       
+    public String eliminar(Client client, Model model){        
         
-        clientService.delete(client);        
+        // TO-DO: detectar si hi havia mascotes associades i llistar-les al log
+//        if (!client.getMascotes().isEmpty()) {
+//            for(int i = 0; i<client.getMascotes().size(); i++)
+//                log.info("Executant el controlador de clients: CLIENT ("+client.getIdclient()+") / MASCOTA ASSOCIADA ("+client.getMascotes().get(i).getId_mascota()+") ELIMINADA");
+//        }
+        
+        clientService.delete(client);
+        log.info("Executant el controlador de clients: CLIENT ("+client.getIdclient()+") ELIMINAT");
+        
         return "redirect:/medicpet/clients";
     }
     

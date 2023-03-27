@@ -9,15 +9,22 @@
 
         <script languague="javascript">
 
+            function formEditable() {
+            var form = document.getElementById("tractamentForm");
+            var elements = form.elements;
+            for (var i = 0, len = elements.length; i < len; ++i) {
+            elements[i].disabled = false;
+            }
+            document.getElementById('nom').style = "background-color: white;";
+            document.getElementById('preu').style = "background-color: white;";
+            }
+
             function mostrar() {
-                div = document.getElementById('btns_edicio');
-                div.style.display = '';
-                div = document.getElementById('btn_editar');
-                div.style.display = 'none';
-                document.getElementById('nom').disabled = false;
-                document.getElementById('nom').style = "background-color: white;";
-                document.getElementById('preu').disabled = false;
-                document.getElementById('preu').style = "background-color: white;";
+            div = document.getElementById('btns_edicio');
+            div.style.display = '';
+            div = document.getElementById('btn_editar');
+            div.style.display = 'none';
+            formEditable();
             }
 
             function validar() {
@@ -78,7 +85,7 @@
             <!-- Breadcrumb -->
             <div class="d-flex">
                 <h2 class="mt-4">
-                    <a th:href="@{/medicpet/tractaments}" class="text-decoration-none text-dark">Llistat de tractaments</a>
+                    <a th:href="@{/medicpet/tractaments}" class="text-dark">Llistat de tractaments</a>
                     <span> / </span>                        
                     <span th:if="${tractament.id != null}" class="text-muted ml-2">Fitxa de tractament</span>
                     <span th:if="${tractament.id == null}" class="text-muted ml-2">Crear tractament</span>
@@ -87,19 +94,36 @@
                 </h2> 
             </div>
 
-            <!-- Botons -->
-            <div class="mt-4">
+            <!-- Botons per TRACTAMENT NOU -->
+            <div class="mt-4" th:if="${tractament.id == null}">
+                <script th:inline="javascript">
+
+                    var filtre = [[${tractament.id == null
+                    }
+                    ]]; // Si el client és nou...
+                    window.onload = function () {
+                    if (!filtre)
+                            return; // Exit/Return si la variable és 'false'
+                    formEditable(); // ...torno inputs del formulari editables
+                    };
+                </script>
+                <div id="btns_edicio">
+                    <button form="tractamentForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
+                    <a th:href="@{/medicpet/tractaments}" class="btn btn-outline-danger p-2">Descartar</a>
+                </div>
+            </div>
+            <!-- Botons EDITAR CLIENT -->            
+            <div class="mt-4" th:if="${tractament.id != null}">
                 <div id="btn_editar">
-                    <a id="btn_editar" href="javascript:mostrar();" name="Desar" class="btn btn-outline-primary p-2 me-3">Editar</a>
+                    <a href="javascript:mostrar();" name="Editar" class="btn btn-outline-primary p-2 me-3">Editar</a>
                 </div>
                 <div id="btns_edicio" style="display:none;">
-                    <button th:if="${tractament.id != null}" form="tractamentForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3" onclick="return validar()">Desar canvis</button>
-                    <button th:if="${tractament.id == null}" form="tractamentForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3" onclick="return validar()">Desar</button>
-                    <a th:href="@{/medicpet/tractaments}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
+                    <button form="tractamentForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
+                    <a th:href="@{/medicpet/tractaments}" class="btn btn-outline-danger p-2" >Descartar</a>
                 </div>
             </div>
 
-            <!-- Form -->
+            <!-- Formulari: Detalls Tractament -->
             <div <div class="p-5 mt-4 bg-light rounded-3">
 
                 <form id="tractamentForm" method="POST" th:action="@{/medicpet/tractaments/guardar}" th:object="${tractament}">
