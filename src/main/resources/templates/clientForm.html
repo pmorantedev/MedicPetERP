@@ -35,7 +35,7 @@
 
     </head>
 
-    <body class="bg-secondary-subtle">
+    <body>
 
         <!-- Menú de navegació -->
         <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, page=${pagina})}"></div>
@@ -46,7 +46,7 @@
             <!-- Breadcrumb -->
             <div class="d-flex">
                 <h2 class="mt-4">
-                    <a th:href="@{/medicpet/clients}" class="text-decoration-none text-dark">Llistat de clients</a>
+                    <a th:href="@{/medicpet/clients}" class="text-dark">Llistat de clients</a>
                     <span> / </span>                        
                     <span th:if="${client.idclient != null}" class="text-muted ml-2">Fitxa de client</span>
                     <span th:if="${client.idclient == null}" class="text-muted ml-2">Crear client</span>
@@ -80,7 +80,7 @@
                 </div>
                 <div id="btns_edicio" style="display:none;">
                     <button form="clientForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
-                    <a th:href="@{/medicpet/clients}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
+                    <a th:href="@{/medicpet/clients}" class="btn btn-outline-danger p-2" >Descartar</a>
                 </div>
             </div>
 

@@ -9,21 +9,25 @@
 
         <script languague="javascript">
 
+            function formEditable() {
+            var form = document.getElementById("treballadorForm");
+            var elements = form.elements;
+            for (var i = 0, len = elements.length; i < len; ++i) {
+            elements[i].disabled = false;
+            }
+            document.getElementById('nomComplet').style = "background-color: white;";
+            document.getElementById('telefon').style = "background-color: white;";
+            document.getElementById('email').style = "background-color: white;";
+            document.getElementById('adreca').style = "background-color: white;";
+            document.getElementById('carrecAux').style = "background-color: white;";
+            }
+
             function mostrar() {
-                div = document.getElementById('btns_edicio');
-                div.style.display = '';
-                div = document.getElementById('btn_editar');
-                div.style.display = 'none';
-                document.getElementById('nomComplet').disabled = false;
-                document.getElementById('nomComplet').style = "background-color: white;";
-                document.getElementById('telefon').disabled = false;
-                document.getElementById('telefon').style = "background-color: white;";
-                document.getElementById('email').disabled = false;
-                document.getElementById('email').style = "background-color: white;";
-                document.getElementById('adreca').disabled = false;
-                document.getElementById('adreca').style = "background-color: white;";
-                document.getElementById('carrecAux').disabled = false;
-                document.getElementById('carrecAux').style = "background-color: white;";
+            div = document.getElementById('btns_edicio');
+            div.style.display = '';
+            div = document.getElementById('btn_editar');
+            div.style.display = 'none';
+            formEditable();
             }
 
         </script>
@@ -41,7 +45,7 @@
             <!-- Breadcrumb -->
             <div class="d-flex">
                 <h2 class="mt-4">
-                    <a th:href="@{/medicpet/rrhh}" class="text-decoration-none text-dark">Llistat de treballadors</a>
+                    <a th:href="@{/medicpet/rrhh}" class="text-dark">Llistat de treballadors</a>
                     <span> / </span>                        
                     <span th:if="${treballador.id != null}" class="text-muted ml-2">Fitxa de treballador</span>
                     <span th:if="${treballador.id == null}" class="text-muted ml-2">Crear treballador</span>
@@ -49,15 +53,33 @@
                     <li th:if="${user.rol.id == 3}" class="breadcrumb-item mt-3 mb-3"><h2>Fitxa client</h2></li>-->                    
                 </h2>
             </div>
-            <!-- Botons -->
-            <div class="mt-4">
+
+            <!-- Botons per TREBALLADOR NOU -->
+            <div class="mt-4" th:if="${treballador.id == null}">
+                <script th:inline="javascript">
+
+                    var filtre = [[${treballador.id == null
+                    }
+                    ]]; // Si el client és nou...
+                    window.onload = function () {
+                    if (!filtre)
+                            return; // Exit/Return si la variable és 'false'
+                    formEditable(); // ...torno inputs del formulari editables
+                    };
+                </script>
+                <div id="btns_edicio">
+                    <button form="treballadorForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
+                    <a th:href="@{/medicpet/rrhh}" class="btn btn-outline-danger p-2">Descartar</a>
+                </div>
+            </div>
+            <!-- Botons EDITAR CLIENT -->            
+            <div class="mt-4" th:if="${treballador.id != null}">
                 <div id="btn_editar">
-                    <a id="btn_editar" href="javascript:mostrar();" name="Desar" class="btn btn-outline-primary p-2 me-3">Editar</a>
+                    <a href="javascript:mostrar();" name="Editar" class="btn btn-outline-primary p-2 me-3">Editar</a>
                 </div>
                 <div id="btns_edicio" style="display:none;">
-                    <button th:if="${treballador.id != null}" form="treballadorForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
-                    <button th:if="${treballador.id == null}" form="treballadorForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">Desar</button>
-                    <a th:href="@{/medicpet/rrhh}"><button type="button" class="btn btn-outline-danger p-2" >Descartar</button></a>
+                    <button form="treballadorForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
+                    <a th:href="@{/medicpet/rrhh}" class="btn btn-outline-danger p-2" >Descartar</a>
                 </div>
             </div>
 
@@ -98,28 +120,14 @@
                             <input id="carrecAux" name="dni" type="text" class="form-control" style="background: none;" th:field="*{carrecAux}" required disabled />
                         </div>
                     </div>
-                    <!-- <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Càrrec</h5></label>
-                        <div class="col-sm-10 align-items-center">
-                            <input id="carrec" name="dni" type="text" class="form-control" style="background: none;" th:field="*{carrec}" required disabled />
-                        </div>
-                    </div>
-                    <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Usuari</h5></label>
-                        <div class="col-sm-10 align-items-center">
-                            <input id="usuari" name="dni" type="text" class="form-control" style="background: none;" th:field="*{usuari}" required disabled />
-                        </div>
-                    </div> -->
-
-
-                </form> 
+                </form>
 
             </div>
+
         </div>
-    </div>
 
-    <!-- Peu de pàgina -->
-    <div th:include="fragments/peuPagina :: footer"/>
+        <!-- Peu de pàgina -->
+        <div th:insert="~{fragments/peuPagina :: footer}"/>
 
-</body>
+    </body>
 </html>
