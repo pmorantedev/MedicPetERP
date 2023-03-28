@@ -1,14 +1,12 @@
 package com.gruptd.medicPet.controllers;
 
-import com.gruptd.medicPet.models.ImageData;
 import com.gruptd.medicPet.services.ImageDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -33,8 +31,14 @@ public class ImageController {
     }
 
     @GetMapping("/image/{name}")
-    public byte[] getImageByName(@PathVariable("name") String name) {
-        return imageDataService.getImage(name);
+    public byte[] getImageByName(@PathVariable("name") String name) throws IOException {
+        try {
+            byte[] image = imageDataService.getImage(name);
+            return image;
+        } catch (java.util.NoSuchElementException ex) {
+            Resource resource = new ClassPathResource("static/avatar1-freepik.jpg");
+            return resource.getContentAsByteArray();
+        }
     }
 
 }
