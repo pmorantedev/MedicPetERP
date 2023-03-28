@@ -25,6 +25,7 @@ public class FacturaController {
     public String principalFactures(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "Factures");
         log.info("Executant el controlador de factures");
         Iterable<Factura> factures = facturaService.findAll();
         log.info(">>> Factures de la BBDD:");

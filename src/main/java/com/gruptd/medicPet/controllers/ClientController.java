@@ -32,6 +32,7 @@ public class ClientController {
         model.addAttribute("clients", clients);
         model.addAttribute("mascotes", mascotes);
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "Clients");
         
         return "clientsMain";
     }
@@ -42,6 +43,7 @@ public class ClientController {
         
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "Clients");
         
         return "clientForm";
     }
@@ -63,6 +65,7 @@ public class ClientController {
         
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "Clients");
         
         return "clientForm";
     }
