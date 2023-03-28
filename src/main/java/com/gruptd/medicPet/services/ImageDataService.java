@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.Optional;
 
 /**
+ * Aquesta clase crea les funcions necessàries per crear o actualitzar una imatge
+ * a la BBDD i per retornar una imatge de perfil segons el nom de l'usuari
+ * identificat.
  *
  * @author pablomorante
  */
@@ -25,7 +28,7 @@ public class ImageDataService {
         Optional<ImageData> existingImageData = imageDataDAO.findByName(username);
 
         if (existingImageData.isPresent()) {
-            // Update the existing image with the new data
+            // Actualiza una imatge de la BD
             ImageData imageData = existingImageData.get();
             imageData.setType(file.getContentType());
             imageData.setImageData(ImageUtils.compressImage(file.getBytes()));
@@ -33,7 +36,7 @@ public class ImageDataService {
 
             return "Imatge actualitzada satisfactoriament: " + file.getOriginalFilename();
         } else {
-            // Create a new image
+            // Crea una nova imatge
             imageDataDAO.save(ImageData.builder()
                     .name(username)
                     .type(file.getContentType())
