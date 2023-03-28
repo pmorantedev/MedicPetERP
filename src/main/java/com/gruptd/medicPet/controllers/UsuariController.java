@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -24,7 +26,7 @@ public class UsuariController {
     private RolServices rolServices;
     
     @GetMapping("/medicpet/perfil")
-    public String perfilUsuari(Model model) {
+    public String perfilUsuari(Model model, @RequestParam(name = "incorrecta", required = false) Boolean incorrecta, @RequestParam(name = "novaInvalida", required = false) Boolean novaInvalida, @RequestParam(name = "correcta", required = false) Boolean correcta) {
         
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuari usuari = usuariServices.getByUsername(username);
@@ -34,6 +36,16 @@ public class UsuariController {
         model.addAttribute("treballador", usuari);
         model.addAttribute("rol", rol);
         model.addAttribute("contrasenya", password);
+        
+        if (incorrecta != null && incorrecta == true) {
+            model.addAttribute("incorrecta", incorrecta);
+        } 
+        if (novaInvalida != null && novaInvalida == true) {
+            model.addAttribute("novaInvalida", novaInvalida);
+        } 
+        if (correcta != null && correcta == true) {
+            model.addAttribute("correcta", correcta);
+        }
         
         return "perfil";
     }
@@ -46,7 +58,7 @@ public class UsuariController {
     }
     
     @PostMapping("/medicpet/perfical/canviarContrasenya")
-    public String modificarContrasenya(CanviContrasenya password, Model model) {
+    public String modificarContrasenya(CanviContrasenya password, RedirectAttributes redirectAtr) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuari usuari = usuariServices.getByUsername(username);
         
@@ -60,14 +72,14 @@ public class UsuariController {
                 String contrasenyaNova = passwordEncoder.encode(password.getContraNova());
                 usuari.setContrasenya(contrasenyaNova);
                 usuariServices.update(usuari);
+                redirectAtr.addAttribute("correcta", true);
             } else {
-                return "redirect:/medicpet/perfil?novaInvalida";
+                redirectAtr.addAttribute("novaInvalida", true);
             }
         } else {
-            return "redirect:/medicpet/perfil?incorrecta";
+            redirectAtr.addAttribute("incorrecta", true);
         }
         
-        model.addAttribute("userName", username);
         
         return "redirect:/medicpet/perfil";
     }
