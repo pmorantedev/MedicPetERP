@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @Entity
-@Table(name = "ImageData")
+@Table(name = "user_images")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,6 +29,6 @@ public class ImageData {
     private String name;
     private String type;
     @Lob
-    @Column(name = "image_data", length = 1000)
+    @Column(name = "image_data")
     private byte[] imageData;
 }

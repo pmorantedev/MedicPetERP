@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -22,28 +23,18 @@ public class ImageController {
     public ImageDataService imageDataService;
 
     @PostMapping("/medicpet/perfil/guardarImatge")
-    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
+    public RedirectView uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         String response = imageDataService.uploadImage(file, username);
 
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @GetMapping("image/info/{name}")
-    public ResponseEntity<?> getImageInfoByName(@PathVariable("name") String name) {
-        ImageData image = imageDataService.getInfoByImageByName(name);
-
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(image);
+        RedirectView redirectView = new RedirectView("/medicpet/perfil?imatge=true");
+        redirectView.setContextRelative(true);
+        return redirectView;
     }
 
     @GetMapping("/image/{name}")
-    public ResponseEntity<?> getImageByName(@PathVariable("name") String name) {
-        byte[] image = imageDataService.getImage(name);
-
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("image/png"))
-                .body(image);
+    public byte[] getImageByName(@PathVariable("name") String name) {
+        return imageDataService.getImage(name);
     }
 
 }
