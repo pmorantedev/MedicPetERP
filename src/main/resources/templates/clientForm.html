@@ -38,18 +38,18 @@
     <body>
 
         <!-- Menú de navegació -->
-        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName})}"></div>
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, page=${pagina})}"></div>
 
         <!-- Continguts -->
         <div class="container">
 
             <!-- Breadcrumb -->
             <div class="d-flex">
-                <h2 class="mt-4">
+                <h2>
                     <a th:href="@{/medicpet/clients}" class="text-dark">[[#{clients.llistatTitol}]]</a>
                     <span> / </span>                        
-                    <span th:if="${client.idclient != null}" class="text-muted ml-2">[[#{clients.fitxaTitol}]]</span>
-                    <span th:if="${client.idclient == null}" class="text-muted ml-2">[[#{clients.fitxaNovaTitol}]]</span>
+                    <span th:if="${client.idclient != null}" class="text-warning ml-2">[[#{clients.fitxaClientTitol}]] "<span th:text="${client.getNomComplert}" class="text-warning"></span>"</span>
+                    <span th:if="${client.idclient == null}" class="text-warning ml-2">[[#{clients.fitxaNovaTitol}]]</span>
                     <!-- TO-DO: detectar rol veterinari 
                     <span th:if="${user.rol.id == 3}" class="text-muted ml-2">[[#{clients.fitxaTitol}]]</span>-->                    
                 </h2>

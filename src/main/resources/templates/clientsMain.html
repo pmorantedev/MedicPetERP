@@ -74,10 +74,6 @@
                                     [[#{generic.botoEliminar}]]
                                 </button>
 
-                                <!--<a id="btn_eliminar" th:href="@{/medicpet/clients/eliminar/} + ${client.getIdclient}" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminar">
-                                    Eliminar
-                                </a>-->
-
                                 <!--<form id="eliminarClient" method="post" th:action="@{/medicpet/clients/eliminar/} + ${client.getIdclient}" class="m-0">
                                     <input type="submit" class="btn btn-outline-danger" value="Eliminar">
                                 </form>-->                      
@@ -91,9 +87,8 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
 
-                            <form method="post" th:action="@{/medicpet/clients/eliminar/} + ${client.getIdclient}" th:object="${client}" class="m-0" id="deleteClientForm">
-                                <input type="hidden" th:field="*{idclient}" />
-
+                            <form method="post" class="m-0" id="deleteClientForm">
+                                <!--<input type="hidden" th:field="*{idclient}" />-->
 
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">[[#{clients.modalTitol}]]</h5>
@@ -124,12 +119,6 @@
             </div>
 
         </div>
-
-        <!-- Sobreescriure 'show.bs.modal' -->
-
-        <script>
-        </script>
-
 
         <!-- Peu de pàgina -->
         <div th:insert="~{fragments/peuPagina :: footer}"/>

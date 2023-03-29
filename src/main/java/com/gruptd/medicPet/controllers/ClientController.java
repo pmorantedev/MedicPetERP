@@ -95,7 +95,7 @@ public class ClientController {
 //        }
         client = clientService.getOne(idclient);
         clientService.delete(client);
-        log.info("Executant el controlador de clients: CLIENT ELIMINAT ( ID:"+client.getIdclient()+", "+client.getNomComplert()+" )...");
+        log.info("Executant controlador clients: CLIENT ELIMINAT ( ID:"+client.getIdclient()+", "+client.getNomComplert()+" )...");
         
         return "redirect:/medicpet/clients";
     }
