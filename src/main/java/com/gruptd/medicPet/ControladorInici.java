@@ -10,12 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -38,14 +38,17 @@ public class ControladorInici {
     private RolServices rolService;
 
     @GetMapping("/login")
-    public String inici() {
-        log.info("Executant el controlador d'inici");
+    public String inici(@RequestParam(value = "message", required = false) String message, Model model) {
+        if ("logout".equals(message)) {
+            model.addAttribute("logout", true);
+        }
+
         return "login";
     }
 
     @GetMapping("/")
     public String arrel() {
-        return "redirect:/medicpet/tractaments";
+        return "redirect:/medicpet/clients";
     }
 
     @GetMapping("/registre")
@@ -79,7 +82,7 @@ public class ControladorInici {
                 return "redirect:/registre";
             }
         }
-        return "redirect:/medicpet/tractaments";
+        return "redirect:/medicpet/clients";
 
     }
 

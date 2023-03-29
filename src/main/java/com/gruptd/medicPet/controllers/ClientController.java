@@ -35,6 +35,7 @@ public class ClientController {
         model.addAttribute("clients", clients);
         model.addAttribute("mascotes", mascotes);
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "Clients");
         
         return "clientsMain";
     }
@@ -44,6 +45,7 @@ public class ClientController {
         
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "Clients");
         
         log.info("Executant controlador clients: FITXA NOU CLIENT...");
         
@@ -58,7 +60,7 @@ public class ClientController {
              return "clientForm"; // Mantenim l'usuari a la pàgina del formulari
         }
         
-        if (client.getIdclient() == null ) {
+        if ( client.getIdclient() == null ) {
             clientService.save(client);
             log.info("Executant controlador clients: NOU CLIENT DESAT ( ID:"+client.getIdclient()+", "+client.getNomComplert()+" )...");
         } else {
@@ -78,6 +80,7 @@ public class ClientController {
         
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
+        model.addAttribute("pagina", "Clients");
                 
         return "clientForm";
     }

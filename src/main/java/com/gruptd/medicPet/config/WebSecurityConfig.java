@@ -55,7 +55,7 @@ public class WebSecurityConfig {
                                 return;
                             }
                         }
-                    response.sendRedirect("/medicpet/tractaments");
+                    response.sendRedirect("/medicpet/clients");
                     })
                 )
                 .authorizeHttpRequests((requests) -> requests
@@ -77,7 +77,7 @@ public class WebSecurityConfig {
                 )
                 .logout((logout) -> logout
                     .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login?logout"))
+                    .logoutSuccessUrl("/login?message=logout"))
                 .csrf(); // Protecció contra atacs CSRF
 
         // protecció per evitar que els atacants robin la sessió d'un usuari canviant l'ID de la sessió
