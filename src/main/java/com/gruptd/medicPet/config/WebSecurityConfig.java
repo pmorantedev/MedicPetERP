@@ -55,7 +55,7 @@ public class WebSecurityConfig {
                                 return;
                             }
                         }
-                    response.sendRedirect("/medicpet/tractaments");
+                    response.sendRedirect("/medicpet/clients");
                     })
                 )
                 .authorizeHttpRequests((requests) -> requests

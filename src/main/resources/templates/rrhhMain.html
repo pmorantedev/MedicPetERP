@@ -11,7 +11,7 @@
     <body class="bg-secondary-subtle">
 
         <!-- Menú de navegació -->
-        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName})}"></div>
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, page=${pagina})}"></div>
 
         <!-- Contingut de la pàgina -->
         <div class="container">
@@ -34,35 +34,37 @@
                 </div>
 
                 <!-- Taula -->
-                <table class="table align-middle table-striped table-responsive-xl mt-2">
-                    <thead class="table-dark">
-                        <tr class="text-center align-middle">
-                            <th scope="col">Id</th>
-                            <th scope="col" class="col-3">Nom i cognoms</th>
-                            <th scope="col">Telèfon</th>
-                            <th scope="col" class="col-3">Email</th>
-                            <th scope="col" class="col-3">Adreça</th>
-                            <th scope="col-3" colspan="3">Accions</th>          
-                        </tr>  
-                    </thead>
-                    <tbody>                 
-                        <tr th:each="treballador: ${treballadors}" class="text-center">
-                            <td th:text="${treballador.getId}"></td>
-                            <td th:text="${treballador.getNomComplet}"></td>
-                            <td th:text="${treballador.getTelefon}"></td>
-                            <td th:text="${treballador.getEmail}"></td>
-                            <td th:text="${treballador.getAdreca}"></td>
-                            <td><form method="get" th:action="@{/medicpet/rrhh/fitxa/} + ${treballador.getId}" class="m-0">
-                                    <input type="submit" class="btn btn-outline-primary" value="Editar">
-                                </form>
-                            </td>
-                            <td><form method="post" th:action="@{/medicpet/rrhh/eliminar/{id}(id=${treballador.id})}" class="m-0">
-                                    <input type="submit" class="btn btn-outline-danger" value="Eliminar">
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> 
+                <div class="table-responsive">
+                    <table class="table align-middle table-striped table-responsive-xl mt-2">
+                        <thead class="table-dark">
+                            <tr class="text-center align-middle">
+                                <th scope="col" class="col-1º">Id</th>
+                                <th scope="col" class="col-3">Nom i cognoms</th>
+                                <th scope="col" class="col-2">Telèfon</th>
+                                <th scope="col" class="col-3">Email</th>
+                                <th scope="col" class="col-3">Adreça</th>
+                                <th scope="col-3" colspan="3">Accions</th>          
+                            </tr>  
+                        </thead>
+                        <tbody>                 
+                            <tr th:each="treballador: ${treballadors}" class="text-center">
+                                <td th:text="${treballador.getId}"></td>
+                                <td th:text="${treballador.getNomComplet}"></td>
+                                <td th:text="${treballador.getTelefon}"></td>
+                                <td th:text="${treballador.getEmail}"></td>
+                                <td th:text="${treballador.getAdreca}"></td>
+                                <td><form method="get" th:action="@{/medicpet/rrhh/fitxa/} + ${treballador.getId}" class="m-0">
+                                        <input type="submit" class="btn btn-outline-primary" value="Mostrar">
+                                    </form>
+                                </td>
+                                <td><form method="post" th:action="@{/medicpet/rrhh/eliminar/{id}(id=${treballador.id})}" class="m-0">
+                                        <input type="submit" class="btn btn-outline-danger" value="Eliminar">
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
             </div>
 
             <!-- Si no hi ha tractaments creats, es mostrarà aquest missatge -->

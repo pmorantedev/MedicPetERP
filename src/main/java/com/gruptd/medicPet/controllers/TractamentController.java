@@ -34,7 +34,7 @@ public class TractamentController {
         
         // String paraulaClau = "TRACTAMENT";
         if (paraulaClau != null) {
-            String sql = "SELECT * FROM tractament t WHERE CONCAT(t.nom, t.id, t.preu) LIKE '%" + paraulaClau + "%'";
+            String sql = "SELECT * FROM tractament t WHERE CONCAT(t.id, t.nom, t.preu) LIKE '%" + paraulaClau + "%'";
             tractaments = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Tractament.class));
         } else {
             tractaments = tractamentService.findAll();
@@ -44,7 +44,8 @@ public class TractamentController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         model.addAttribute("userName", username);
-
+        model.addAttribute("pagina", "Tractaments");
+        
         return "tractamentsMain";
     }
 
@@ -54,7 +55,8 @@ public class TractamentController {
         model.addAttribute("tractament", tractament);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
-
+        model.addAttribute("pagina", "Tractaments");
+        
         return "tractamentsForm";
     }
 
@@ -62,7 +64,8 @@ public class TractamentController {
     public String fitxaTractament(Tractament tractament, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
-
+        model.addAttribute("pagina", "Tractaments");
+        
         return "tractamentsForm";
     }
 

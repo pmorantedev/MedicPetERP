@@ -18,16 +18,16 @@
                         </a>
 
                         <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
-                            <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" class="nav-link px-2 text-white">Facturació</a></li>
-                            <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" class="nav-link px-2 text-white">Clients</a></li>
-                            <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" class="nav-link px-2 text-white">Tractaments</a></li>
-                            <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" class="nav-link px-2 text-white">RRHH</a></li>
+                            <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" th:class="${page == 'Factures' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Facturació</a></li>
+                            <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" th:class="${page == 'Clients' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Clients</a></li>
+                            <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" th:class="${page == 'Tractaments' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Tractaments</a></li>
+                            <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" th:class="${page == 'RRHH' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">RRHH</a></li>
                         </ul>
 
                         <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
                             <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="mx-1 text-white align-middle" th:text="${user}"></span>
-                                <img th:src="@{/avatar1-freepik.jpg}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Foto de perfil">
+                                <img th:src="@{/image/{name}(name=${user})}" width="40px" class="avatar img-fluid rounded-circle ms-1" alt="Foto de perfil">
                             </a>
                             <ul class="dropdown-menu text-small">
                                 <li><a class="dropdown-item" href="/medicpet/perfil">Perfil</a></li>

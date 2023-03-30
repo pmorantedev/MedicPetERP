@@ -48,7 +48,7 @@ public class ControladorInici {
 
     @GetMapping("/")
     public String arrel() {
-        return "redirect:/medicpet/tractaments";
+        return "redirect:/medicpet/clients";
     }
 
     @GetMapping("/registre")
@@ -82,7 +82,7 @@ public class ControladorInici {
                 return "redirect:/registre";
             }
         }
-        return "redirect:/medicpet/tractaments";
+        return "redirect:/medicpet/clients";
 
     }
 

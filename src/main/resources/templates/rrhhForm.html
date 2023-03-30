@@ -37,7 +37,7 @@
     <body>
 
         <!-- Menú de navegació -->
-        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName})}"></div>
+        <div th:insert="fragments/barraNavegacio :: header(user=${userName}, page=${pagina})"/>
 
         <!-- Continguts -->
         <div class="container">
@@ -118,6 +118,17 @@
                         <label class="col-sm-2 control-label"><h5>Especialitat</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="carrecAux" name="dni" type="text" class="form-control" style="background: none;" th:field="*{carrecAux}" required disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Càrrec</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <select class="form-select" id="carrec" name="carrec_id" th:field="*{carrec}" disabled>
+                                <option value="">Seleccionar càrrec...</option>
+                                <th:block th:each="carrec : ${carrecs}">
+                                    <option th:value="${carrec.getId}" th:text="${carrec.getNom}"></option>
+                                </th:block>
+                            </select>
                         </div>
                     </div>
                 </form>

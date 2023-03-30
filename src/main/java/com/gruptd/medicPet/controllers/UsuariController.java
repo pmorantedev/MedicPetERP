@@ -1,6 +1,7 @@
 package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.models.CanviContrasenya;
+import com.gruptd.medicPet.models.ImageData;
 import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.services.RolServices;
 import com.gruptd.medicPet.services.UsuariServices;
@@ -26,7 +27,10 @@ public class UsuariController {
     private RolServices rolServices;
     
     @GetMapping("/medicpet/perfil")
-    public String perfilUsuari(Model model, @RequestParam(name = "incorrecta", required = false) Boolean incorrecta, @RequestParam(name = "novaInvalida", required = false) Boolean novaInvalida, @RequestParam(name = "correcta", required = false) Boolean correcta) {
+    public String perfilUsuari(Model model, @RequestParam(name = "incorrecta", required = false) Boolean incorrecta, 
+            @RequestParam(name = "novaInvalida", required = false) Boolean novaInvalida, 
+            @RequestParam(name = "correcta", required = false) Boolean correcta,
+            @RequestParam(name = "imatge", required = false) Boolean imatge) {
         
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuari usuari = usuariServices.getByUsername(username);
@@ -45,6 +49,9 @@ public class UsuariController {
         } 
         if (correcta != null && correcta == true) {
             model.addAttribute("correcta", correcta);
+        }
+        if (imatge != null && imatge == true) {
+            model.addAttribute("imatge", imatge);
         }
         
         return "perfil";

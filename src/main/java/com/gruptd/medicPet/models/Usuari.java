@@ -24,7 +24,6 @@ public class Usuari implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
     private String username;
     @NotEmpty
     private String nom;
@@ -33,7 +32,6 @@ public class Usuari implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "rol_id")
-//    @NotEmpty
     private Rol rol_id;
 
 }

@@ -21,6 +21,7 @@ public class MascotaController {
     @GetMapping("/medicpet/clients/fitxa/{client_id}/mascotes/fitxa")           // URL fitxa mascota (FORM)
     public String fitxaMascota(Mascota mascota, Model model) {
         log.info("Executant el controlador de mascotes: FORMULARI OBERT...");
+        model.addAttribute("pagina", "Clients");
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
@@ -43,6 +44,7 @@ public class MascotaController {
 
         mascota = mascotaService.getOne(mascota.getId_mascota());
         model.addAttribute("mascota", mascota);
+        model.addAttribute("pagina", "Clients");
         
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
