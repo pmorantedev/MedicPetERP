@@ -14,7 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 
 @SpringBootTest
-class DemoApplicationTests {
+class CRUDTests {
 
     @Autowired
     private TractamentServices tractamentServices;
@@ -29,6 +29,7 @@ class DemoApplicationTests {
     @Transactional
     @Rollback(true)
     public void testSaveAndFindAll() {
+        List<Tractament> tractamentsInici = (List<Tractament>) tractamentServices.findAll();
         Tractament tractament = new Tractament();
         tractament.setNom("Tractament 1");
         tractament.setPreu(10.0f);
@@ -36,8 +37,8 @@ class DemoApplicationTests {
         tractamentServices.save(tractament);
 
         Iterable<Tractament> tractaments = tractamentServices.findAll();
-        assertEquals(1, ((List<Tractament>) tractaments).size());
-        Tractament savedTractament = ((List<Tractament>) tractaments).get(0);
+        assertEquals(tractamentsInici.size()+1, ((List<Tractament>) tractaments).size());
+        Tractament savedTractament = ((List<Tractament>) tractaments).get(tractamentsInici.size());
         assertEquals("Tractament 1", savedTractament.getNom());
         assertEquals(10.0, savedTractament.getPreu(), 0.0);
     }
