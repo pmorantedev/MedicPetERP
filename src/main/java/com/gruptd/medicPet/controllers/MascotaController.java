@@ -2,7 +2,9 @@ package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.models.Client;
 import com.gruptd.medicPet.models.Mascota;
+import com.gruptd.medicPet.models.Visita;
 import com.gruptd.medicPet.services.MascotaServices;
+import com.gruptd.medicPet.services.VisitaServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +19,9 @@ public class MascotaController {
 
     @Autowired
     private MascotaServices mascotaService;
-    
+    @Autowired
+    private VisitaServices visitaService;
+
     @GetMapping("/medicpet/clients/fitxa/{client_id}/mascotes/fitxa")           // URL fitxa mascota (FORM)
     public String fitxaMascota(Mascota mascota, Model model) {
         log.info("Executant el controlador de mascotes: FORMULARI OBERT...");
@@ -25,7 +29,7 @@ public class MascotaController {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
-        
+
         return "mascotaForm";
     }
 
@@ -34,7 +38,7 @@ public class MascotaController {
         log.info("Executant el controlador de mascotes: DESANT DADES MASCOTA...");
 
         mascotaService.save(mascota);
-        
+
         return "redirect:/medicpet/clients/fitxa/{client_id}";
     }
 
@@ -45,10 +49,14 @@ public class MascotaController {
         mascota = mascotaService.getOne(mascota.getId_mascota());
         model.addAttribute("mascota", mascota);
         model.addAttribute("pagina", "Clients");
-        
+
+        Iterable<Visita> visites = visitaService.findAll();
+
+        model.addAttribute("visites", visites);
+
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
-        
+
         return "mascotaForm";
     }
 
@@ -57,7 +65,7 @@ public class MascotaController {
         log.info("Executant el controlador de mascotes: MASCOTA (" + mascota.getNom() + ") ELIMINADA...");
 
         mascotaService.delete(mascota);
-        
+
         return "redirect:/medicpet/clients/fitxa/{client_id}";
     }
 

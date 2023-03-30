@@ -37,6 +37,6 @@ public class Visita implements Serializable {
     @OneToOne
     @JoinColumn(name = "mascota_id")
     @NotEmpty
-    private Mascota mascota_id;
+    private Mascota mascota;
 
 }
