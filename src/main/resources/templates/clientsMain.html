@@ -65,19 +65,18 @@
 
                                 <!-- accions -->
                                 <td>
-                                    <a class="btn btn-outline-primary" th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" >
-                                        [[#{generic.botoMostrar}]]
-                                    </a>
+                                    <a class="btn btn-outline-primary" th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" >[[#{generic.botoMostrar}]]</a>
                                 </td>
                                 <td>
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-id="${client.getIdclient}" id="deleteClientButton">
+                                    <!--<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-id="${client.getIdclient}">
                                         [[#{generic.botoEliminar}]]
-                                    </button>
+                                    </button>-->
 
-                                    <!--<form id="eliminarClient" method="post" th:action="@{/medicpet/clients/eliminar/} + ${client.getIdclient}" class="m-0">
+                                    <form id="eliminarClient" method="post" th:action="@{/medicpet/clients/eliminar/} + ${client.getIdclient}" onsubmit="return confirmDelete();" class="m-0">
                                         <input type="submit" class="btn btn-outline-danger" value="Eliminar">
-                                    </form>-->                      
+                                    </form>
+                                    <!-- <a data-bs-toggle="modal" data-bs-target="#confirmarEliminar" name="btn_eliminar" class="btn btn-outline-danger" th:data-idclient="${client}" >[[#{generic.botoEliminar}]]</a> -->
                                 </td>
                             </tr>
                         </tbody>
@@ -89,8 +88,8 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
 
-                            <form method="post" class="m-0" id="deleteClientForm">
-                                <!--<input type="hidden" th:field="*{idclient}" />-->
+                            <!--<form method="post" class="m-0" id="deleteClientForm" th:action="@{/medicpet/clients/eliminar/} + ${idclient}" th:object="${client}">-->
+                                <!--<input type="hidden" th:field="*{idclient}" />-->                                
 
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">[[#{clients.modalTitol}]]</h5>
@@ -98,14 +97,14 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <p>[[#{clients.modalMsg}]]</p>                               
+                                    <p>[[#{clients.modalMsg}]]</p>
                                 </div>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">[[#{generic.botoTancar}]]</button>
-                                    <button type="submit" class="btn btn-outline-danger">[[#{generic.botoEliminar}]]</button>                                                                   
+                                    <button type="button" class="btn btn-outline-danger">[[#{generic.botoEliminar}]]</button>                                                                   
                                 </div>
-                            </form>
+                            <!--</form>-->
                         </div>
                     </div>
                 </div>
@@ -121,6 +120,44 @@
             </div>
 
         </div>
+
+        <!-- Script de jQuery para capturar el valor del ID del objeto cuando se hace clic en el botón de eliminar -->
+        <script>
+            $(document).ready(function () {
+
+                $('.table #btn_eliminar').on('click', function (event) {
+                    event.preventDefault();
+                    //        var href = $(this).attr('href');
+                    var action = "@{/medicpet/clients/eliminar/} + ${client.getIdclient}";
+                    $('#confirmarEliminar').attr('th:action', action);
+                    $('#confirmarEliminar').modal();
+                });
+            });
+
+        </script>
+
+        <script th:inline="javascript">
+            function confirmDelete() {
+                var result = confirm("Are you sure you want to delete this client?");
+                if (result) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            document.getElementById("#eliminarClient").addEventListener("submit", function (event) {
+                event.preventDefault();
+                $('#confirm-delete').modal('show');
+            });
+
+            document.getElementById("delete-client").addEventListener("click", function (event) {
+                document.getElementById("eliminarClient").submit();
+            });
+
+        </script>
+
+
 
         <!-- Peu de pàgina -->
         <div th:insert="~{fragments/peuPagina :: footer}"/>

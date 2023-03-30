@@ -86,14 +86,17 @@ public class ClientController {
     }
     
     @PostMapping("/medicpet/clients/eliminar/{idclient}")                       // URL 'DELETE' client (FORM)
-    public String eliminar(@PathVariable Long idclient, Client client, Model model){        
+    public String eliminar(Client client){        
         
         // TO-DO: detectar si hi havia mascotes associades i llistar-les al log
 //        if (!client.getMascotes().isEmpty()) {
 //            for(int i = 0; i<client.getMascotes().size(); i++)
 //                log.info("Executant el controlador de clients: CLIENT ("+client.getIdclient()+") / MASCOTA ASSOCIADA ("+client.getMascotes().get(i).getId_mascota()+") ELIMINADA");
 //        }
-        client = clientService.getOne(idclient);
+    
+//        client = clientService.getOne(idclient);
+//        model.addAttribute("client", client );
+         
         clientService.delete(client);
         log.info("Executant controlador clients: CLIENT ELIMINAT ( ID:"+client.getIdclient()+", "+client.getNomComplert()+" )...");
         
