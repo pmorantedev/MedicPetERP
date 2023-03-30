@@ -58,7 +58,6 @@ public class UsuariServices implements ServicesInterface<Usuari> {
         Usuari usuariBD = getOne(u.getId());
         if (usuariBD != null) {
 
-            usuariBD.setUsername(u.getUsername());
             usuariBD.setNom(u.getNom());
             if (u.getContrasenya() != null) {
                 usuariBD.setContrasenya(u.getContrasenya());

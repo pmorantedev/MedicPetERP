@@ -35,52 +35,54 @@
                 </div>
 
                 <!-- Taula -->
-                <table class="table align-middle table-striped table-responsive-xl mt-3">
-                    <thead class="table-dark">
-                        <tr class="text-center align-middle">
-                            <th scope="col">[[#{generic.colId}]]</th>
-                            <th scope="col" class="col-2">[[#{clients.campNom}]]</th>
-                            <th scope="col">[[#{clients.campDni}]]</th>
-                            <th scope="col" class="col-2">[[#{clients.campTelefon}]]</th>
-                            <th scope="col" class="col-2">[[#{clients.campEmail}]]</th>
-                            <th scope="col">[[#{clients.campMascotes}]]</th>
-                            <th scope="col" colspan="3" class="col-1">[[#{generic.colAccions}]]</th>
-                        </tr>  
-                    </thead>
-                    <tbody>                 
-                        <tr th:each="client: ${clients}" class="text-center">
+                <div class="table-responsive">
+                    <table class="table align-middle table-striped table-responsive-xl mt-3">
+                        <thead class="table-dark">
+                            <tr class="text-center align-middle">
+                                <th scope="col">[[#{generic.colId}]]</th>
+                                <th scope="col" class="col-2">[[#{clients.campNom}]]</th>
+                                <th scope="col">[[#{clients.campDni}]]</th>
+                                <th scope="col" class="col-2">[[#{clients.campTelefon}]]</th>
+                                <th scope="col" class="col-2">[[#{clients.campEmail}]]</th>
+                                <th scope="col">[[#{clients.campMascotes}]]</th>
+                                <th scope="col" colspan="3" class="col-1">[[#{generic.colAccions}]]</th>
+                            </tr>  
+                        </thead>
+                        <tbody>                 
+                            <tr th:each="client: ${clients}" class="text-center">
 
-                            <td th:text="${client.getIdclient}"></td>
-                            <td><a th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" th:text="${client.getNomComplert}" class="text-decoration-none" /></td>
-                            <td th:text="${client.getDni}"></td>
-                            <td th:text="${client.getTelefon}"></td>
-                            <td th:text="${client.getEmail}"></td>
+                                <td th:text="${client.getIdclient}"></td>
+                                <td><a th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" th:text="${client.getNomComplert}" class="text-decoration-none" /></td>
+                                <td th:text="${client.getDni}"></td>
+                                <td th:text="${client.getTelefon}"></td>
+                                <td th:text="${client.getEmail}"></td>
 
-                            <!-- mascotes (amb o sense) -->
-                            <td th:if="${client.getMascotes != null and !client.getMascotes.empty}">
-                                <span th:each="mascota: ${client.mascotes}" th:text="${mascota.nom}" class="badge p-2 me-2 my-1 bg-dark" />
-                            </td>
-                            <td th:if="${client.getMascotes == null or client.getMascotes.empty}" th:text="${'Sense mascotes...'}" class="text-muted fst-italic" />
+                                <!-- mascotes (amb o sense) -->
+                                <td th:if="${client.getMascotes != null and !client.getMascotes.empty}">
+                                    <span th:each="mascota: ${client.mascotes}" th:text="${mascota.nom}" class="badge p-2 me-2 my-1 bg-dark" />
+                                </td>
+                                <td th:if="${client.getMascotes == null or client.getMascotes.empty}" th:text="${'Sense mascotes...'}" class="text-muted fst-italic" />
 
-                            <!-- accions -->
-                            <td>
-                                <a class="btn btn-outline-primary" th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" >
-                                    [[#{generic.botoMostrar}]]
-                                </a>
-                            </td>
-                            <td>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-id="${client.getIdclient}" id="deleteClientButton">
-                                    [[#{generic.botoEliminar}]]
-                                </button>
+                                <!-- accions -->
+                                <td>
+                                    <a class="btn btn-outline-primary" th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" >
+                                        [[#{generic.botoMostrar}]]
+                                    </a>
+                                </td>
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-id="${client.getIdclient}" id="deleteClientButton">
+                                        [[#{generic.botoEliminar}]]
+                                    </button>
 
-                                <!--<form id="eliminarClient" method="post" th:action="@{/medicpet/clients/eliminar/} + ${client.getIdclient}" class="m-0">
-                                    <input type="submit" class="btn btn-outline-danger" value="Eliminar">
-                                </form>-->                      
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                    <!--<form id="eliminarClient" method="post" th:action="@{/medicpet/clients/eliminar/} + ${client.getIdclient}" class="m-0">
+                                        <input type="submit" class="btn btn-outline-danger" value="Eliminar">
+                                    </form>-->                      
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <!-- Modal -->
                 <div class="modal fade" id="confirmarEliminar" tabindex="-1" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
