@@ -41,6 +41,8 @@ public class TreballadorController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
         model.addAttribute("pagina", "RRHH");
+        Iterable<Carrec> carrecs = carrecService.findAll();
+        model.addAttribute("carrecs", carrecs);
         
         return "rrhhForm";
     }
@@ -50,6 +52,8 @@ public class TreballadorController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
         model.addAttribute("pagina", "RRHH");
+        Iterable<Carrec> carrecs = carrecService.findAll();
+        model.addAttribute("carrecs", carrecs);
         
         return "rrhhForm";
     }

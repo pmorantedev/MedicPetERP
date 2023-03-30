@@ -59,7 +59,8 @@
             <div class="mt-4" th:if="${client.idclient == null}">
                 <script th:inline="javascript">
 
-                    var filtre = [[${client.idclient == null}
+                    var filtre = [[${client.idclient == null
+                    }
                     ]]; // Si el client és nou...
                     window.onload = function () {
                         if (!filtre)
@@ -89,7 +90,7 @@
             <div class="p-5 mt-4 bg-light rounded-3">
                 <!-- th:action="@{${client.idclient != null} ? '/medicpet/clients/desar' : '/medicpet/clients/update/' + ${client.idclient}}" -->
                 <form id="clientForm" method="POST" th:action="@{/medicpet/clients/desar}" th:object="${client}" class="form-horizontal">
-                
+
                     <input type="hidden" name="idclient" th:field="*{idclient}" th:if="${client.idclient != null}">
 
                     <div class="form-group row align-items-center">
@@ -136,40 +137,42 @@
                 <a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa(idclient=${client.idclient})}" class="btn btn-outline-success mt-4">[[#{mascotes.botoCrear}]]</a>
 
                 <!-- Taula -->
-                <table class="table align-middle table-striped table-responsive-xl mt-4">
-                    <thead class="table-dark">
-                        <tr class="text-center align-middle">
-                            <th scope="col">[[#{generic.colId}]]</th>
-                            <th scope="col">[[#{mascotes.campNom}]]</th>
-                            <th scope="col">[[#{mascotes.campAniversari}]]</th>
-                            <th scope="col">[[#{mascotes.campSexe}]]</th>
-                            <th scope="col">[[#{mascotes.campEspecie}]]</th>
-                            <th scope="col">[[#{mascotes.campRaca}]]</th>
-                            <th scope="col" colspan="3" class="col-1">[[#{generic.colAccions}]]</th>
-                        </tr>  
-                    </thead>
-                    <tbody>                 
-                        <tr th:each="mascota: ${client.mascotes}" class="text-center">
-                            <td th:text="${mascota.getId_mascota}"></td>
-                            <td><a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa/{idmascota}/editar(idclient=${client.getIdclient}, idmascota=${mascota.getId_mascota})}" th:text="${mascota.getNom}" class="text-decoration-none" /></td>
-                            <td th:text="${mascota.getData_naixement}"></td>
-                            <td th:text="${mascota.getSexe}"></td>
-                            <td th:text="${mascota.getEspecie}"></td>                            
-                            <td th:text="${mascota.getRaca}"></td>                            
-                            <td>
-                                <a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa/{idmascota}/editar(idclient=${client.getIdclient}, idmascota=${mascota.getId_mascota})}" class="btn btn-outline-primary m-0">
-                                    [[#{generic.botoMostrar}]]
-                                </a>
-                            </td>
-                            <td>
-                                <!-- per fer POST, cal que sigui un btn -->
-                                <form method="POST" th:action="@{/medicpet/clients/fitxa/{idclient}/mascotes/eliminar/{idmascota}(idclient=${client.idclient}, idmascota=${mascota.getId_mascota})}" class="m-0">
-                                    <button type="submit" class="btn btn-outline-danger">[[#{generic.botoEliminar}]]</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> 
+                <div class="table-responsive">
+                    <table class="table align-middle table-striped table-responsive-xl mt-4">
+                        <thead class="table-dark">
+                            <tr class="text-center align-middle">
+                                <th scope="col">[[#{generic.colId}]]</th>
+                                <th scope="col">[[#{mascotes.campNom}]]</th>
+                                <th scope="col">[[#{mascotes.campAniversari}]]</th>
+                                <th scope="col">[[#{mascotes.campSexe}]]</th>
+                                <th scope="col">[[#{mascotes.campEspecie}]]</th>
+                                <th scope="col">[[#{mascotes.campRaca}]]</th>
+                                <th scope="col" colspan="3" class="col-1">[[#{generic.colAccions}]]</th>
+                            </tr>  
+                        </thead>
+                        <tbody>                 
+                            <tr th:each="mascota: ${client.mascotes}" class="text-center">
+                                <td th:text="${mascota.getId_mascota}"></td>
+                                <td><a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa/{idmascota}/editar(idclient=${client.getIdclient}, idmascota=${mascota.getId_mascota})}" th:text="${mascota.getNom}" class="text-decoration-none" /></td>
+                                <td th:text="${mascota.getData_naixement}"></td>
+                                <td th:text="${mascota.getSexe}"></td>
+                                <td th:text="${mascota.getEspecie}"></td>                            
+                                <td th:text="${mascota.getRaca}"></td>                            
+                                <td>
+                                    <a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa/{idmascota}/editar(idclient=${client.getIdclient}, idmascota=${mascota.getId_mascota})}" class="btn btn-outline-primary m-0">
+                                        [[#{generic.botoMostrar}]]
+                                    </a>
+                                </td>
+                                <td>
+                                    <!-- per fer POST, cal que sigui un btn -->
+                                    <form method="POST" th:action="@{/medicpet/clients/fitxa/{idclient}/mascotes/eliminar/{idmascota}(idclient=${client.idclient}, idmascota=${mascota.getId_mascota})}" class="m-0">
+                                        <button type="submit" class="btn btn-outline-danger">[[#{generic.botoEliminar}]]</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
             </div>
             <!-- Si no hi ha mascotes creades, es mostrarà aquest missatge -->
             <div th:if="${client.idclient != null and (client.mascotes == null or client.mascotes.empty)}" class="justify-content-center mt-3">
