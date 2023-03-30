@@ -28,7 +28,7 @@
             }
 
             function validar() {
-                var preu = document.getElementById('preu').value;
+                var preu =  document.getElementById('preu').value;
                 var error = document.getElementById('preu-error');
                 var error2 = document.getElementById('preu-lletres');
                 
@@ -42,7 +42,7 @@
                     errorNom.style.display = 'block';
                     errorNomBuit.style.display = 'none';
                     formulariNotOk++;
-                } else if (nom.isEmpty || nom.length === 0) {
+                } else if (nom.trim() === '' || nom.length === 0) {
                     errorNomBuit.style.display = 'block';
                     errorNom.style.display = 'none';
                     formulariNotOk++;
@@ -63,7 +63,9 @@
                     error2.style.display = 'none';
                 }
                 
-                if (formulariNotOk === 0){
+                window.alert("ERROR ---> " + formulariNotOk);
+                
+                if (formulariNotOk == 0){
                     return true;
                 } else {
                     return false;
@@ -126,14 +128,14 @@
             <!-- Formulari: Detalls Tractament -->
             <div <div class="p-5 mt-4 bg-light rounded-3">
 
-                <form id="tractamentForm" method="POST" th:action="@{/medicpet/tractaments/guardar}" th:object="${tractament}">
+                <form id="tractamentForm" method="POST" th:action="@{/medicpet/tractaments/guardar}" th:object="${tractament}" onsubmit="return validar()">
 
                     <input type="hidden" name="id" th:field="*{id}">
 
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 control-label"><h5>Nom del tractament</h5></label>
                         <div class="col-sm-9 align-items-center">
-                            <input id="nom" name="name" type="text" class="form-control" style="background: none;" th:field="*{nom}" required disabled />
+                            <input id="nom" name="name" type="text" class="form-control" style="background: none;" th:field="*{nom}" />
                             <span id="error-nom" class="text-danger" style="display:none;">El nom ha de tenir com a màxim 45 caràcters.</span>
                             <span id="error-buit" class="text-danger" style="display:none;">El nom no pot estar buit.</span>
                         </div>
@@ -141,7 +143,7 @@
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-3 control-label"><h5>Preu del tractament</h5></label>
                         <div class="col-sm-9 align-items-center">
-                            <input id="preu" name="price" type="text" class="form-control" style="background: none;" th:field="*{preu}" required disabled/>
+                            <input id="preu" name="price" type="text" class="form-control" style="background: none;" th:field="*{preu}" />
                             <span id="preu-error" class="text-danger" style="display:none;">El preu ha de ser mínim 0.01€</span>
                             <span id="preu-lletres" class="text-danger" style="display:none;">El preu no poden ser lletres</span>
                         </div>

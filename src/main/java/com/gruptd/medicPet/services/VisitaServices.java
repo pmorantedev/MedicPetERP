@@ -7,6 +7,7 @@ package com.gruptd.medicPet.services;
 import com.gruptd.medicPet.dao.VisitaDAO;
 import com.gruptd.medicPet.models.Visita;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author izan
  */
+@Service
 public class VisitaServices implements ServicesInterface<Visita> {
 
     @Autowired
@@ -46,7 +48,6 @@ public class VisitaServices implements ServicesInterface<Visita> {
     }
 
     @Transactional
-
     @Override
     public void update(Visita v) {
         Visita visitaDB = getOne(v.getId());
