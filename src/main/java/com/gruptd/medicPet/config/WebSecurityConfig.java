@@ -62,6 +62,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/registre").hasAuthority("ADMIN")
                     .requestMatchers("/medicpet/tractaments/fitxa", "/medicpet/tractaments/eliminar/**", "/medicpet/tractaments/guardar").hasAuthority("ADMINISTRATIU")
                     .requestMatchers("/medicpet/rrhh/fitxa", "/medicpet/rrhh/eliminar/**", "/medicpet/rrhh/guardar").hasAuthority("ADMINISTRATIU")
+                    .requestMatchers("/medicpet/clients/fitxa", "/medicpet/clients/eliminar/**", "/medicpet/clients/guardar").hasAuthority("ADMINISTRATIU")
                     .requestMatchers("/medicpet/**").hasAnyAuthority("ADMINISTRATIU", "VETERINARI")
                     .requestMatchers("/**").permitAll()
                 )
