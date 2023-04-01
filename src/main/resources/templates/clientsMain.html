@@ -96,7 +96,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">[[#{generic.botoCancelar}]]</button>
+                                <button type="button" class="btn btn-secondary" id="btn_eliminarCancelar" data-bs-dismiss="modal">[[#{generic.botoCancelar}]]</button>
                                 <button type="button" class="btn btn-outline-danger" id="btn_eliminarConfirmar" data-id="">[[#{generic.botoEliminar}]]</button>                                                                   
                             </div>
                         </div>
@@ -128,11 +128,16 @@
                 const modal = new bootstrap.Modal(modalEl, {
                     keyboard: false
                 });
-
+                
+                // Desar tots els botons que serveixen per eliminar un registre
+                const botonsEliminar = document.querySelectorAll('.btn-eliminar');
+                
+                // Botons del modal
+                const btnEliminarConfirmar = document.getElementById('btn_eliminarConfirmar');
+                const btnEliminarCancelar = document.getElementById('btn_eliminarCancelar');
+                
                 // Funció per eliminar un registre
                 function eliminarRegistre(idRegistre) {
-
-                    console.log(`Eliminant registre ${idRegistre} ...`);
 
                     // Obtindre la ruta per l'acció 'Eliminar'
                     const formEliminar = document.getElementById(`eliminarRegistre${idRegistre}`);
@@ -147,50 +152,59 @@
                         idRegistre = Number(idRegistre);
                         formEliminar.action = `${url}${idRegistre}`;
                         formEliminar.submit();
+                        console.log(">> Registre nº (" + idRegistre + ") eliminat"); 
 
                     } else {
                         console.error(`El valor de 'data-th-id' no és un nombre vàlid: ${idRegistre}`);
                     }
                 }
-
+                
                 // Funció per confirmar l'eliminació
                 function confirmarEliminar(idRegistre) {
-
+                    
+                    // Mostrar modal
                     modal.show();
-
-                    const btnEliminarConfirmar = document.getElementById('btn_eliminarConfirmar');
+                    console.log(">> Registre seleccionat (" + idRegistre + ")");                    
+                    
                     btnEliminarConfirmar.addEventListener('click', function () {
-                        console.log(">> Registre nº (" + idRegistre + ") eliminat");
+                        console.log(`Eliminant registre ${idRegistre} ...`);
                         eliminarRegistre(idRegistre);
                         modal.hide();
                     });
+                    
+                    btnEliminarCancelar.addEventListener('click', function () {
+                        console.log(">> Acció cancel·lada");
+                        idRegistre = null;  // resetejo id per evitar acomular-los                        
+                        modal.hide();
+                    });
+                    
                 }
-
-                // Detectar quin botó s'ha clicat (Event)
-                const botonsEliminar = document.querySelectorAll('.btn-eliminar');
-
+                
                 // Iterar sobre cada botó
                 botonsEliminar.forEach(function (boto) {
                     
-                    const idRegistre = boto.getAttribute('id');
-                    
+                    // En fer clic, es mostra el modal
                     boto.addEventListener('click', function (event) {
-
-                        console.log('S\'ha fet clic al botó nº: ' + idRegistre);
-
+                        
+                        // Detectar quin botó s'ha clicat (Event) per establir l'ID
+                        let idRegistre = boto.getAttribute('id');
+                        console.log('>> ID registre: ' + idRegistre);
+                        
                         // Recuperar el valor de l'atribut 'data-th-nom' del botó
                         const nom = event.target.getAttribute('nom');
-                        console.log('Nom registre: ' + nom);
+                        console.log('>> Nom registre: ' + nom);
                         // Actualitzar el contingut del títol del modal amb el valor de l'atribut
                         document.querySelector('#confirmarEliminarLabel span').textContent = nom;
-                        // Mostrar modal
-                        confirmarEliminar(idRegistre);
+                        
+                        confirmarEliminar(idRegistre);                        
                         
                     });
+                    
+                    
                 });
+                
             });
         </script>
-
 
     </body>
 </html>
