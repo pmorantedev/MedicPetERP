@@ -14,6 +14,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @Slf4j
@@ -88,15 +90,11 @@ public class ClientController {
     @PostMapping("/medicpet/clients/eliminar/{idclient}")                       // URL 'DELETE' client (FORM)
     public String eliminar(Client client) {
 
-        // TO-DO: detectar si hi havia mascotes associades i llistar-les al log
-//        if (!client.getMascotes().isEmpty()) {
-//            for(int i = 0; i<client.getMascotes().size(); i++)
-//                log.info("Executant el controlador de clients: CLIENT ("+client.getIdclient()+") / MASCOTA ASSOCIADA ("+client.getMascotes().get(i).getId_mascota()+") ELIMINADA");
-//        }
-//        client = clientService.getOne(idclient);
-//        model.addAttribute("client", client );
-
+        // Aquí recupero client només per recuperar-ne el nom per mostrar-lo per consola
+        client = clientService.getOne(client.getIdclient());
         log.info("Executant controlador clients: CLIENT ELIMINAT ( ID:" + client.getIdclient() + ", " + client.getNomComplert() + " )...");
+        
+        // Executo l'acció d'eliminar
         clientService.delete(client);
 
         return "redirect:/medicpet/clients";
