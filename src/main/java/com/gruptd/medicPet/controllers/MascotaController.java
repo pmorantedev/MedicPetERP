@@ -21,7 +21,7 @@ public class MascotaController {
     private MascotaServices mascotaService;
     @Autowired
     private VisitaServices visitaService;
-
+    
     @GetMapping("/medicpet/clients/fitxa/{client_id}/mascotes/fitxa")           // URL fitxa mascota (FORM)
     public String fitxaMascota(Mascota mascota, Model model) {
         log.info("Executant el controlador de mascotes: FORMULARI OBERT...");
@@ -49,7 +49,7 @@ public class MascotaController {
         mascota = mascotaService.getOne(mascota.getId_mascota());
         model.addAttribute("mascota", mascota);
         model.addAttribute("pagina", "Clients");
-
+        
         Iterable<Visita> visites = visitaService.findAll();
 
         model.addAttribute("visites", visites);
