@@ -59,9 +59,7 @@
             <div class="mt-4" th:if="${client.idclient == null}">
                 <script th:inline="javascript">
 
-                    var filtre = [[${client.idclient == null
-                    }
-                    ]]; // Si el client és nou...
+                    var filtre = [[${client.idclient == null}]]; // Si el client és nou...
                     window.onload = function () {
                         if (!filtre)
                             return; // Exit/Return si la variable és 'false'

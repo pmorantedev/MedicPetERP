@@ -5,8 +5,10 @@
 package com.gruptd.medicPet.services;
 
 import com.gruptd.medicPet.dao.VisitaDAO;
+import com.gruptd.medicPet.models.Mascota;
 import com.gruptd.medicPet.models.Visita;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author izan
  */
+@Service
 public class VisitaServices implements ServicesInterface<Visita> {
 
     @Autowired
@@ -46,7 +49,6 @@ public class VisitaServices implements ServicesInterface<Visita> {
     }
 
     @Transactional
-
     @Override
     public void update(Visita v) {
         Visita visitaDB = getOne(v.getId());
@@ -56,12 +58,17 @@ public class VisitaServices implements ServicesInterface<Visita> {
             visitaDB.setData_visita(v.getData_visita());
 
             visitaDB.setTreballador_id(v.getTreballador_id());
-            visitaDB.setMascota_id(v.getMascota_id());
+            visitaDB.setMascota(v.getMascota());
 
             save(visitaDB);
         } else {
             System.out.println("La visita no existeix.");
         }
+    }
+    
+    @Transactional(readOnly = true)
+    public Iterable<Visita> findAllByMascota (Mascota mascota){
+        return visitaDao.findByMascota(mascota);
     }
 
 }

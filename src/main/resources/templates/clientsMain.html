@@ -30,7 +30,11 @@
                 <div class="d-flex justify-content-between mt-4">
                     <a th:href="@{/medicpet/clients/fitxa}" class="btn btn-outline-success">[[#{clients.botoCrear}]]</a>
                     <div class="float-right search btn-group">
-                        <input class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off">
+                        <form method="get" th:action="@{/medicpet/clients}">
+                            <input required th:value="${paraulaClau}" style="width: auto!important; display: inline;" class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off" name="paraulaClau" id="paraulaClau">
+                            <button class="btn btn-outline-primary ms-2" type="submit">Buscar</button>
+                            <button class="btn btn-outline-secondary ms-2" type="button" onclick="limpiarCampos()">Netejar</button>
+                        </form>
                     </div>
                 </div>
 
@@ -121,6 +125,12 @@
         <!-- Script per confirmar l'eliminació d'un registre -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script th:inline="javascript">
+            
+            function limpiarCampos(){
+                window.location= "/medicpet/clients"
+            }
+            
+            // Script mostrar Modal confirmació (Eliminar registre)
             document.addEventListener("DOMContentLoaded", function () {
 
                 // Inicialització del modal

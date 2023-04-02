@@ -2,7 +2,9 @@ package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.models.Client;
 import com.gruptd.medicPet.models.Mascota;
+import com.gruptd.medicPet.models.Visita;
 import com.gruptd.medicPet.services.MascotaServices;
+import com.gruptd.medicPet.services.VisitaServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,8 @@ public class MascotaController {
 
     @Autowired
     private MascotaServices mascotaService;
+    @Autowired
+    private VisitaServices visitaService;
     
     @GetMapping("/medicpet/clients/fitxa/{client_id}/mascotes/fitxa")           // URL fitxa mascota (FORM)
     public String fitxaMascota(Mascota mascota, Model model) {
@@ -46,6 +50,10 @@ public class MascotaController {
         model.addAttribute("mascota", mascota);
         model.addAttribute("pagina", "Clients");
         
+        Iterable<Visita> visites = visitaService.findAll();
+
+        model.addAttribute("visites", visites);
+
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
         

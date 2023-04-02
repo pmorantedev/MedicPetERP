@@ -26,16 +26,20 @@
                 </nav>
 
                 <!-- Botons i cercador -->
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between mt-4">
                     <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success">Crear treballador</a>
                     <div class="float-right search btn-group">
-                        <input class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off">
+                        <form method="get" th:action="@{/medicpet/rrhh}">
+                            <input required th:value="${paraulaClau}" style="width: auto!important; display: inline;" class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off" name="paraulaClau" id="paraulaClau">
+                            <button class="btn btn-outline-primary ms-2" type="submit">Buscar</button>
+                            <button class="btn btn-outline-secondary ms-2" type="button" onclick="limpiarCampos()">Netejar</button>
+                        </form>
                     </div>
                 </div>
 
                 <!-- Taula -->
                 <div class="table-responsive">
-                    <table class="table align-middle table-striped table-responsive-xl mt-2">
+                    <table class="table align-middle table-striped table-responsive-xl mt-3">
                         <thead class="table-dark">
                             <tr class="text-center align-middle">
                                 <th scope="col" class="col-1º">Id</th>
@@ -80,6 +84,10 @@
 
         <!-- Peu de pàgina -->
         <div th:insert="~{fragments/peuPagina :: footer}"/>
-
+        <script type="text/javascript">
+            function limpiarCampos(){
+                window.location= "/medicpet/rrhh"
+            }
+        </script>
     </body>
 </html>
