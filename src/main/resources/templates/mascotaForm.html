@@ -10,25 +10,24 @@
         <script languague="javascript">
 
             function formEditable() {
-                var form = document.getElementById("mascotaForm");
-                var elements = form.elements;
-                for (var i = 0, len = elements.length; i < len; ++i) {
-                    elements[i].disabled = false;
-                }
-                document.getElementById('nom').style = "background-color: white;";
-                document.getElementById('dataNaixement').style = "background-color: white;";
-                document.getElementById('sexeMascota').style = "background-color: white;";
-                document.getElementById('especie').style = "background-color: white;";
-                document.getElementById('raça').style = "background-color: white;";
+            var form = document.getElementById("mascotaForm");
+            var elements = form.elements;
+            for (var i = 0, len = elements.length; i < len; ++i) {
+            elements[i].disabled = false;
+            }
+            document.getElementById('nom').style = "background-color: white;";
+            document.getElementById('dataNaixement').style = "background-color: white;";
+            document.getElementById('sexeMascota').style = "background-color: white;";
+            document.getElementById('especie').style = "background-color: white;";
+            document.getElementById('raça').style = "background-color: white;";
             }
 
             function mostrar() {
-                div = document.getElementById('btns_edicio');
-                div.style.display = '';
-                div = document.getElementById('btn_editar');
-                div.style.display = 'none';
-
-                formEditable();
+            div = document.getElementById('btns_edicio');
+            div.style.display = '';
+            div = document.getElementById('btn_editar');
+            div.style.display = 'none';
+            formEditable();
             }
 
         </script>
@@ -62,9 +61,9 @@
 
                     var filtre = [[${mascota.id_mascota == null}]]; // Si la mascota és nova...
                     window.onload = function () {
-                        if (!filtre)
+                    if (!filtre)
                             return; // Exit/Return si la variable és 'false'
-                        formEditable(); // ...torno inputs del formulari editables
+                    formEditable(); // ...torno inputs del formulari editables
                     };
 
                 </script>                
@@ -181,6 +180,56 @@
             </div>
         </div>
 
+
+        <div class="container">
+            <!-- Llistat de visites en cas que n'hi hagi creades -->
+            <div th:if="${visites != null and !visites.empty}">
+
+                <!-- Breadcrumb -->
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb fs-4  mt-5">
+                        <li class="breadcrumb-item"><h2>Llistat de visites</h2></li>
+                    </ol>
+                </nav>
+
+                <!-- Taula -->
+                <div class="table-responsive">
+                    <table class="table align-middle table-striped table-responsive-xl mt-3">
+                        <thead class="table-dark">
+                            <tr class="text-center align-middle">
+                                <th scope="col" class="col-1">Id</th>
+                                <th scope="col" class="col-6">Diagnòstic</th>
+                                <th scope="col" class="col-3">Data de visita</th>
+                                <th scope="col-2"colspan="2">Accions</th>          
+                            </tr>  
+                        </thead>
+                        <tbody>                 
+                            <tr th:each="visita: ${visites}" class="text-center">
+                                <td th:text="${visita.getId}"></td>
+                                <td th:text="${visita.getDiagnostic}"></td>
+                                <td th:text="${visita.getData_visita}"></td>
+                                <td><form method="get" th:action="@{/medicpet/tractaments/fitxa/} + ${visita.getId}" class="m-0">
+                                        <input type="submit" class="btn btn-outline-primary" value="Mostrar">
+                                    </form>
+                                </td>
+                                <td><form method="post" th:action="@{/medicpet/tractaments/eliminar/{id}(id=${visita.id})}" class="m-0">
+                                        <input type="submit" class="btn btn-outline-danger" value="Eliminar">
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
+        </div>
+
+        <!-- Si no hi ha visites creades, es mostrarà aquest missatge -->
+        <div th:if="${visites == null or visites.empty}" class="justify-content-center mt-5">
+            <div class="text-center">
+                <h2 class="mx-auto">Aquesta mascota encara no té visites registrades.</h2>
+                <a th:href="@{/medicpet/tractaments/fitxa}" class="btn btn-outline-success mt-3">Crear visita</a>
+            </div>
+        </div>
 
         <!-- Peu de pàgina -->
         <div th:insert="~{fragments/peuPagina :: footer}"/>

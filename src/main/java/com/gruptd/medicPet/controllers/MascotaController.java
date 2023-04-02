@@ -29,7 +29,7 @@ public class MascotaController {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
-        
+
         return "mascotaForm";
     }
 
@@ -38,7 +38,7 @@ public class MascotaController {
         log.info("Executant el controlador de mascotes: DESANT DADES MASCOTA...");
 
         mascotaService.save(mascota);
-        
+
         return "redirect:/medicpet/clients/fitxa/{client_id}";
     }
 
@@ -56,7 +56,7 @@ public class MascotaController {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
-        
+
         return "mascotaForm";
     }
 
@@ -65,7 +65,7 @@ public class MascotaController {
         log.info("Executant el controlador de mascotes: MASCOTA (" + mascota.getNom() + ") ELIMINADA...");
 
         mascotaService.delete(mascota);
-        
+
         return "redirect:/medicpet/clients/fitxa/{client_id}";
     }
 
