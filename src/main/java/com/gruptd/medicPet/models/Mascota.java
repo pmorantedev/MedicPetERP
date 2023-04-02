@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -36,4 +37,7 @@ public class Mascota implements Serializable {
     @JoinColumn(name = "client_id")
     @NotNull
     private Client client_id;
+    
+    @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL)
+    private List<Visita> visites;
 }

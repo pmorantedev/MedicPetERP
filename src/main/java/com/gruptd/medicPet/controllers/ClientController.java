@@ -39,7 +39,7 @@ public class ClientController {
         
         Iterable<Client> clients;
         
-        // String paraulaClau = "TRACTAMENT";
+        // Codi pel cercador
         if (paraulaClau != null) {
             String sql = "SELECT * FROM client c WHERE CONCAT(c.idclient, c.nom_complert, c.dni, c.telefon, c.email, c.adreca) LIKE '%" + paraulaClau + "%'";
             clients = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Client.class));

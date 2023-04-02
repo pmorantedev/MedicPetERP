@@ -4,8 +4,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Llistat de treballadors</title>
+        <title>[[#{rrhh.llistatTitol}]]</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     </head>
 
     <body class="bg-secondary-subtle">
@@ -16,67 +17,100 @@
         <!-- Contingut de la pàgina -->
         <div class="container">
 
+            <!-- TO-DO: Mostar Alerta -->
+            <div id="alertaEliminar" class="alert alert-info alert-dismissible fade text-center" style="display:none;" role="alert" data-nom-client-eliminat>
+                <strong>Info:</strong> El treballador s'ha eliminat.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <!-- Breadcrumb -->
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb fs-4 mt-4">
+                    <li class="breadcrumb-item"><h2>[[#{rrhh.llistatTitol}]]</h2></li>
+                </ol>
+            </nav>
+
+            <!-- Botons i cercador -->
+            <div class="d-flex justify-content-between mt-4">
+                <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success">[[#{rrhh.botoCrear}]]</a>
+                <div class="float-right search btn-group">
+                    <form method="get" th:action="@{/medicpet/rrhh}">
+                        <input required th:value="${paraulaClau}" style="width: auto!important; display: inline;" class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off" name="paraulaClau" id="paraulaClau">
+                        <button class="btn btn-outline-primary ms-2" type="submit">[[#{generic.botoCercar}]]</button>
+                        <button class="btn btn-outline-secondary ms-2" type="button" onclick="limpiarCampos()">[[#{generic.botoNetejar}]]</button>
+                    </form>
+                </div>
+            </div>
+
             <!-- Llistat de tractaments en cas que n'hi hagi creats -->
             <div th:if="${treballadors != null and !treballadors.empty}">
-                <!-- Breadcrumb -->
-                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                    <ol class="breadcrumb fs-4  mt-4">
-                        <li class="breadcrumb-item"><h2>[[#{rrhh.llistatTitol}]]</h2></li>
-                    </ol>
-                </nav>
-
-                <!-- Botons i cercador -->
-                <div class="d-flex justify-content-between mt-4">
-                    <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success">Crear treballador</a>
-                    <div class="float-right search btn-group">
-                        <form method="get" th:action="@{/medicpet/rrhh}">
-                            <input required th:value="${paraulaClau}" style="width: auto!important; display: inline;" class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off" name="paraulaClau" id="paraulaClau">
-                            <button class="btn btn-outline-primary ms-2" type="submit">Buscar</button>
-                            <button class="btn btn-outline-secondary ms-2" type="button" onclick="limpiarCampos()">Netejar</button>
-                        </form>
-                    </div>
-                </div>
 
                 <!-- Taula -->
                 <div class="table-responsive">
                     <table class="table align-middle table-striped table-responsive-xl mt-3">
                         <thead class="table-dark">
                             <tr class="text-center align-middle">
-                                <th scope="col" class="col-1º">Id</th>
-                                <th scope="col" class="col-3">Nom i cognoms</th>
-                                <th scope="col" class="col-2">Telèfon</th>
-                                <th scope="col" class="col-3">Email</th>
-                                <th scope="col" class="col-3">Adreça</th>
-                                <th scope="col-3" colspan="3">Accions</th>          
+                                <th scope="col">Id</th>
+                                <th scope="col">Nom i cognoms</th>
+                                <th scope="col">Telèfon</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Càrrec</th>
+                                <th scope="col-3" colspan="3" class="col-1">[[#{generic.colAccions}]]</th>          
                             </tr>  
                         </thead>
                         <tbody>                 
                             <tr th:each="treballador: ${treballadors}" class="text-center">
                                 <td th:text="${treballador.getId}"></td>
-                                <td th:text="${treballador.getNomComplet}"></td>
+                                <td><a th:href="@{/medicpet/rrhh/fitxa/} + ${treballador.getId}" th:text="${treballador.getNomComplet}" class="text-decoration-none" /></td>
                                 <td th:text="${treballador.getTelefon}"></td>
                                 <td th:text="${treballador.getEmail}"></td>
-                                <td th:text="${treballador.getAdreca}"></td>
-                                <td><form method="get" th:action="@{/medicpet/rrhh/fitxa/} + ${treballador.getId}" class="m-0">
-                                        <input type="submit" class="btn btn-outline-primary" value="Mostrar">
-                                    </form>
+                                <td th:text="${treballador.getCarrec.getNom}"></td>
+
+                                <!-- accions -->
+                                <td>
+                                    <a th:attr="title=#{generic.botoMostrar}" class="btn btn-outline-primary" th:href="@{/medicpet/rrhh/fitxa/} + ${treballador.getId}" ><i class="bi bi-eye-fill"></i></a>
                                 </td>
-                                <td><form method="post" th:action="@{/medicpet/rrhh/eliminar/{id}(id=${treballador.id})}" class="m-0">
-                                        <input type="submit" class="btn btn-outline-danger" value="Eliminar">
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <form th:id="'eliminarRegistre' + ${treballador.getId}" method="post" th:action="@{/medicpet/rrhh/eliminar/ + ${treballador.getId}}">                                        
+                                        <button th:id="${treballador.getId}" th:attr="title=#{generic.botoEliminar}" type="button" class="btn btn-outline-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-th-id="${treballador.getId}" data-th-nom="${treballador.getNomComplet}">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
                         </tbody>
                     </table> 
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="confirmarEliminar" tabindex="-1" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">                               
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmarEliminarLabel">[[#{clients.modalTitol}]]: <span class="text-danger">[[#{generic.modalTitolRegistre}]]</span></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <p>[[#{clients.modalMsg}]]</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="btn_eliminarCancelar" data-bs-dismiss="modal">[[#{generic.botoCancelar}]]</button>
+                                <button type="button" class="btn btn-outline-danger" id="btn_eliminarConfirmar" data-id="">[[#{generic.botoEliminar}]]</button>                                                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+
             </div>
 
             <!-- Si no hi ha tractaments creats, es mostrarà aquest missatge -->
             <div th:if="${treballadors == null or treballadors.empty}" class="justify-content-center mt-5">
                 <div class="text-center">
-                    <h2 class="mx-auto">[[#{rrhh.taulaBuida1}]]</h2>
-                    <h2 class="mx-auto">[[#{rrhh.taulaBuida2}]]</h2>
-                    <a th:href="@{/medicpet/rrhh/fitxa}" class="btn btn-outline-success mt-3">Crear</a>
+                    <h2 class="mx-auto">[[#{rrhh.taulaBuida1}]] <br> [[#{rrhh.taulaBuida2}]]</h2>
                 </div>
             </div>
 
@@ -84,10 +118,105 @@
 
         <!-- Peu de pàgina -->
         <div th:insert="~{fragments/peuPagina :: footer}"/>
-        <script type="text/javascript">
-            function limpiarCampos(){
-                window.location= "/medicpet/rrhh"
-            }
+
+        <!-- Script per confirmar l'eliminació d'un registre -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script th:inline="javascript">
+
+                            function limpiarCampos() {
+                                window.location = "/medicpet/rhh"
+                            }
+
+                            // TO-DO: pendent d'implementar que quan s'esborri un registre mostri alerta de confirmació
+                            /* function mostrarAlerta() {
+                             document.getElementById("alertaEliminar").style.display = "block";
+                             }*/
+
+                            // Script mostrar Modal confirmació (Eliminar registre)
+                            document.addEventListener("DOMContentLoaded", function () {
+
+                                // Inicialització del modal
+                                const modalEl = document.getElementById('confirmarEliminar');
+                                const modal = new bootstrap.Modal(modalEl, {
+                                    keyboard: false
+                                });
+
+                                // Desar tots els botons que serveixen per eliminar un registre
+                                const botonsEliminar = document.querySelectorAll('.btn-eliminar');
+
+                                // Botons del modal
+                                const btnEliminarConfirmar = document.getElementById('btn_eliminarConfirmar');
+                                const btnEliminarCancelar = document.getElementById('btn_eliminarCancelar');
+
+                                // Funció per eliminar un registre
+                                function eliminarRegistre(idRegistre) {
+
+                                    // Obtindre la ruta per l'acció 'Eliminar'
+                                    const formEliminar = document.getElementById(`eliminarRegistre${idRegistre}`);
+                                    const accioEliminar = formEliminar.getAttribute('action');
+                                    const index = accioEliminar.indexOf('eliminar/');
+                                    const url = accioEliminar.substring(0, index + 'eliminar/'.length);
+                                    console.log(">> url registre (Eliminat): ", url + idRegistre);
+
+                                    // Comprovar que l'ID sigui un Nombre
+                                    if (!isNaN(idRegistre)) {
+
+                                        idRegistre = Number(idRegistre);
+                                        formEliminar.action = `${url}${idRegistre}`;
+                                        formEliminar.submit();
+                                        console.log(">> Registre nº (" + idRegistre + ") eliminat");
+
+                                    } else {
+                                        console.error(`El valor de 'data-th-id' no és un nombre vàlid: ${idRegistre}`);
+                                    }
+                                }
+
+                                // Funció per confirmar l'eliminació
+                                function confirmarEliminar(idRegistre) {
+
+                                    // Mostrar modal
+                                    modal.show();
+                                    console.log(">> Registre seleccionat (" + idRegistre + ")");
+
+                                    btnEliminarConfirmar.addEventListener('click', function () {
+                                        console.log(`Eliminant registre ${idRegistre} ...`);
+                                        eliminarRegistre(idRegistre);
+                                        modal.hide();
+                                    });
+
+                                    btnEliminarCancelar.addEventListener('click', function () {
+                                        console.log(">> Acció cancel·lada");
+                                        idRegistre = null;  // resetejo id per evitar acomular-los                        
+                                        modal.hide();
+                                    });
+
+                                }
+
+                                // Iterar sobre cada botó
+                                botonsEliminar.forEach(function (boto) {
+
+                                    // En fer clic, es mostra el modal
+                                    boto.addEventListener('click', function (event) {
+                                        let nom = "";
+
+                                        // Detectar quin botó s'ha clicat (Event) per establir l'ID
+                                        let idRegistre = boto.getAttribute('id');
+                                        console.log('>> ID registre: ' + idRegistre);
+
+                                        // Recuperar el valor de l'atribut 'data-th-nom' del botó
+                                        nom = boto.getAttribute('nom');
+                                        console.log('>> Nom registre: ' + nom);
+                                        // Actualitzar el contingut del títol del modal amb el valor de l'atribut
+                                        document.querySelector('#confirmarEliminarLabel span').textContent = nom;
+
+                                        confirmarEliminar(idRegistre);
+
+                                    });
+
+
+                                });
+
+                            });
         </script>
     </body>
 </html>
