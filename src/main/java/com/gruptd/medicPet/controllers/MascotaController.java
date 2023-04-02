@@ -51,9 +51,9 @@ public class MascotaController {
         model.addAttribute("pagina", "Clients");
         
         Iterable<Visita> visites = visitaService.findAll();
-
         model.addAttribute("visites", visites);
-
+        log.info(">> Visites: ", visites.toString());
+        
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("userName", username);
 
