@@ -105,10 +105,15 @@
             </div>
 
             <!-- Si no hi ha tractaments creats, es mostrarà aquest missatge -->
-            <div th:if="${tractaments == null or tractaments.empty}" class="justify-content-center mt-5">
+            <!-- Si no hi ha clients creats, es mostrarà aquest missatge -->
+            <div th:if="${tractaments == null or tractaments.empty}" class="justify-content-center mt-5" id="senseRegistres" style="display:none;">
                 <div class="text-center">
-                    <h2 class="mx-auto">La taula de tractaments està buida. <br> Per afegir-ne, feu clic al botó 'Crear'.</h2>
-                    <a th:href="@{/medicpet/tractaments/fitxa}" class="btn btn-outline-success mt-3">Crear</a>
+                    <h2 class="mx-auto">[[#{tractaments.msgAfegirTractament_1}]] <br> [[#{tractaments.msgAfegirTractament_2}]]</h2>
+                </div>
+            </div>
+            <div th:if="${tractaments == null or tractaments.empty}" class="justify-content-center mt-5" id="senseCoincidencies" style="display:none;">
+                <div class="text-center">
+                    <h2 class="mx-auto">[[#{generic.msgCercaFallida_1}]] <br> [[#{generic.msgCercaFallida_2}]]</h2>
                 </div>
             </div>
 
@@ -119,9 +124,25 @@
         <!-- Script per confirmar l'eliminació d'un registre -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script th:inline="javascript">
+                            
+                            // Aplicar missatge correcte a l'usuari quan la taula és buida
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const queryString = window.location.search;
+                                const urlParams = new URLSearchParams(queryString);
+                                const cercaExecutada = urlParams.has('paraulaClau');                    
 
+                                if (cercaExecutada !== null && cercaExecutada !== '' && cercaExecutada === true) {
+                                    console.log(">> Cerca executada");
+                                    document.getElementById('senseRegistres').style.display = 'none';
+                                    document.getElementById('senseCoincidencies').style.display = 'block';                        
+                                } else {
+                                    document.getElementById('senseCoincidencies').style.display = 'none';
+                                    document.getElementById('senseRegistres').style.display = 'block';
+                                }
+                            });
+                            
                             function limpiarCampos() {
-                                window.location = "/medicpet/clients"
+                                window.location = "/medicpet/tractaments"
                             }
 
                             // TO-DO: pendent d'implementar que quan s'esborri un registre mostri alerta de confirmació
