@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[[#{rrhh.fitxaTitol}]]</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+        <script language="javascript">
+
+            function formEditable() {
+
+                var form = document.getElementById("visitaForm");
+                console.log(">> Habilitar formulari: ", form);
+                var elements = form.elements;
+                for (var i = 0, len = elements.length; i < len; ++i) {
+                    elements[i].disabled = false;
+                }
+                document.getElementById('nom').style = "background-color: white;";
+                document.getElementById('dataNaixement').style = "background-color: white;";
+                document.getElementById('sexeMascota').style = "background-color: white;";
+                document.getElementById('especie').style = "background-color: white;";
+                document.getElementById('raça').style = "background-color: white;";
+            }
+
+            function mostrar() {
+
+                div = document.getElementById('btns_edicio');
+                div.style.display = '';
+                div = document.getElementById('btn_editar');
+                div.style.display = 'none';
+
+                formEditable();
+            }
+
+        </script>
+
+    </head>
+
+    <body>
+
+        <!-- Menú de navegació -->
+        <div th:insert="fragments/barraNavegacio :: header(user=${userName}, page=${pagina})"/>
+
+        <!-- Continguts -->
+        <div class="container">
+            
+            <!-- Breadcrumb -->
+            <div class="d-flex">
+                <h2>Crear nova visita</h2>
+            </div>
+            
+            <!-- <div class="d-flex">
+                <h2>
+                    <a th:href="@{/medicpet/clients}" class="link-secondary">[[#{clients.llistatTitol}]]</a>
+                    <span> / </span>                        
+                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="link-secondary ml-2">[[#{clients.fitxaClientTitol}]] "<span th:text="${mascota.client_id.getNomComplert}"></span>"</a>
+                    <span> / </span>
+                    <span th:if="${mascota.id_mascota != null}" class="text-dark ml-2">[[#{mascotes.fitxaTitol}]] "<span th:text="${mascota.getNom}"></span>"</span>                 
+                    <span th:if="${mascota.id_mascota == null}" class="text-dark ml-2">[[#{mascotes.fitxaNovaTitol}]]</span>                 
+                </h2>
+            </div>-->
+            
+            <!-- Botons per nova visita -->
+            <div class="mt-4" th:if="${visita.id == null}">
+                <script th:inline="javascript">
+                    console.log(">> Visita nova...");
+                    var filtre = [[${visita.id == null}
+                    ]]; // Si la visita és nova...
+                    window.onload = function () {
+                        if (!filtre)
+                            return; // Exit/Return si la variable és 'false'
+                        formEditable(); // ...torno inputs del formulari editables
+                    };
+
+                </script>                
+                <div id="btns_edicio">
+                    <button form="visitaForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">[[#{generic.botoDesar}]]</button>
+                    <a onclick="history.go(-1)"><button type="button" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</button></a>
+                </div>
+            </div>
+            
+            <!-- Formulari: Detalls visita -->
+            <div class="p-5 mt-4 bg-light rounded-3"> 
+            
+                <form id="visitaForm" method="POST" th:action="@{/medicpet/visites/fitxa/desar}" th:object="${visita}" class="form-horizontal">
+                    
+                    <input type="hidden" name="id" th:field="*{id}">
+                    
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Diagnòstic</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="diagnostic" name="diagnostic" type="text" class="form-control" style="background: none;" th:field="*{diagnostic}" required disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Medicació</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="medicacio" name="medicacio" type="text" class="form-control" style="background: none;" th:field="*{medicacio}" required disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Data de visita</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="dataVisita" name="data_visita" type="date" class="form-control" style="background: none;" th:field="*{data_visita}" required disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Veterinari</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <select class="form-select" id="treballador" name="treballador_id" th:field="*{treballador_id}" disabled>
+                                <option value="">Seleccionar veterinari...</option>
+                                <th:block th:each="veterinari : ${veterinaris}">
+                                    <option th:value="${veterinari.getId}" th:text="${veterinari.getNomComplet}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Mascota</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="nomMascota" name="mascota" type="text" class="form-control" style="background: none;" th:field="${mascota.nom}" required disabled />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+
+        <!-- Peu de pàgina -->
+        <div th:insert="~{fragments/peuPagina :: footer}"/>
+
+    </body>
+</html>
