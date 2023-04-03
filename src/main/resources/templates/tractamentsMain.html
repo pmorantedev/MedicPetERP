@@ -18,8 +18,8 @@
         <div class="container">
 
             <!-- TO-DO: Mostar Alerta -->
-            <div id="alertaEliminar" class="alert alert-info alert-dismissible fade text-center" style="display:none;" role="alert" data-nom-client-eliminat>
-                <strong>Info:</strong> El tractament s'ha eliminat.
+            <div th:if="${nomRegistreEliminat}" id="alertaEliminar" class="alert alert-info alert-dismissible fade show text-center" role="alert">
+                <i class="bi bi-info-circle me-2"></i> [[#{tractaments.msgRegistreEliminat_1}]] <b th:text="${nomRegistreEliminat}">[[#{generic.modalTitolRegistre}]]</b> [[#{generic.msgRegistreEliminat_2}]]
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
