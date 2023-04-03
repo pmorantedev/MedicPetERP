@@ -80,7 +80,7 @@
                 </div>
             </div>
             <!-- Botons EDITAR CLIENT -->            
-            <div class="mt-4" th:if="${rolUsuari != 'VETERINARI'}">
+            <div class="mt-4" th:if="${client.idclient != null and rolUsuari != 'VETERINARI'}">
                 <div id="btn_editar">
                     <a href="javascript:mostrar();" name="Editar" class="btn btn-outline-primary p-2 me-3">[[#{generic.botoEditar}]]</a>
                 </div>
