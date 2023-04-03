@@ -47,7 +47,6 @@ public class VisitaController {
     @PostMapping("/medicpet/visites/fitxa/desar")          
     public String desarVisita(Visita visita, Model model) {
         log.info("Executant el controlador de mascotes: DESANT DADES MASCOTA...");
-
         visitaServices.save(visita);
 
         return "redirect:/medicpet/clients";

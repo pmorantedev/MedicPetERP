@@ -9,19 +9,48 @@
 
         <script language="javascript">
 
+            function validarVisita() {
+                
+                var valid = true;
+                var treballador = document.getElementById('treballador').value;
+                var treballadorError = document.getElementById('error-veterinari');
+                var data = document.getElementById('dataVisita').value;
+                var dataError = document.getElementById('error-data');
+                
+                if (treballador.trim() === '' || treballador.length === 0){
+                    treballadorError.style.display = 'block';
+                    document.getElementById('treballador').classList.add('border-danger');
+                    valid = false;
+                } else {
+                    treballadorError.style.display = 'none';
+                    document.getElementById('treballador').classList.remove('border-danger');
+                }
+                
+                if (!/^\d{4}-\d{2}-\d{2}$/.test(data)) {
+                    valid = false;
+                    dataError.style.display = 'block';
+                    document.getElementById('dataVisita').classList.add('border-danger');
+                } else {
+                    dataError.style.display = 'none';
+                    document.getElementById('dataVisita').classList.remove('border-danger');
+                }
+                
+                return valid;
+            }
+
             function formEditable() {
 
                 var form = document.getElementById("visitaForm");
-                console.log(">> Habilitar formulari: ", form);
                 var elements = form.elements;
                 for (var i = 0, len = elements.length; i < len; ++i) {
                     elements[i].disabled = false;
                 }
-                document.getElementById('nom').style = "background-color: white;";
-                document.getElementById('dataNaixement').style = "background-color: white;";
-                document.getElementById('sexeMascota').style = "background-color: white;";
-                document.getElementById('especie').style = "background-color: white;";
-                document.getElementById('raça').style = "background-color: white;";
+                document.getElementById('diagnostic').disabled = true;
+                document.getElementById('medicacio').disabled = true;
+                document.getElementById('dataVisita').style = "background-color: white;";
+                document.getElementById('treballador').style = "background-color: white;";
+                document.getElementById('nomMascota').disabled = true;
+                
             }
 
             function mostrar() {
@@ -84,43 +113,46 @@
             <!-- Formulari: Detalls visita -->
             <div class="p-5 mt-4 bg-light rounded-3"> 
             
-                <form id="visitaForm" method="POST" th:action="@{/medicpet/visites/fitxa/desar}" th:object="${visita}" class="form-horizontal">
+                <form id="visitaForm" method="POST" th:action="@{/medicpet/visites/fitxa/desar}" th:object="${visita}" class="form-horizontal" onsubmit="return validarVisita();">
                     
                     <input type="hidden" name="id" th:field="*{id}">
                     
                     <div class="form-group row align-items-center">
                         <label class="col-sm-2 control-label"><h5>Diagnòstic</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="diagnostic" name="diagnostic" type="text" class="form-control" style="background: none;" th:field="*{diagnostic}" required disabled />
+                            <input id="diagnostic" name="diagnostic" type="text" class="form-control" style="background: none;" th:field="*{diagnostic}" />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Medicació</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="medicacio" name="medicacio" type="text" class="form-control" style="background: none;" th:field="*{medicacio}" required disabled />
+                            <input id="medicacio" name="medicacio" type="text" class="form-control" style="background: none;" th:field="*{medicacio}" />
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Data de visita</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="dataVisita" name="data_visita" type="date" class="form-control" style="background: none;" th:field="*{data_visita}" required disabled />
+                            <input id="dataVisita" name="data_visita" type="date" class="form-control" style="background: none;" th:field="*{data_visita}" />
+                            <span id="error-data" class="text-danger" style="display:none;">Has d'introduir una data</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Veterinari</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <select class="form-select" id="treballador" name="treballador_id" th:field="*{treballador_id}" disabled>
+                            <select class="form-select" style="background: none;" id="treballador" name="treballador_id" th:field="*{treballador_id}" disabled>
                                 <option value="">Seleccionar veterinari...</option>
                                 <th:block th:each="veterinari : ${veterinaris}">
                                     <option th:value="${veterinari.getId}" th:text="${veterinari.getNomComplet}"></option>
                                 </th:block>
                             </select>
+                            <span id="error-veterinari" class="text-danger" style="display:none;">Has de seleccionar un veterinari per aquesta visita</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>Mascota</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="nomMascota" name="mascota" type="text" class="form-control" style="background: none;" th:field="${mascota.nom}" required disabled />
+                            <input id="nomMascota" name="animal" type="text" class="form-control" style="background: none;" th:field="${mascota.nom}"/>
+                            <input type="hidden" name="mascota" th:value="${mascota.getId_mascota}" />
                         </div>
                     </div>
                 </form>

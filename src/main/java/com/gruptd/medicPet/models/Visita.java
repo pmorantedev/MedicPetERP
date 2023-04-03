@@ -26,17 +26,17 @@ public class Visita implements Serializable {
 
     private String diagnostic;
     private String medicacio;
-    @NotEmpty
+    //@NotEmpty
     private String data_visita;
     
     @OneToOne
     @JoinColumn(name = "treballador_id")
-    @NotEmpty
+    //@NotEmpty
     private Treballador treballador_id;
     
     @OneToOne
     @JoinColumn(name = "mascota_id")
-    @NotEmpty
+    //@NotEmpty
     private Mascota mascota;
 
 }
