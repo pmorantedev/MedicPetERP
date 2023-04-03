@@ -108,9 +108,14 @@
             </div>
 
             <!-- Si no hi ha tractaments creats, es mostrarà aquest missatge -->
-            <div th:if="${treballadors == null or treballadors.empty}" class="justify-content-center mt-5">
+            <div th:if="${treballadors == null or treballadors.empty}" class="justify-content-center mt-5" id="senseRegistres" style="display:none;">
                 <div class="text-center">
                     <h2 class="mx-auto">[[#{rrhh.taulaBuida1}]] <br> [[#{rrhh.taulaBuida2}]]</h2>
+                </div>
+            </div>
+            <div th:if="${treballadors == null or treballadors.empty}" class="justify-content-center mt-5" id="senseCoincidencies" style="display:none;">
+                <div class="text-center">
+                    <h2 class="mx-auto">[[#{generic.msgCercaFallida_1}]] <br> [[#{generic.msgCercaFallida_2}]]</h2>
                 </div>
             </div>
 
@@ -122,9 +127,25 @@
         <!-- Script per confirmar l'eliminació d'un registre -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script th:inline="javascript">
+            
+                            // Aplicar missatge correcte a l'usuari quan la taula és buida
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const queryString = window.location.search;
+                                const urlParams = new URLSearchParams(queryString);
+                                const cercaExecutada = urlParams.has('paraulaClau');                    
+
+                                if (cercaExecutada !== null && cercaExecutada !== '' && cercaExecutada === true) {
+                                    console.log(">> Cerca executada");
+                                    document.getElementById('senseRegistres').style.display = 'none';
+                                    document.getElementById('senseCoincidencies').style.display = 'block';                        
+                                } else {
+                                    document.getElementById('senseCoincidencies').style.display = 'none';
+                                    document.getElementById('senseRegistres').style.display = 'block';
+                                }
+                            });
 
                             function limpiarCampos() {
-                                window.location = "/medicpet/rhh"
+                                window.location = "/medicpet/rrhh"
                             }
 
                             // TO-DO: pendent d'implementar que quan s'esborri un registre mostri alerta de confirmació

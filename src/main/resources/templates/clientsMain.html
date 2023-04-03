@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>[[#{clients.llistatTitol}]]</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">        
     </head>
 
     <body class="bg-secondary-subtle"> 
@@ -116,12 +116,17 @@
             </div>
 
             <!-- Si no hi ha clients creats, es mostrarà aquest missatge -->
-            <div th:if="${clients == null or clients.empty}" class="justify-content-center mt-5">
+            <div th:if="${clients == null or clients.empty}" class="justify-content-center mt-5" id="senseRegistres" style="display:none;">
                 <div class="text-center">
                     <h2 class="mx-auto">[[#{clients.msgAfegirClient_1}]] <br> [[#{clients.msgAfegirClient_2}]]</h2>
                 </div>
             </div>
-
+            <div th:if="${clients == null or clients.empty}" class="justify-content-center mt-5" id="senseCoincidencies" style="display:none;">
+                <div class="text-center">
+                    <h2 class="mx-auto">[[#{generic.msgCercaFallida_1}]] <br> [[#{generic.msgCercaFallida_2}]]</h2>
+                </div>
+            </div>
+            
         </div>
 
         <!-- Peu de pàgina -->
@@ -131,100 +136,116 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script th:inline="javascript">
 
-                            function limpiarCampos() {
-                                window.location = "/medicpet/clients"
-                            }
+                // Aplicar missatge correcte a l'usuari quan la taula és buida
+                document.addEventListener("DOMContentLoaded", function () {
+                    const queryString = window.location.search;
+                    const urlParams = new URLSearchParams(queryString);
+                    const cercaExecutada = urlParams.has('paraulaClau');                    
+                    
+                    if (cercaExecutada !== null && cercaExecutada !== '' && cercaExecutada === true) {
+                        console.log(">> Cerca executada");
+                        document.getElementById('senseRegistres').style.display = 'none';
+                        document.getElementById('senseCoincidencies').style.display = 'block';                        
+                    } else {
+                        document.getElementById('senseCoincidencies').style.display = 'none';
+                        document.getElementById('senseRegistres').style.display = 'block';
+                    }
+                });
 
-                            // TO-DO: pendent d'implementar que quan s'esborri un registre mostri alerta de confirmació
-                            /* function mostrarAlerta() {
-                             document.getElementById("alertaEliminar").style.display = "block";
-                             }*/
+                function limpiarCampos() {
+                    window.location = "/medicpet/clients"
+                }
 
-                            // Script mostrar Modal confirmació (Eliminar registre)
-                            document.addEventListener("DOMContentLoaded", function () {
+                // TO-DO: pendent d'implementar que quan s'esborri un registre mostri alerta de confirmació
+                /* function mostrarAlerta() {
+                 document.getElementById("alertaEliminar").style.display = "block";
+                 }*/
 
-                                // Inicialització del modal
-                                const modalEl = document.getElementById('confirmarEliminar');
-                                const modal = new bootstrap.Modal(modalEl, {
-                                    keyboard: false
-                                });
+                // Script mostrar Modal confirmació (Eliminar registre)
+                document.addEventListener("DOMContentLoaded", function () {
 
-                                // Desar tots els botons que serveixen per eliminar un registre
-                                const botonsEliminar = document.querySelectorAll('.btn-eliminar');
+                    // Inicialització del modal
+                    const modalEl = document.getElementById('confirmarEliminar');
+                    const modal = new bootstrap.Modal(modalEl, {
+                        keyboard: false
+                    });
 
-                                // Botons del modal
-                                const btnEliminarConfirmar = document.getElementById('btn_eliminarConfirmar');
-                                const btnEliminarCancelar = document.getElementById('btn_eliminarCancelar');
+                    // Desar tots els botons que serveixen per eliminar un registre
+                    const botonsEliminar = document.querySelectorAll('.btn-eliminar');
 
-                                // Funció per eliminar un registre
-                                function eliminarRegistre(idRegistre) {
+                    // Botons del modal
+                    const btnEliminarConfirmar = document.getElementById('btn_eliminarConfirmar');
+                    const btnEliminarCancelar = document.getElementById('btn_eliminarCancelar');
 
-                                    // Obtindre la ruta per l'acció 'Eliminar'
-                                    const formEliminar = document.getElementById(`eliminarRegistre${idRegistre}`);
-                                    const accioEliminar = formEliminar.getAttribute('action');
-                                    const index = accioEliminar.indexOf('eliminar/');
-                                    const url = accioEliminar.substring(0, index + 'eliminar/'.length);
-                                    console.log(">> url registre (Eliminat): ", url + idRegistre);
+                    // Funció per eliminar un registre
+                    function eliminarRegistre(idRegistre) {
 
-                                    // Comprovar que l'ID sigui un Nombre
-                                    if (!isNaN(idRegistre)) {
+                        // Obtindre la ruta per l'acció 'Eliminar'
+                        const formEliminar = document.getElementById(`eliminarRegistre${idRegistre}`);
+                        const accioEliminar = formEliminar.getAttribute('action');
+                        const index = accioEliminar.indexOf('eliminar/');
+                        const url = accioEliminar.substring(0, index + 'eliminar/'.length);
+                        console.log(">> url registre (Eliminat): ", url + idRegistre);
 
-                                        idRegistre = Number(idRegistre);
-                                        formEliminar.action = `${url}${idRegistre}`;
-                                        formEliminar.submit();
-                                        console.log(">> Registre nº (" + idRegistre + ") eliminat");
+                        // Comprovar que l'ID sigui un Nombre
+                        if (!isNaN(idRegistre)) {
 
-                                    } else {
-                                        console.error(`El valor de 'data-th-id' no és un nombre vàlid: ${idRegistre}`);
-                                    }
-                                }
+                            idRegistre = Number(idRegistre);
+                            formEliminar.action = `${url}${idRegistre}`;
+                            formEliminar.submit();
+                            console.log(">> Registre nº (" + idRegistre + ") eliminat");
 
-                                // Funció per confirmar l'eliminació
-                                function confirmarEliminar(idRegistre) {
+                        } else {
+                            console.error(`El valor de 'data-th-id' no és un nombre vàlid: ${idRegistre}`);
+                        }
+                    }
 
-                                    // Mostrar modal
-                                    modal.show();
-                                    console.log(">> Registre seleccionat (" + idRegistre + ")");
+                    // Funció per confirmar l'eliminació
+                    function confirmarEliminar(idRegistre) {
 
-                                    btnEliminarConfirmar.addEventListener('click', function () {
-                                        console.log(`Eliminant registre ${idRegistre} ...`);
-                                        eliminarRegistre(idRegistre);
-                                        modal.hide();
-                                    });
+                        // Mostrar modal
+                        modal.show();
+                        console.log(">> Registre seleccionat (" + idRegistre + ")");
 
-                                    btnEliminarCancelar.addEventListener('click', function () {
-                                        console.log(">> Acció cancel·lada");
-                                        idRegistre = null;  // resetejo id per evitar acomular-los                        
-                                        modal.hide();
-                                    });
+                        btnEliminarConfirmar.addEventListener('click', function () {
+                            console.log(`Eliminant registre ${idRegistre} ...`);
+                            eliminarRegistre(idRegistre);
+                            modal.hide();
+                        });
 
-                                }
+                        btnEliminarCancelar.addEventListener('click', function () {
+                            console.log(">> Acció cancel·lada");
+                            idRegistre = null;  // resetejo id per evitar acomular-los                        
+                            modal.hide();
+                        });
 
-                                // Iterar sobre cada botó
-                                botonsEliminar.forEach(function (boto) {
+                    }
 
-                                    // En fer clic, es mostra el modal
-                                    boto.addEventListener('click', function (event) {
-                                        let nom = "";
+                    // Iterar sobre cada botó
+                    botonsEliminar.forEach(function (boto) {
 
-                                        // Detectar quin botó s'ha clicat (Event) per establir l'ID
-                                        let idRegistre = boto.getAttribute('id');
-                                        console.log('>> ID registre: ' + idRegistre);
+                        // En fer clic, es mostra el modal
+                        boto.addEventListener('click', function (event) {
+                            let nom = "";
 
-                                        // Recuperar el valor de l'atribut 'data-th-nom' del botó
-                                        nom = boto.getAttribute('nom');
-                                        console.log('>> Nom registre: ' + nom);
-                                        // Actualitzar el contingut del títol del modal amb el valor de l'atribut
-                                        document.querySelector('#confirmarEliminarLabel span').textContent = nom;
+                            // Detectar quin botó s'ha clicat (Event) per establir l'ID
+                            let idRegistre = boto.getAttribute('id');
+                            console.log('>> ID registre: ' + idRegistre);
 
-                                        confirmarEliminar(idRegistre);
+                            // Recuperar el valor de l'atribut 'data-th-nom' del botó
+                            nom = boto.getAttribute('nom');
+                            console.log('>> Nom registre: ' + nom);
+                            // Actualitzar el contingut del títol del modal amb el valor de l'atribut
+                            document.querySelector('#confirmarEliminarLabel span').textContent = nom;
 
-                                    });
+                            confirmarEliminar(idRegistre);
+
+                        });
 
 
-                                });
+                    });
 
-                            });
+                });
         </script>
 
     </body>
