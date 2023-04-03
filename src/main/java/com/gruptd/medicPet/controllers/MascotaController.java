@@ -38,10 +38,12 @@ public class MascotaController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         // Recuperar l'objecte Usuari corresponent a l'usuari actual
         Usuari usuari = usuariService.getByUsername(username);
-        // Accedir a l'atribut 'Nom' per mostrar-lo al header
+        // Accedir als atributs
         String nomUsuariComplert = usuari.getNom();
+        String rolUsuari = usuari.getRol_id().getNom();
         model.addAttribute("userName", username);
         model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
 
         return "mascotaForm";
     }
@@ -71,10 +73,12 @@ public class MascotaController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         // Recuperar l'objecte Usuari corresponent a l'usuari actual
         Usuari usuari = usuariService.getByUsername(username);
-        // Accedir a l'atribut 'Nom' per mostrar-lo al header
+        // Accedir als atributs
         String nomUsuariComplert = usuari.getNom();
+        String rolUsuari = usuari.getRol_id().getNom();
         model.addAttribute("userName", username);
         model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
 
         return "mascotaForm";
     }
