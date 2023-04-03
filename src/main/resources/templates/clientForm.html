@@ -7,7 +7,7 @@
         <title>[[#{clients.fitxaTitol}]]</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-        
+
         <script language="javascript">
 
             function formEditable() {
@@ -30,6 +30,79 @@
                 div.style.display = 'none';
 
                 formEditable();
+            }
+
+            function validar() {
+                var valid = true;
+                var nomComplert = document.getElementById('nomComplert').value;
+                var nomComplertError = document.getElementById('error-nom');
+
+                var dni = document.getElementById('dni').value;
+                var dniError = document.getElementById('error-dni');
+
+                var telefon = document.getElementById('telefon').value;
+                var telefonErrorLlarg = document.getElementById('error-telefonLlarg');
+                var telefonErrorCar = document.getElementById('error-telefonCar');
+
+                var email = document.getElementById('email').value;
+                var emailError = document.getElementById('error-email');
+
+                var address = document.getElementById('address').value;
+                var addressError = document.getElementById('error-address');
+
+                if (nomComplert.length > 45) {
+                    valid = false;
+                    nomComplertError.style.display = 'block';
+                    document.getElementById('nomComplert').classList.add('border-danger');
+                } else {
+                    nomComplertError.style.display = 'none';
+                    document.getElementById('nomComplert').classList.remove('border-danger');
+                }
+
+                if (dni.length > 9) {
+                    valid = false;
+                    dniError.style.display = 'block';
+                    document.getElementById('dni').classList.add('border-danger');
+                } else {
+                    dniError.style.display = 'none';
+                    document.getElementById('dni').classList.remove('border-danger');
+                }
+
+                if (email.length > 45) {
+                    valid = false;
+                    emailError.style.display = 'block';
+                    document.getElementById('email').classList.add('border-danger');
+                } else {
+                    emailError.style.display = 'none';
+                    document.getElementById('email').classList.remove('border-danger');
+                }
+
+                if (address.length > 100) {
+                    valid = false;
+                    addressError.style.display = 'block';
+                    document.getElementById('address').classList.add('border-danger');
+                } else {
+                    addressError.style.display = 'none';
+                    document.getElementById('address').classList.remove('border-danger');
+                }
+
+                if (!/^[+\d]+$/.test(telefon)) {
+                    valid = false;
+                    telefonErrorCar.style.display = 'block';
+                    document.getElementById('telefon').classList.add('border-danger');
+                } else if (telefon.length > 15) {
+                    valid = false;
+                    telefonErrorLlarg.style.display = 'block';
+                    telefonErrorCar.style.display = 'none';
+                    document.getElementById('telefon').classList.add('border-danger');
+                } else {
+                    telefonErrorLlarg.style.display = 'none';
+                    telefonErrorCar.style.display = 'none';
+                    document.getElementById('telefon').classList.remove('border-danger');
+                }
+
+
+                return valid;
             }
 
         </script>
@@ -66,7 +139,8 @@
             <div class="mt-4" th:if="${client.idclient == null}">
                 <script th:inline="javascript">
 
-                    var filtre = [[${client.idclient == null}]]; // Si el client és nou...
+                    var filtre = [[${client.idclient == null}
+                    ]]; // Si el client és nou...
                     window.onload = function () {
                         if (!filtre)
                             return; // Exit/Return si la variable és 'false'
@@ -92,7 +166,7 @@
 
             <!-- Formulari: Detalls client -->
             <div class="p-5 mt-4 bg-light rounded-3">
-                <form id="clientForm" method="POST" th:action="@{/medicpet/clients/desar}" th:object="${client}" class="form-horizontal">
+                <form id="clientForm" method="POST" th:action="@{/medicpet/clients/desar}" th:object="${client}" class="form-horizontal" onsubmit="return validar();">
 
                     <input type="hidden" name="idclient" th:field="*{idclient}" th:if="${client.idclient != null}">
 
@@ -100,30 +174,36 @@
                         <label class="col-sm-2 control-label"><h5>[[#{clients.campNom}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="nomComplert" name="name" type="text" class="form-control" style="background: none;" th:field="*{nomComplert}" required disabled />
+                            <span id="error-nom" class="text-danger" style="display:none;">El nom ha de tenir com a màxim 45 caràcters</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{clients.campDni}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="dni" name="dni" type="text" class="form-control" style="background: none;" th:field="*{dni}" required disabled />
+                            <span id="error-dni" class="text-danger" style="display:none;">El DNI ha de tenir com a màxim 9 caràcters</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{clients.campTelefon}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="telefon" name="phone" type="text" class="form-control" style="background: none;" th:field="*{telefon}" required disabled />
+                            <span id="error-telefonLlarg" class="text-danger" style="display:none;">El telèfon ha de tenir com a màxim 15 caràcters</span>
+                            <span id="error-telefonCar" class="text-danger" style="display:none;">El telèfon només pot contenir números i símbols.</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{clients.campEmail}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="email" name="email" type="email" class="form-control" style="background: none;" th:field="*{email}" required disabled />
+                            <span id="error-email" class="text-danger" style="display:none;">L'email ha de tenir com a màxim 45 caràcters</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{clients.campAdreca}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="adreça" name="address" type="text" class="form-control" style="background: none;" th:field="*{adreca}" required disabled />
+                            <input id="address" name="address" type="text" class="form-control" style="background: none;" th:field="*{adreca}" required disabled />
+                            <span id="error-address" class="text-danger" style="display:none;">La adreça ha de tenir com a màxim 100 caràcters</span>
                         </div>
                     </div>
                 </form>
