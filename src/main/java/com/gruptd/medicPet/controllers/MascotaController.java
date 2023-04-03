@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -35,8 +36,12 @@ public class MascotaController {
     }
 
     @PostMapping("/medicpet/clients/fitxa/{client_id}/mascotes/desar")          // URL 'CREATE' mascota (FORM)***
-    public String desarMascota(Mascota mascota, Model model) {
+    public String desarMascota(Mascota mascota, Model model, Errors errors) {
         log.info("Executant el controlador de mascotes: DESANT DADES MASCOTA...");
+        
+        if (errors.hasErrors()) { // Si s'han produït errors...
+            return "mascotaForm"; // Mantenim l'usuari a la pàgina del formulari
+        }
 
         mascotaService.save(mascota);
 

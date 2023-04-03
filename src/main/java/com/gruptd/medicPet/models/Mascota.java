@@ -27,6 +27,7 @@ public class Mascota implements Serializable {
     private String nom;
     @NotEmpty
     private String especie;
+    @NotEmpty
     private String raca;
     @NotEmpty
     private String data_naixement;
