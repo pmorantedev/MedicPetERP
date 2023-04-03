@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -30,12 +32,24 @@ public class TreballadorController {
     private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/medicpet/rrhh")
-    public String principalTreballadors(Model model, @Param("paraulaClau") String paraulaClau) {
-        log.info("Executant el controlador de treballador");
-
+    public String principalTreballadors(Model model, 
+            @Param("paraulaClau") String paraulaClau,
+            @Param("nomRegistreEliminat") String nomRegistreEliminat,
+            @RequestParam(name = "registreEliminat", required = false) Boolean registreEliminat) {
+        
+        log.info("Executant controlador treballadors: LLISTAT");
+        
+        // Mostra alerta per informar a l'usuari que un treballador s'ha eliminat
+        if (registreEliminat != null) {
+            log.info("[info] Mostrar alerta a l'usuari: TREBALLADOR ELIMINAT");
+            model.addAttribute("nomRegistreEliminat", nomRegistreEliminat);
+        } 
+        
+        // Definir/Inicialitzar variables necessàries per la vista
         Iterable<Treballador> treballadors;
+         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        // String paraulaClau = "TRACTAMENT";
+        // Codi pel cercador
         if (paraulaClau != null) {
             String sql = "SELECT * FROM treballador t WHERE CONCAT(t.nom_complet, t.telefon, t.email, t.adreca, t.carrec_aux, t.carrec_id) LIKE '%" + paraulaClau + "%'";
             treballadors = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Treballador.class));
@@ -43,8 +57,8 @@ public class TreballadorController {
             treballadors = treballadorService.findAll();
         }
 
-        model.addAttribute("treballadors", treballadors);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Passar variables a la vista
+        model.addAttribute("treballadors", treballadors);       
         model.addAttribute("userName", username);
         model.addAttribute("pagina", "RRHH");
 
@@ -76,13 +90,25 @@ public class TreballadorController {
     }
 
     @PostMapping("/medicpet/rrhh/eliminar/{id}")
-    public String eliminar(Treballador treballador) {
+    public String eliminar(Treballador treballador, RedirectAttributes redirectAtr) {
+        
+        // Recupero treballador per mostrar el nom per consola i passar-lo a la vista
+        treballador = treballadorService.getOne(treballador.getId());
+        log.info("Executant controlador clients: TREBALLADOR ELIMINAT ( ID:" + treballador.getId() + ", " + treballador.getNomComplet() + " )...");
+        redirectAtr.addAttribute("nomRegistreEliminat", treballador.getNomComplet());        
+        
+        // Executo l'acció d'eliminar
         treballadorService.delete(treballador);
+        redirectAtr.addAttribute("registreEliminat", true);
+        
         return "redirect:/medicpet/rrhh";
     }
 
     @PostMapping("/medicpet/rrhh/guardar")
-    public String guardar(Treballador treballador) {
+    public String guardar(Treballador treballador, Errors errors) {
+        if (errors.hasErrors()) {
+            return "rrhhForm"; 
+        }
         treballadorService.save(treballador);
         return "redirect:/medicpet/rrhh";
     }

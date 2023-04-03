@@ -3,7 +3,6 @@ package com.gruptd.medicPet.controllers;
 import com.gruptd.medicPet.services.TractamentServices;
 import com.gruptd.medicPet.models.Tractament;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -28,11 +28,24 @@ public class TractamentController {
     private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/medicpet/tractaments")
-    public String principalTractament(Model model, @Param("paraulaClau") String paraulaClau) {
-
-        Iterable<Tractament> tractaments;
+    public String principalTractament(Model model, 
+            @Param("paraulaClau") String paraulaClau,
+            @Param("nomRegistreEliminat") String nomRegistreEliminat,
+            @RequestParam(name = "registreEliminat", required = false) Boolean registreEliminat) {
         
-        // String paraulaClau = "TRACTAMENT";
+        log.info("Executant controlador tractaments: LLISTAT");
+        
+        // Mostra alerta per informar a l'usuari que un tractament s'ha eliminat
+        if (registreEliminat != null) {
+            log.info("[info] Mostrar alerta a l'usuari: TRACTAMENT ELIMINAT");
+            model.addAttribute("nomRegistreEliminat", nomRegistreEliminat);
+        }
+
+        // Definir/Inicialitzar variables necessàries per la vista
+        Iterable<Tractament> tractaments;
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        
+        // Codi pel cercador
         if (paraulaClau != null) {
             String sql = "SELECT * FROM tractament t WHERE CONCAT(t.id, t.nom, t.preu) LIKE '%" + paraulaClau + "%'";
             tractaments = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Tractament.class));
@@ -40,9 +53,8 @@ public class TractamentController {
             tractaments = tractamentService.findAll();
         }
         
-        model.addAttribute("tractaments", tractaments);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
+        // Passar variables a la vista
+        model.addAttribute("tractaments", tractaments);        
         model.addAttribute("userName", username);
         model.addAttribute("pagina", "Tractaments");
         
@@ -70,8 +82,17 @@ public class TractamentController {
     }
 
     @PostMapping("/medicpet/tractaments/eliminar/{id}")
-    public String eliminar(Tractament tractament) {
+    public String eliminar(Tractament tractament, RedirectAttributes redirectAtr) {
+        
+        // Recupero tractament per mostrar el nom per consola i passar-lo a la vista
+        tractament = tractamentService.getOne(tractament.getId());
+        log.info("Executant controlador tractaments: TRACTAMENT ELIMINAT ( ID:" + tractament.getId() + ", " + tractament.getNom() + " )...");
+        redirectAtr.addAttribute("nomRegistreEliminat", tractament.getNom());        
+        
+        // Executo l'acció d'eliminar
         tractamentService.delete(tractament);
+        redirectAtr.addAttribute("registreEliminat", true);
+        
         return "redirect:/medicpet/tractaments";
     }
 

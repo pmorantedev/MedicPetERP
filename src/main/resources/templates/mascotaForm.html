@@ -34,6 +34,71 @@
 
                 formEditable();
             }
+            
+            function validar() {
+                var valid = true;
+                var nom = document.getElementById('nom').value;
+                var nomError = document.getElementById('error-nom');
+
+                var especie = document.getElementById('especie').value;
+                var especieError = document.getElementById('error-especie');
+
+                var raça = document.getElementById('raça').value;
+                var raçaError = document.getElementById('error-raça');
+
+                var data = document.getElementById('dataNaixement').value;
+                var dataError = document.getElementById('error-data');
+
+                var sexe = document.getElementById('sexeMascota').value;
+                var sexeError = document.getElementById('error-sexe');
+                
+                if (nom.length > 45) {
+                    valid = false;
+                    nomError.style.display = 'block';
+                    document.getElementById('nom').classList.add('border-danger');
+                } else {
+                    nomError.style.display = 'none';
+                    document.getElementById('nom').classList.remove('border-danger');
+                }
+
+                if (especie.length > 45) {
+                    valid = false;
+                    especieError.style.display = 'block';
+                    document.getElementById('especie').classList.add('border-danger');
+                } else {
+                    especieError.style.display = 'none';
+                    document.getElementById('especie').classList.remove('border-danger');
+                }
+
+                if (raça.length > 45) {
+                    valid = false;
+                    raçaError.style.display = 'block';
+                    document.getElementById('raça').classList.add('border-danger');
+                } else {
+                    raçaError.style.display = 'none';
+                    document.getElementById('raça').classList.remove('border-danger');
+                }
+                
+                if (data === '') {
+                    valid = false;
+                    dataError.style.display = 'block';
+                    document.getElementById('dataNaixement').classList.add('border-danger');
+                } else {
+                    dataError.style.display = 'none';
+                    document.getElementById('dataNaixement').classList.remove('border-danger');
+                }
+                
+                if (sexe === '') {
+                    valid = false;
+                    sexeError.style.display = 'block';
+                    document.getElementById('sexeMascota').classList.add('border-danger');
+                } else {
+                    sexeError.style.display = 'none';
+                    document.getElementById('sexeMascota').classList.remove('border-danger');
+                }
+                
+                return valid;
+            }
 
         </script>
 
@@ -97,7 +162,7 @@
 
             <!-- Formulari: Detalls mascota -->
             <div class="p-5 mt-4 bg-light rounded-3">
-                <form id="mascotaForm" method="POST" th:action="@{/medicpet/clients/fitxa/{client_id}/mascotes/desar(client_id=${mascota.client_id.getIdclient})}" th:object="${mascota}" class="form-horizontal">
+                <form id="mascotaForm" method="POST" th:action="@{/medicpet/clients/fitxa/{client_id}/mascotes/desar(client_id=${mascota.client_id.getIdclient})}" th:object="${mascota}" class="form-horizontal" onsubmit="return validar();">
 
                     <input type="hidden" name="id_mascota" th:field="*{id_mascota}">
 
@@ -105,36 +170,41 @@
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campNom}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="nom" name="nom" type="text" class="form-control" style="background: none;" th:field="*{nom}" required disabled />
+                            <span id="error-nom" class="text-danger" style="display:none;">El nom ha de tenir com a màxim 45 caràcters</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campAniversari}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="dataNaixement" name="data_naixement" type="date" class="form-control" style="background: none;" th:field="*{data_naixement}" required disabled />
+                            <input id="dataNaixement" name="data_naixement" type="date" class="form-control" style="background: none;" th:field="*{data_naixement}"  />
+                            <span id="error-data" class="text-danger" style="display:none;">S'ha de seleccionar data de naixament</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campSexe}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <!--<input type="text" class="form-control" name="sexe" th:field="*{sexe}" th:if="${mascota.id_mascota != null}"/>-->
-                            <select id="sexeMascota" name="sexe" class="form-select" style="background: none;" th:field="*{sexe}" required disabled >
+                            <select id="sexeMascota" name="sexe" class="form-select" style="background: none;" th:field="*{sexe}"  >
                                 <option value="">[[#{generic.campSeleccionar}]]</option>
                                 <option value="Mascle">[[#{mascotes.campSexeMascle}]]</option>
                                 <option value="Femella">[[#{mascotes.campSexeFemella}]]</option>
                                 <option value="Desconegut">[[#{mascotes.campSexeDesconegut}]]</option>
                             </select>
+                             <span id="error-sexe" class="text-danger" style="display:none;">S'ha de seleccionar sexe</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campEspecie}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="especie" name="especie" type="text" class="form-control" style="background: none;" th:field="*{especie}" required disabled />
+                            <span id="error-especie" class="text-danger" style="display:none;">L'espècie ha de tenir com a màxim 45 caràcters</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campRaca}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="raça" name="raça" type="text" class="form-control" style="background: none;" th:field="*{raca}" required disabled />
+                            <span id="error-raça" class="text-danger" style="display:none;">La raça ha de tenir com a màxim 45 caràcters</span>
                         </div>
                     </div>
                 </form>
