@@ -2,8 +2,10 @@ package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.models.Client;
 import com.gruptd.medicPet.models.Mascota;
+import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.models.Visita;
 import com.gruptd.medicPet.services.MascotaServices;
+import com.gruptd.medicPet.services.UsuariServices;
 import com.gruptd.medicPet.services.VisitaServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MascotaController {
 
     @Autowired
+    private UsuariServices usuariService;
+    
+    @Autowired
     private MascotaServices mascotaService;
+    
     @Autowired
     private VisitaServices visitaService;
     
@@ -29,8 +35,16 @@ public class MascotaController {
         log.info("Executant el controlador de mascotes: FORMULARI OBERT...");
         model.addAttribute("pagina", "Clients");
 
+        // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir als atributs
+        String nomUsuariComplert = usuari.getNom();
+        String rolUsuari = usuari.getRol_id().getNom();
         model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
 
         return "mascotaForm";
     }
@@ -60,8 +74,16 @@ public class MascotaController {
         model.addAttribute("visites", visites);
         log.info(">> Visites: ", visites.toString());
         
+        // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir als atributs
+        String nomUsuariComplert = usuari.getNom();
+        String rolUsuari = usuari.getRol_id().getNom();
         model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
 
         return "mascotaForm";
     }

@@ -12,7 +12,7 @@
     <body class="bg-secondary-subtle"> 
 
         <!-- Menú de navegació -->
-        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, page=${pagina})}"></div>
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, nomComplert=${nomUsuariComplert}, page=${pagina})}"></div>
 
         <!-- Continguts -->
         <div class="container">
@@ -31,8 +31,8 @@
             </nav>
 
             <!-- Botons i cercador -->
-            <div class="d-flex justify-content-between mt-4">
-                <a th:href="@{/medicpet/clients/fitxa}" class="btn btn-outline-success">[[#{clients.botoCrear}]]</a>
+            <div th:class="${rolUsuari != 'VETERINARI' ? 'd-flex justify-content-between mt-4' : 'd-flex justify-content-end mt-4'}">
+                <a th:href="@{/medicpet/clients/fitxa}" class="btn btn-outline-success" th:if="${rolUsuari != 'VETERINARI'}">[[#{clients.botoCrear}]]</a>
                 <div class="float-right search btn-group">
                     <form method="get" th:action="@{/medicpet/clients}">
                         <input required th:value="${paraulaClau}" style="width: auto!important; display: inline;" class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off" name="paraulaClau" id="paraulaClau">
@@ -63,22 +63,22 @@
                             <tr th:each="client: ${clients}" class="text-center">
 
                                 <td th:text="${client.getIdclient}"></td>
-                                <td><a th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" th:text="${client.getNomComplert}" class="text-decoration-none" /></td>
+                                <td><a th:attr="title=#{generic.botoMostrar}" th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" th:text="${client.getNomComplert}" class="text-decoration-none" /></td>
                                 <td th:text="${client.getDni}"></td>
                                 <td th:text="${client.getTelefon}"></td>
                                 <td th:text="${client.getEmail}"></td>
 
                                 <!-- mascotes (amb o sense) -->
                                 <td th:if="${client.getMascotes != null and !client.getMascotes.empty}">
-                                    <span th:each="mascota: ${client.mascotes}" th:text="${mascota.nom}" class="badge p-2 me-2 my-1 bg-dark" />
-                                </td>
+                                    <a th:each="mascota: ${client.mascotes}"  class="btn px-2 py-1 m-1 btn-primary" th:attr="title=#{generic.botoMostrar}" th:text="${mascota.nom}" th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa/{idmascota}/editar(idclient=${client.getIdclient}, idmascota=${mascota.id_mascota})}"></a>
+                                
                                 <td th:if="${client.getMascotes == null or client.getMascotes.empty}" th:text="${'Sense mascotes...'}" class="text-muted fst-italic" />
 
                                 <!-- accions -->
                                 <td>
                                     <a th:attr="title=#{generic.botoMostrar}" class="btn btn-outline-primary" th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" ><i class="bi bi-eye-fill"></i></a>
                                 </td>
-                                <td>
+                                <td th:if="${rolUsuari != 'VETERINARI'}">
                                     <!-- Button trigger modal -->
                                     <form th:id="'eliminarRegistre' + ${client.getIdclient}" method="post" th:action="@{/medicpet/clients/eliminar/ + ${client.getIdclient}}">                                        
                                         <button th:id="${client.getIdclient()}" th:attr="title=#{generic.botoEliminar}" type="button" class="btn btn-outline-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-th-id="${client.getIdclient}" data-th-nom="${client.getNomComplert}">

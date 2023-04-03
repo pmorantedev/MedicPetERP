@@ -34,10 +34,13 @@ public class UsuariController {
         
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuari usuari = usuariServices.getByUsername(username);
+        // Accedir als atributs
+        String nomUsuariComplert = usuari.getNom();
         String rol = usuari.getRol_id().getNom();
         CanviContrasenya password = new CanviContrasenya();
         model.addAttribute("userName", username);
         model.addAttribute("treballador", usuari);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
         model.addAttribute("rol", rol);
         model.addAttribute("contrasenya", password);
         

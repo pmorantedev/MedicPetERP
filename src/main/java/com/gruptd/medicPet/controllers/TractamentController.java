@@ -2,6 +2,8 @@ package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.services.TractamentServices;
 import com.gruptd.medicPet.models.Tractament;
+import com.gruptd.medicPet.models.Usuari;
+import com.gruptd.medicPet.services.UsuariServices;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Slf4j
 public class TractamentController {
 
+    @Autowired
+    private UsuariServices usuariService;
+    
     @Autowired
     private TractamentServices tractamentService;
 
@@ -43,7 +48,14 @@ public class TractamentController {
 
         // Definir/Inicialitzar variables necessàries per la vista
         Iterable<Tractament> tractaments;
+        
+        // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir als atributs
+        String nomUsuariComplert = usuari.getNom();
+        String rolUsuari = usuari.getRol_id().getNom();
         
         // Codi pel cercador
         if (paraulaClau != null) {
@@ -56,6 +68,8 @@ public class TractamentController {
         // Passar variables a la vista
         model.addAttribute("tractaments", tractaments);        
         model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
         model.addAttribute("pagina", "Tractaments");
         
         return "tractamentsMain";
@@ -65,8 +79,18 @@ public class TractamentController {
     public String desarTractament(Tractament tractament, Model model) {
         tractament = tractamentService.getOne(tractament.getId());
         model.addAttribute("tractament", tractament);
+        
+        // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir als atributs
+        String nomUsuariComplert = usuari.getNom();
+        String rolUsuari = usuari.getRol_id().getNom();
         model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
+        
         model.addAttribute("pagina", "Tractaments");
         
         return "tractamentsForm";
@@ -74,8 +98,18 @@ public class TractamentController {
 
     @GetMapping("/medicpet/tractaments/fitxa")
     public String fitxaTractament(Tractament tractament, Model model) {
+        
+        // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir als atributs
+        String nomUsuariComplert = usuari.getNom();
+        String rolUsuari = usuari.getRol_id().getNom();
         model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
+        
         model.addAttribute("pagina", "Tractaments");
         
         return "tractamentsForm";

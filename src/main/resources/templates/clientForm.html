@@ -112,7 +112,7 @@
     <body>
 
         <!-- Menú de navegació -->
-        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, page=${pagina})}"></div>
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, nomComplert=${nomUsuariComplert}, page=${pagina})}"></div>
 
         <!-- Continguts -->
         <div class="container">
@@ -136,7 +136,7 @@
             </div>
 
             <!-- Botons per CLIENT NOU -->
-            <div class="mt-4" th:if="${client.idclient == null}">
+            <div class="mt-4" th:if="${client.idclient == null and rolUsuari != 'VETERINARI'}">
                 <script th:inline="javascript">
 
                     var filtre = [[${client.idclient == null}
@@ -150,17 +150,17 @@
                 </script>              
                 <div id="btns_edicio">
                     <button form="clientForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">[[#{generic.botoDesar}]]</button>
-                    <a th:href="@{/medicpet/clients}"><button type="button" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</button></a>
+                    <a th:href="@{/medicpet/clients}" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</a>
                 </div>
             </div>
             <!-- Botons EDITAR CLIENT -->            
-            <div class="mt-4" th:if="${client.idclient != null}">
+            <div class="mt-4" th:if="${client.idclient != null and rolUsuari != 'VETERINARI'}">
                 <div id="btn_editar">
                     <a href="javascript:mostrar();" name="Editar" class="btn btn-outline-primary p-2 me-3">[[#{generic.botoEditar}]]</a>
                 </div>
                 <div id="btns_edicio" style="display:none;">
                     <button form="clientForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">[[#{generic.botoDesarCanvis}]]</button>
-                    <a th:href="@{/medicpet/clients}" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</a>
+                    <button onClick="window.location.reload();" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</button>
                 </div>
             </div>
 
@@ -217,7 +217,7 @@
                 <h2 class="mt-5">[[#{mascotes.llistatTitol}]]</h2>
 
                 <!-- Botons -->
-                <a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa(idclient=${client.idclient})}" class="btn btn-outline-success mt-4">[[#{mascotes.botoCrear}]]</a>
+                <a th:if="${rolUsuari != 'VETERINARI'}" th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa(idclient=${client.idclient})}" class="btn btn-outline-success mt-4">[[#{mascotes.botoCrear}]]</a>
 
                 <!-- Taula -->
                 <div class="table-responsive">
@@ -236,7 +236,7 @@
                         <tbody>                 
                             <tr th:each="mascota: ${client.mascotes}" class="text-center">
                                 <td th:text="${mascota.getId_mascota}"></td>
-                                <td><a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa/{idmascota}/editar(idclient=${client.getIdclient}, idmascota=${mascota.getId_mascota})}" th:text="${mascota.getNom}" class="text-decoration-none" /></td>
+                                <td><a th:attr="title=#{generic.botoMostrar}" th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa/{idmascota}/editar(idclient=${client.getIdclient}, idmascota=${mascota.getId_mascota})}" th:text="${mascota.getNom}" class="text-decoration-none" /></td>
                                 <td th:text="${mascota.getData_naixement}"></td>
                                 <td th:text="${mascota.getSexe}"></td>
                                 <td th:text="${mascota.getEspecie}"></td>                            
@@ -246,7 +246,7 @@
                                 <td>
                                     <a th:attr="title=#{generic.botoMostrar}" class="btn btn-outline-primary" th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa/{idmascota}/editar(idclient=${client.getIdclient}, idmascota=${mascota.getId_mascota})}" ><i class="bi bi-eye-fill"></i></a>
                                 </td>
-                                <td>
+                                <td th:if="${rolUsuari != 'VETERINARI'}">
                                     <!-- Button trigger modal -->
                                     <form th:id="'eliminarRegistre' + ${mascota.getId_mascota}" method="post" th:action="@{/medicpet/clients/fitxa/{idclient}/mascotes/eliminar/{idmascota}(idclient=${client.getIdclient}, idmascota=${mascota.getId_mascota})}">                                        
                                         <button th:id="${mascota.getId_mascota}" th:attr="title=#{generic.botoEliminar}" type="button" class="btn btn-outline-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-th-id="${mascota.getId_mascota}" data-th-nom="${mascota.getNom}">
