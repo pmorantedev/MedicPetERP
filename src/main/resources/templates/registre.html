@@ -6,6 +6,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Iniciar sessió</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script language="javascript">
+            function validar() {
+                var valid = true;
+                var username = document.getElementById('username').value;
+                var usernameError = document.getElementById('error-username');
+                
+                var name = document.getElementById('name').value;
+                var nameError = document.getElementById('error-nom');
+                
+                if (username.length > 45) {
+                    valid = false;
+                    usernameError.style.display = 'block';
+                    document.getElementById('username').classList.add('border-danger');
+                } else {
+                    usernameError.style.display = 'none';
+                    document.getElementById('username').classList.remove('border-danger');
+                }
+                
+                if (name.length > 45) {
+                    valid = false;
+                    nameError.style.display = 'block';
+                    document.getElementById('name').classList.add('border-danger');
+                } else {
+                    nameError.style.display = 'none';
+                    document.getElementById('name').classList.remove('border-danger');
+                }
+                
+                return valid;
+            }
+        </script>
     </head>
 
     <!-- BODY -->
@@ -17,7 +47,7 @@
                     <!-- login form -->
                     <div class="text-center">
 
-                        <form id="registerForm" th:action="@{/nou-usuari}" th:object="${usuari}" method="POST" class="register-form" enctype="multipart/form-data">
+                        <form id="registerForm" th:action="@{/nou-usuari}" th:object="${usuari}" method="POST" class="register-form" enctype="multipart/form-data" onsubmit="return validar();">
 
                             <div class="row justify-content-center mt-5">            
                                 <div>
@@ -30,9 +60,11 @@
                             <div class="container mt-4">
                                 <div class="row justify-content-center">
 
-                                    <input type="text" name="Name" th:field="*{nom}" class="form-control mb-2 border-0" placeholder="Nom i cognoms" required autofocus="">
-                                    <input type="text" name="userName" th:field="*{username}" class="form-control mb-2 border-0" placeholder="Nom d'usuari">
-                                    <input type="password" name="userPassword" th:field="*{contrasenya}" class="form-control mb-2 border-0" placeholder="Contrassenya" required> 
+                                    <input id="name" type="text" name="Name" th:field="*{nom}" class="form-control mb-2" placeholder="Nom i cognoms" required autofocus="">
+                                    <span id="error-nom" class="text-danger" style="display:none;">El nom ha de tenir com a màxim 45 caràcters</span>
+                                    <input id="username" type="text" name="userName" th:field="*{username}" class="form-control mb-2" placeholder="Nom d'usuari">
+                                    <span id="error-username" class="text-danger" style="display:none;">El nom d'usuari ha de tenir com a màxim 45 caràcters</span>
+                                    <input type="password" name="userPassword" th:field="*{contrasenya}" class="form-control mb-2" placeholder="Contrassenya" required> 
                                     <select class="form-select" id="rol_usuari" name="rol_id" th:field="*{rol_id}" required>
                                         <option value="">Seleccionar rol...</option>
                                         <option value="2">Administratiu</option>
