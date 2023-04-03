@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>[[#{clients.llistatTitol}]]</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">        
     </head>
 
     <body class="bg-secondary-subtle"> 
@@ -16,27 +17,33 @@
         <!-- Continguts -->
         <div class="container">
 
+            <!-- TO-DO: Mostar Alerta -->
+            <div th:if="${nomRegistreEliminat}" id="alertaEliminar" class="alert alert-info alert-dismissible fade show text-center" role="alert">
+                <i class="bi bi-info-circle me-2"></i> [[#{clients.msgRegistreEliminat_1}]] <b th:text="${nomRegistreEliminat}">[[#{generic.modalTitolRegistre}]]</b> [[#{generic.msgRegistreEliminat_2}]]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <!-- Breadcrumb -->
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb fs-4 mt-4">
+                    <li class="breadcrumb-item"><h2>[[#{clients.llistatTitol}]]</h2></li>
+                </ol>
+            </nav>
+
+            <!-- Botons i cercador -->
+            <div class="d-flex justify-content-between mt-4">
+                <a th:href="@{/medicpet/clients/fitxa}" class="btn btn-outline-success">[[#{clients.botoCrear}]]</a>
+                <div class="float-right search btn-group">
+                    <form method="get" th:action="@{/medicpet/clients}">
+                        <input required th:value="${paraulaClau}" style="width: auto!important; display: inline;" class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off" name="paraulaClau" id="paraulaClau">
+                        <button class="btn btn-outline-primary ms-2" type="submit">[[#{generic.botoCercar}]]</button>
+                        <button class="btn btn-outline-secondary ms-2" type="button" onclick="limpiarCampos()">[[#{generic.botoNetejar}]]</button>
+                    </form>
+                </div>
+            </div>
+
             <!-- Llistat de clients en cas que n'hi hagi de creats -->
             <div th:if="${clients != null and !clients.empty}">
-
-                <!-- Breadcrumb -->
-                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                    <ol class="breadcrumb fs-4 mt-4">
-                        <li class="breadcrumb-item"><h2>[[#{clients.llistatTitol}]]</h2></li>
-                    </ol>
-                </nav>
-
-                <!-- Botons i cercador -->
-                <div class="d-flex justify-content-between mt-4">
-                    <a th:href="@{/medicpet/clients/fitxa}" class="btn btn-outline-success">[[#{clients.botoCrear}]]</a>
-                    <div class="float-right search btn-group">
-                        <form method="get" th:action="@{/medicpet/clients}">
-                            <input required th:value="${paraulaClau}" style="width: auto!important; display: inline;" class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off" name="paraulaClau" id="paraulaClau">
-                            <button class="btn btn-outline-primary ms-2" type="submit">Buscar</button>
-                            <button class="btn btn-outline-secondary ms-2" type="button" onclick="limpiarCampos()">Netejar</button>
-                        </form>
-                    </div>
-                </div>
 
                 <!-- Taula -->
                 <div class="table-responsive">
@@ -69,19 +76,15 @@
 
                                 <!-- accions -->
                                 <td>
-                                    <a class="btn btn-outline-primary" th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" >
-                                        [[#{generic.botoMostrar}]]
-                                    </a>
+                                    <a th:attr="title=#{generic.botoMostrar}" class="btn btn-outline-primary" th:href="@{/medicpet/clients/fitxa/} + ${client.getIdclient}" ><i class="bi bi-eye-fill"></i></a>
                                 </td>
                                 <td>
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-id="${client.getIdclient}" id="deleteClientButton">
-                                        [[#{generic.botoEliminar}]]
-                                    </button>
-
-                                    <!--<form id="eliminarClient" method="post" th:action="@{/medicpet/clients/eliminar/} + ${client.getIdclient}" class="m-0">
-                                        <input type="submit" class="btn btn-outline-danger" value="Eliminar">
-                                    </form>-->                      
+                                    <form th:id="'eliminarRegistre' + ${client.getIdclient}" method="post" th:action="@{/medicpet/clients/eliminar/ + ${client.getIdclient}}">                                        
+                                        <button th:id="${client.getIdclient()}" th:attr="title=#{generic.botoEliminar}" type="button" class="btn btn-outline-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-th-id="${client.getIdclient}" data-th-nom="${client.getNomComplert}">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         </tbody>
@@ -91,47 +94,159 @@
                 <!-- Modal -->
                 <div class="modal fade" id="confirmarEliminar" tabindex="-1" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
+                        <div class="modal-content">                               
 
-                            <form method="post" class="m-0" id="deleteClientForm">
-                                <!--<input type="hidden" th:field="*{idclient}" />-->
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmarEliminarLabel">[[#{clients.modalTitol}]]: <span class="text-danger">[[#{generic.modalTitolRegistre}]]</span></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
 
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">[[#{clients.modalTitol}]]</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
+                            <div class="modal-body">
+                                <p>[[#{clients.modalMsg}]]</p>
+                            </div>
 
-                                <div class="modal-body">
-                                    <p>[[#{clients.modalMsg}]]</p>                               
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">[[#{generic.botoTancar}]]</button>
-                                    <button type="submit" class="btn btn-outline-danger">[[#{generic.botoEliminar}]]</button>                                                                   
-                                </div>
-                            </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="btn_eliminarCancelar" data-bs-dismiss="modal">[[#{generic.botoCancelar}]]</button>
+                                <button type="button" class="btn btn-outline-danger" id="btn_eliminarConfirmar" data-id="">[[#{generic.botoEliminar}]]</button>                                                                   
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div>                
 
             </div>
 
             <!-- Si no hi ha clients creats, es mostrarà aquest missatge -->
-            <div th:if="${clients == null or clients.empty}" class="justify-content-center mt-5">
+            <div th:if="${clients == null or clients.empty}" class="justify-content-center mt-5" id="senseRegistres" style="display:none;">
                 <div class="text-center">
                     <h2 class="mx-auto">[[#{clients.msgAfegirClient_1}]] <br> [[#{clients.msgAfegirClient_2}]]</h2>
-                    <a th:href="@{/medicpet/clients/fitxa}" class="btn btn-outline-success mt-3">Crear</a>
                 </div>
             </div>
-
+            <div th:if="${clients == null or clients.empty}" class="justify-content-center mt-5" id="senseCoincidencies" style="display:none;">
+                <div class="text-center">
+                    <h2 class="mx-auto">[[#{generic.msgCercaFallida_1}]] <br> [[#{generic.msgCercaFallida_2}]]</h2>
+                </div>
+            </div>
+            
         </div>
 
         <!-- Peu de pàgina -->
         <div th:insert="~{fragments/peuPagina :: footer}"/>
-        <script type="text/javascript">
-            function limpiarCampos(){
-                window.location= "/medicpet/clients"
-            }
+
+        <!-- Script per confirmar l'eliminació d'un registre -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script th:inline="javascript">
+
+                // Aplicar missatge correcte a l'usuari quan la taula és buida
+                document.addEventListener("DOMContentLoaded", function () {
+                    const queryString = window.location.search;
+                    const urlParams = new URLSearchParams(queryString);
+                    const cercaExecutada = urlParams.has('paraulaClau');                    
+                    
+                    if (cercaExecutada !== null && cercaExecutada !== '' && cercaExecutada === true) {
+                        console.log(">> Cerca executada");
+                        document.getElementById('senseRegistres').style.display = 'none';
+                        document.getElementById('senseCoincidencies').style.display = 'block';                        
+                    } else {
+                        document.getElementById('senseCoincidencies').style.display = 'none';
+                        document.getElementById('senseRegistres').style.display = 'block';
+                    }
+                });
+
+                function limpiarCampos() {
+                    window.location = "/medicpet/clients"
+                }
+
+                // TO-DO: pendent d'implementar que quan s'esborri un registre mostri alerta de confirmació
+                /* function mostrarAlerta() {
+                 document.getElementById("alertaEliminar").style.display = "block";
+                 }*/
+
+                // Script mostrar Modal confirmació (Eliminar registre)
+                document.addEventListener("DOMContentLoaded", function () {
+
+                    // Inicialització del modal
+                    const modalEl = document.getElementById('confirmarEliminar');
+                    const modal = new bootstrap.Modal(modalEl, {
+                        keyboard: false
+                    });
+
+                    // Desar tots els botons que serveixen per eliminar un registre
+                    const botonsEliminar = document.querySelectorAll('.btn-eliminar');
+
+                    // Botons del modal
+                    const btnEliminarConfirmar = document.getElementById('btn_eliminarConfirmar');
+                    const btnEliminarCancelar = document.getElementById('btn_eliminarCancelar');
+
+                    // Funció per eliminar un registre
+                    function eliminarRegistre(idRegistre) {
+
+                        // Obtindre la ruta per l'acció 'Eliminar'
+                        const formEliminar = document.getElementById(`eliminarRegistre${idRegistre}`);
+                        const accioEliminar = formEliminar.getAttribute('action');
+                        const index = accioEliminar.indexOf('eliminar/');
+                        const url = accioEliminar.substring(0, index + 'eliminar/'.length);
+                        console.log(">> url registre (Eliminat): ", url + idRegistre);
+
+                        // Comprovar que l'ID sigui un Nombre
+                        if (!isNaN(idRegistre)) {
+
+                            idRegistre = Number(idRegistre);
+                            formEliminar.action = `${url}${idRegistre}`;
+                            formEliminar.submit();
+                            console.log(">> Registre nº (" + idRegistre + ") eliminat");
+
+                        } else {
+                            console.error(`El valor de 'data-th-id' no és un nombre vàlid: ${idRegistre}`);
+                        }
+                    }
+
+                    // Funció per confirmar l'eliminació
+                    function confirmarEliminar(idRegistre) {
+
+                        // Mostrar modal
+                        modal.show();
+                        console.log(">> Registre seleccionat (" + idRegistre + ")");
+
+                        btnEliminarConfirmar.addEventListener('click', function () {
+                            console.log(`Eliminant registre ${idRegistre} ...`);
+                            eliminarRegistre(idRegistre);
+                            modal.hide();
+                        });
+
+                        btnEliminarCancelar.addEventListener('click', function () {
+                            console.log(">> Acció cancel·lada");
+                            idRegistre = null;  // resetejo id per evitar acomular-los                        
+                            modal.hide();
+                        });
+
+                    }
+
+                    // Iterar sobre cada botó
+                    botonsEliminar.forEach(function (boto) {
+
+                        // En fer clic, es mostra el modal
+                        boto.addEventListener('click', function (event) {
+                            let nom = "";
+
+                            // Detectar quin botó s'ha clicat (Event) per establir l'ID
+                            let idRegistre = boto.getAttribute('id');
+                            console.log('>> ID registre: ' + idRegistre);
+
+                            // Recuperar el valor de l'atribut 'data-th-nom' del botó
+                            nom = boto.getAttribute('nom');
+                            console.log('>> Nom registre: ' + nom);
+                            // Actualitzar el contingut del títol del modal amb el valor de l'atribut
+                            document.querySelector('#confirmarEliminarLabel span').textContent = nom;
+
+                            confirmarEliminar(idRegistre);
+
+                        });
+
+
+                    });
+
+                });
         </script>
+
     </body>
 </html>
