@@ -76,7 +76,7 @@
                 </script>              
                 <div id="btns_edicio">
                     <button form="clientForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">[[#{generic.botoDesar}]]</button>
-                    <a th:href="@{/medicpet/clients}"><button type="button" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</button></a>
+                    <a th:href="@{/medicpet/clients}" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</a>
                 </div>
             </div>
             <!-- Botons EDITAR CLIENT -->            
@@ -86,7 +86,7 @@
                 </div>
                 <div id="btns_edicio" style="display:none;">
                     <button form="clientForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">[[#{generic.botoDesarCanvis}]]</button>
-                    <a th:href="@{/medicpet/clients}" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</a>
+                    <button onClick="window.location.reload();" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</button>
                 </div>
             </div>
 

@@ -91,7 +91,7 @@
                 </div>
                 <div id="btns_edicio" style="display:none;">
                     <button form="mascotaForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">[[#{generic.botoDesarCanvis}]]</button>
-                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</a>
+                    <button onClick="window.location.reload();" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</button>
                 </div>
             </div>
 
