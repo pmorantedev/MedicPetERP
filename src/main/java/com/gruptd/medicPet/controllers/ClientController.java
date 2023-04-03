@@ -2,8 +2,10 @@ package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.models.Client;
 import com.gruptd.medicPet.models.Mascota;
+import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.services.ClientServices;
 import com.gruptd.medicPet.services.MascotaServices;
+import com.gruptd.medicPet.services.UsuariServices;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
@@ -23,6 +25,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Slf4j
 public class ClientController {
 
+    @Autowired
+    private UsuariServices usuariService;
+    
     @Autowired
     private ClientServices clientService;
 
@@ -50,7 +55,13 @@ public class ClientController {
         // Definir/Inicialitzar variables necessàries per la vista
         Iterable<Client> clients;
         Iterable<Mascota> mascotes = mascotaService.findAll();
+        
+        // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir a l'atribut 'Nom' per mostrar-lo al header
+        String nomUsuariComplert = usuari.getNom();
         
         // Codi pel cercador
         if (paraulaClau != null) {
@@ -64,6 +75,7 @@ public class ClientController {
         model.addAttribute("clients", clients);
         model.addAttribute("mascotes", mascotes);
         model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
         model.addAttribute("pagina", "Clients");
 
         return "clientsMain";
@@ -72,8 +84,14 @@ public class ClientController {
     @GetMapping("/medicpet/clients/fitxa")                                      // URL mostrar fitxa client (FORM)
     public String crearClient(Client client, Model model) {
 
+        // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir a l'atribut 'Nom' per mostrar-lo al header
+        String nomUsuariComplert = usuari.getNom();
         model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
         model.addAttribute("pagina", "Clients");
 
         log.info("Executant controlador clients: FITXA NOU CLIENT...");
@@ -115,8 +133,14 @@ public class ClientController {
         model.addAttribute("client", client);
         log.info("Executant controlador clients: MOSTRAR FITXA CLIENT EXISTENT ( ID:" + client.getIdclient() + ", " + client.getNomComplert() + " )...");
 
+        // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir a l'atribut 'Nom' per mostrar-lo al header
+        String nomUsuariComplert = usuari.getNom();
         model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
         model.addAttribute("pagina", "Clients");
 
         return "clientForm";

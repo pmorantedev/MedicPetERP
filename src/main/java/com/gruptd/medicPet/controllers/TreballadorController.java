@@ -2,8 +2,10 @@ package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.models.Carrec;
 import com.gruptd.medicPet.models.Treballador;
+import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.services.CarrecServices;
 import com.gruptd.medicPet.services.TreballadorServices;
+import com.gruptd.medicPet.services.UsuariServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -21,6 +23,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Slf4j
 public class TreballadorController {
 
+    @Autowired
+    private UsuariServices usuariService;
+    
     @Autowired
     private TreballadorServices treballadorService;
 
@@ -46,7 +51,15 @@ public class TreballadorController {
         
         // Definir/Inicialitzar variables necessàries per la vista
         Iterable<Treballador> treballadors;
-         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        
+        // Recuperar el nom de l'usuari actual
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir a l'atribut 'Nom' per mostrar-lo al header
+        String nomUsuariComplert = usuari.getNom();
+        model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
 
         // Codi pel cercador
         if (paraulaClau != null) {
@@ -57,8 +70,7 @@ public class TreballadorController {
         }
 
         // Passar variables a la vista
-        model.addAttribute("treballadors", treballadors);       
-        model.addAttribute("userName", username);
+        model.addAttribute("treballadors", treballadors);
         model.addAttribute("pagina", "RRHH");
 
         return "rrhhMain";
@@ -68,8 +80,16 @@ public class TreballadorController {
     public String modificarTreballador(Treballador treballador, Model model) {
         treballador = treballadorService.getOne(treballador.getId());
         model.addAttribute("treballador", treballador);
+        
+        // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir a l'atribut 'Nom' per mostrar-lo al header
+        String nomUsuariComplert = usuari.getNom();
         model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        
         model.addAttribute("pagina", "RRHH");
         Iterable<Carrec> carrecs = carrecService.findAll();
         model.addAttribute("carrecs", carrecs);
@@ -79,8 +99,16 @@ public class TreballadorController {
 
     @GetMapping("/medicpet/rrhh/fitxa")
     public String fitxaTractament(Treballador treballador, Model model) {
+        
+        // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir a l'atribut 'Nom' per mostrar-lo al header
+        String nomUsuariComplert = usuari.getNom();
         model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        
         model.addAttribute("pagina", "RRHH");
         Iterable<Carrec> carrecs = carrecService.findAll();
         model.addAttribute("carrecs", carrecs);

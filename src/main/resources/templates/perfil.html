@@ -70,7 +70,7 @@
     <body>
 
         <!-- Menú de navegació -->
-        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName})}"></div>
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, nomComplert=${nomUsuariComplert})}"></div>
 
         <!-- Continguts -->
         <div class="container">
