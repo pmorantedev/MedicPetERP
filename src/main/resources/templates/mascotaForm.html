@@ -132,7 +132,7 @@
 
 
             <!-- Botons per MASCOTA NOVA -->
-            <div class="mt-4" th:if="${mascota.id_mascota == null}">
+            <div class="mt-4" th:if="${mascota.id_mascota == null and rolUsuari != 'VETERINARI'}">
                 <script th:inline="javascript">
                     console.log(">> Mascota nova...");
                     var filtre = [[${mascota.id_mascota == null}
@@ -150,13 +150,13 @@
                 </div>
             </div>
             <!-- Botons EDITAR MASCOTA -->            
-            <div class="mt-4" th:if="${mascota.id_mascota != null}">
+            <div class="mt-4" th:if="${mascota.id_mascota != null and rolUsuari != 'VETERINARI'}">
                 <div id="btn_editar">
                     <a href="javascript:mostrar();" name="Editar" class="btn btn-outline-primary p-2 me-3">[[#{generic.botoEditar}]]</a>
                 </div>
                 <div id="btns_edicio" style="display:none;">
                     <button form="mascotaForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">[[#{generic.botoDesarCanvis}]]</button>
-                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</a>
+                    <button onClick="window.location.reload();" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</button>
                 </div>
             </div>
 

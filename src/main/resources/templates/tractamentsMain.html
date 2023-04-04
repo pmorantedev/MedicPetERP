@@ -60,7 +60,7 @@
                             <tr th:each="tractament: ${tractaments}" class="text-center">
 
                                 <td th:text="${tractament.getId}"></td>
-                                <td><a th:href="@{/medicpet/tractaments/fitxa/} + ${tractament.getId}" th:text="${tractament.getNom}" class="text-decoration-none" /></td>
+                                <td><a th:attr="title=#{generic.botoMostrar}" th:href="@{/medicpet/tractaments/fitxa/} + ${tractament.getId}" th:text="${tractament.getNom}" class="text-decoration-none" /></td>
                                 <td th:text="${T(java.lang.String).format('%.2f €', tractament.getPreu())}"></td>
 
                                 <!-- accions -->

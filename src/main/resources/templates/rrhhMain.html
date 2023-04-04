@@ -12,7 +12,7 @@
     <body class="bg-secondary-subtle">
 
         <!-- Menú de navegació -->
-        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, page=${pagina})}"></div>
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, nomComplert=${nomUsuariComplert}, page=${pagina})}"></div>
 
         <!-- Contingut de la pàgina -->
         <div class="container">
@@ -61,7 +61,7 @@
                         <tbody>                 
                             <tr th:each="treballador: ${treballadors}" class="text-center">
                                 <td th:text="${treballador.getId}"></td>
-                                <td><a th:href="@{/medicpet/rrhh/fitxa/} + ${treballador.getId}" th:text="${treballador.getNomComplet}" class="text-decoration-none" /></td>
+                                <td><a th:attr="title=#{generic.botoMostrar}" th:href="@{/medicpet/rrhh/fitxa/} + ${treballador.getId}" th:text="${treballador.getNomComplet}" class="text-decoration-none" /></td>
                                 <td th:text="${treballador.getTelefon}"></td>
                                 <td th:text="${treballador.getEmail}"></td>
                                 <td th:text="${treballador.getCarrec.getNom}"></td>
