@@ -31,12 +31,12 @@ public class Visita implements Serializable {
     
     @OneToOne
     @JoinColumn(name = "treballador_id")
-    @NotEmpty
+    //@NotEmpty
     private Treballador treballador_id;
     
     @OneToOne
     @JoinColumn(name = "mascota_id")
-    @NotEmpty
+    //@NotEmpty
     private Mascota mascota;
 
 }

@@ -223,6 +223,8 @@
                     </ol>
                 </nav>
 
+                <a th:href="@{/medicpet/visites/{id_mascota}/fitxa(id_mascota=${mascota.id_mascota})}" class="btn btn-outline-success">[[#{visites.botoCrear}]]</a>
+                
                 <!-- Taula -->
                 <div class="table-responsive">
                     <table class="table align-middle table-striped table-responsive-xl mt-3">
@@ -239,18 +241,44 @@
                                 <td th:text="${visita.getId}"></td>
                                 <td th:text="${visita.getDiagnostic}"></td>
                                 <td th:text="${visita.getData_visita}"></td>
-                                <td><form method="get" th:action="@{/medicpet/tractaments/fitxa/} + ${visita.getId}" class="m-0">
-                                        <input type="submit" class="btn btn-outline-primary" value="Mostrar">
-                                    </form>
+                                
+                                <td>
+                                    <a th:attr="title=#{generic.botoMostrar}" class="btn btn-outline-primary" th:href="@{/medicpet/visites/{id_mascota}/fitxa/{id_visita}/editar(id_mascota=${mascota.getId_mascota}, id_visita=${visita.getId})}" ><i class="bi bi-eye-fill"></i></a>
                                 </td>
                                 <td>
-                                    <form th:id="'eliminarRegistre' + ${visita.getId}" method="post" th:action="@{/medicpet/tractaments/eliminar/{id}(id=${visita.id})}" class="m-0">
-                                        <input type="submit" class="btn btn-outline-danger" value="Eliminar">
-                                    </form>
+                                    <!-- Button trigger modal -->
+                                    <!-- <form th:id="'eliminarVisita' + ${visita.getId}" method="post" th:action="@/medicpet/visites/fitxa/eliminar/{id}(id=${visita.getId})}">                                        
+                                        <button th:id="${visita.getId}" th:attr="title=#{generic.botoEliminar}" type="button" class="btn btn-outline-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-th-id="${visita.getId}" data-th-nom="${visita.getDataVisita}">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                    </form> -->
                                 </td>
+                                
                             </tr>
                         </tbody>
                     </table> 
+                </div>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="confirmarEliminar" tabindex="-1" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">                               
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmarEliminarLabel">[[#{clients.modalTitol}]]: <span class="text-danger">[[#{generic.modalTitolRegistre}]]</span></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <p>[[#{clients.modalMsg}]]</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="btn_eliminarCancelar" data-bs-dismiss="modal">[[#{generic.botoCancelar}]]</button>
+                                <button type="button" class="btn btn-outline-danger" id="btn_eliminarConfirmar" data-id="">[[#{generic.botoEliminar}]]</button>                                                                   
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -258,7 +286,7 @@
             <div th:if="${mascota.id_mascota != null and (visites == null or visites.empty)}" class="justify-content-center mt-5">
                 <div class="p-5 mb-4 rounded-3 text-center alert alert-danger" role="alert">
                     <h4 class="mx-auto">[[#{visites.msgAfegirVisita_1}]] <br> [[#{visites.msgAfegirVisita_2}]]</h4>
-                    <a href="#/" class="btn btn-outline-danger mt-3">[[#{visites.botoAfegir}]]</a>
+                    <a th:href="@{/medicpet/visites/{id_mascota}/fitxa(id_mascota=${mascota.id_mascota})}" class="btn btn-outline-danger mt-3">[[#{visites.botoAfegir}]]</a>
                 </div>
             </div>
             

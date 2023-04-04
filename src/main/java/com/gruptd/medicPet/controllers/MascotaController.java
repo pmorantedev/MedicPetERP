@@ -23,10 +23,8 @@ public class MascotaController {
 
     @Autowired
     private UsuariServices usuariService;
-    
     @Autowired
     private MascotaServices mascotaService;
-    
     @Autowired
     private VisitaServices visitaService;
     
@@ -70,9 +68,8 @@ public class MascotaController {
         model.addAttribute("mascota", mascota);
         model.addAttribute("pagina", "Clients");
         
-        Iterable<Visita> visites = visitaService.findAll();
+        Iterable<Visita> visites = visitaService.findAllByMascota(mascota);
         model.addAttribute("visites", visites);
-        log.info(">> Visites: ", visites.toString());
         
         // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
