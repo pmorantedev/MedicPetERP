@@ -18,10 +18,10 @@
                         </a>
 
                         <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
-                            <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" th:class="${page == 'Factures' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Facturació</a></li>
+                            <li th:if="${rol != 'VETERINARI'}" class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" th:class="${page == 'Factures' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Facturació</a></li>
                             <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" th:class="${page == 'Clients' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Clients</a></li>
                             <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" th:class="${page == 'Tractaments' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Tractaments</a></li>
-                            <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" th:class="${page == 'RRHH' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">RRHH</a></li>
+                            <li th:if="${rol != 'VETERINARI'}" class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/rrhh" th:class="${page == 'RRHH' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">RRHH</a></li>
                         </ul>
 
                         <div class="col-12 col-lg-auto dropdown text-lg-end d-flex justify-content-center">
