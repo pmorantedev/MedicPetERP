@@ -61,6 +61,24 @@
                 div = document.getElementById('btns_edicioImg');
                 div.style.display = 'block';
             }
+            
+            function validar() {
+                var valid = true;
+                
+                var name = document.getElementById('nom').value;
+                var nameError = document.getElementById('error-nom');
+                
+                if (name.length > 45) {
+                    valid = false;
+                    nameError.style.display = 'block';
+                    document.getElementById('nom').classList.add('border-danger');
+                } else {
+                    nameError.style.display = 'none';
+                    document.getElementById('nom').classList.remove('border-danger');
+                }
+                
+                return valid;
+            }
 
 
         </script>
@@ -126,7 +144,7 @@
             <!-- Formulari: Detalls perfil -->
             <div <div class="p-5 mt-4 bg-light rounded-3">
 
-                <form id="treballadorForm" method="POST" th:action="@{/medicpet/perfil/guardar}" th:object="${treballador}" class="form-horizontal">
+                <form id="treballadorForm" method="POST" th:action="@{/medicpet/perfil/guardar}" th:object="${treballador}" class="form-horizontal" onsubmit="return validar();">
 
                     <input type="hidden" name="id" th:field="*{id}">
 
@@ -140,6 +158,7 @@
                         <label class="col-sm-2 control-label"><h5>Nom</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="nom" name="nom" type="text" class="form-control" style="background: none;" th:field="*{nom}" required disabled />
+                            <span id="error-nom" class="text-danger" style="display:none;">El nom ha de tenir com a màxim 45 caràcters</span>
                         </div>
                     </div>
 
