@@ -26,7 +26,7 @@ public class Visita implements Serializable {
 
     private String diagnostic;
     private String medicacio;
-    //@NotEmpty
+    @NotEmpty
     private String data_visita;
     
     @OneToOne
