@@ -84,17 +84,6 @@
                 <h2 th:if="${visita.id == null}">[[#{visita.crearTitol}]]</h2>
             </div>
 
-            <!-- <div class="d-flex">
-                <h2>
-                    <a th:href="@{/medicpet/clients}" class="link-secondary">[[#{clients.llistatTitol}]]</a>
-                    <span> / </span>                        
-                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="link-secondary ml-2">[[#{clients.fitxaClientTitol}]] "<span th:text="${mascota.client_id.getNomComplert}"></span>"</a>
-                    <span> / </span>
-                    <span th:if="${mascota.id_mascota != null}" class="text-dark ml-2">[[#{mascotes.fitxaTitol}]] "<span th:text="${mascota.getNom}"></span>"</span>                 
-                    <span th:if="${mascota.id_mascota == null}" class="text-dark ml-2">[[#{mascotes.fitxaNovaTitol}]]</span>                 
-                </h2>
-            </div>-->
-
             <!-- Botons per nova visita -->
             <div class="mt-4" th:if="${visita.id == null}">
                 <script th:inline="javascript">
@@ -118,6 +107,7 @@
             <!-- Botons editar visita -->            
             <div class="mt-4" th:if="${visita.id != null}">
                 <div id="btn_editar">
+                    <a href="javascript:history.go(-1)" name="Editar" class="btn btn-outline-danger p-2 me-3">Tornar enrere</a>
                     <a href="javascript:mostrar();" name="Editar" class="btn btn-outline-primary p-2 me-3">[[#{generic.botoEditar}]]</a>
                 </div>
                 <div id="btns_edicio" style="display:none;">
