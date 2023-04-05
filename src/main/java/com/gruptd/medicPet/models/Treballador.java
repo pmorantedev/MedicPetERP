@@ -21,17 +21,22 @@ public class Treballador implements Serializable {
     
     @NotEmpty
     private String nomComplet;
+    
     @NotEmpty
     private String telefon;
+    
     @NotEmpty
     private String email;
+    
     @NotEmpty
     private String adreca;
+    
     private String carrecAux;
+    
     @ManyToOne
     @JoinColumn(name = "carrec_id")
-    //@NotEmpty
     private Carrec carrec;
+    
     @OneToOne
     @JoinColumn(name = "usuari_id")
     private Usuari usuari;

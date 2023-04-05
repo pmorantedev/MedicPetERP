@@ -135,6 +135,7 @@ public class TreballadorController {
     @PostMapping("/medicpet/rrhh/guardar")
     public String guardar(Treballador treballador, Errors errors) {
         if (errors.hasErrors()) {
+            log.info("------------------------- Entra a hasErrors dentro de treballadors");
             return "rrhhForm"; 
         }
         treballadorService.save(treballador);

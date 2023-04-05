@@ -3,10 +3,12 @@ package com.gruptd.medicPet.controllers;
 import com.gruptd.medicPet.models.Carrec;
 import com.gruptd.medicPet.models.Mascota;
 import com.gruptd.medicPet.models.Treballador;
+import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.models.Visita;
 import com.gruptd.medicPet.services.CarrecServices;
 import com.gruptd.medicPet.services.MascotaServices;
 import com.gruptd.medicPet.services.TreballadorServices;
+import com.gruptd.medicPet.services.UsuariServices;
 import com.gruptd.medicPet.services.VisitaServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +31,29 @@ public class VisitaController {
     private CarrecServices carrecServices;
     @Autowired
     private MascotaServices mascotaServices;
+    @Autowired
+    private UsuariServices usuariService;
     
     @GetMapping("/medicpet/visites/{id_mascota}/fitxa")
     public String principalVisita(Mascota mascota, Visita visita, Model model) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Carrec carrec = carrecServices.getOne(1L);
         Iterable<Treballador> veterinaris = treballadorServices.getByCarrec(carrec);
         Mascota mascota2 = mascotaServices.getOne(mascota.getId_mascota());
         
         model.addAttribute("mascota", mascota2);
-        model.addAttribute("userName", username);
         model.addAttribute("pagina", "Clients");
         model.addAttribute("veterinaris", veterinaris);
+        
+        // Recuperar el nom de l'usuari actual
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir als atributs
+        String nomUsuariComplert = usuari.getNom();
+        String rolUsuari = usuari.getRol_id().getNom();
+        model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
         
         return "visitaForm";
     }
@@ -71,10 +84,19 @@ public class VisitaController {
         Mascota mascota2 = mascotaServices.getOne(mascota.getId_mascota());
         
         model.addAttribute("mascota", mascota2);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("userName", username);
         model.addAttribute("pagina", "Clients");
         model.addAttribute("veterinaris", veterinaris);
+        
+        // Recuperar el nom de l'usuari actual
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Recuperar l'objecte Usuari corresponent a l'usuari actual
+        Usuari usuari = usuariService.getByUsername(username);
+        // Accedir als atributs
+        String nomUsuariComplert = usuari.getNom();
+        String rolUsuari = usuari.getRol_id().getNom();
+        model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
 
         return "visitaForm";
     }
