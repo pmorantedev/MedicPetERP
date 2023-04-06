@@ -20,7 +20,7 @@ function mostrar() {
 }
 
 function validar() {
-    var valid = 0;
+    var valid = true;
     var nomComplet = document.getElementById('nomComplet').value;
     var nomCompletErrorBuit = document.getElementById('error-nomBuit');
     var nomCompletErrorLlarg = document.getElementById('error-nomLlarg');
@@ -35,15 +35,16 @@ function validar() {
     var emailErrorBuit = document.getElementById('error-emailBuit');
 
     var address = document.getElementById('adreca').value;
-    var addressError = document.getElementById('error-adrecaLlarg');
+    var addressErrorLlarg = document.getElementById('error-adrecaLlarg');
+    var addressErrorBuit = document.getElementById('error-adrecaBuit');
 
     if (nomComplet.length > 60) {
-        valid++;
+        valid = false;
         nomCompletErrorLlarg.style.display = 'block';
         nomCompletErrorBuit.style.display = 'none';
         document.getElementById('nomComplet').classList.add('border-danger');
     } else if (nomComplet.trim() === '' || nomComplet.length === 0) {
-        valid++;
+        valid = false;
         nomCompletErrorLlarg.style.display = 'none';
         nomCompletErrorBuit.style.display = 'block';
         document.getElementById('nomComplet').classList.add('border-danger');
@@ -53,22 +54,22 @@ function validar() {
         document.getElementById('nomComplet').classList.remove('border-danger');
     }
     
-    if (!/^[+\d]+$/.test(telefon)) {
-        valid++;
-        telefonErrorLletres.style.display = 'block';
-        telefonErrorBuit.style.display = 'none';
+    if (telefon.trim() === '' || telefon.length === 0) {
+        valid = false;
+        telefonErrorLletres.style.display = 'none';
+        telefonErrorBuit.style.display = 'block';
         telefonErrorLlarg.style.display = 'none';
         document.getElementById('telefon').classList.add('border-danger');
     } else if (telefon.length > 15) {
-        valid++;
+        valid = false;
         telefonErrorLletres.style.display = 'none';
         telefonErrorBuit.style.display = 'none';
         telefonErrorLlarg.style.display = 'block';
         document.getElementById('telefon').classList.add('border-danger');
-    } else if (telefon.trim() === '' || telefon.length === 0) {
-        valid++;
-        telefonErrorLletres.style.display = 'none';
-        telefonErrorBuit.style.display = 'block';
+    } else if (!/^[+\d]+$/.test(telefon)) {
+        valid = false;
+        telefonErrorLletres.style.display = 'block';
+        telefonErrorBuit.style.display = 'none';
         telefonErrorLlarg.style.display = 'none';
         document.getElementById('telefon').classList.add('border-danger');
     } else {
@@ -79,12 +80,12 @@ function validar() {
     }
 
     if (email.length > 45) {
-        valid++;
+        valid = false;
         emailErrorLlarg.style.display = 'block';
         emailErrorBuit.style.display = 'none';
         document.getElementById('email').classList.add('border-danger');
     } else if (email.trim() === '' || email.length === 0) {
-        valid++;
+        valid = false;
         emailErrorBuit.style.display = 'block';
         emailErrorLlarg.style.display = 'none';
         document.getElementById('email').classList.add('border-danger');
@@ -95,23 +96,20 @@ function validar() {
     }
     
     if (address.length > 100) {
-        valid++;
-        addressError.style.display = 'block';
-        document.getElementById('address').classList.add('border-danger');
+        valid = false;
+        addressErrorLlarg.style.display = 'block';
+        addressErrorBuit.style.display = 'none';
+        document.getElementById('adreca').classList.add('border-danger');
     } else if (address.trim() === '' || address.length === 0) {
-        valid++;
-        telefonErrorLletres.style.display = 'none';
-        telefonErrorBuit.style.display = 'block';
-        telefonErrorLlarg.style.display = 'none';
-        document.getElementById('address').classList.add('border-danger');
+        valid = false;
+        addressErrorLlarg.style.display = 'none';
+        addressErrorBuit.style.display = 'block';
+        document.getElementById('adreca').classList.add('border-danger');
     } else {
-        addressError.style.display = 'none';
-        document.getElementById('address').classList.remove('border-danger');
+        addressErrorLlarg.style.display = 'none';
+        addressErrorBuit.style.display = 'none';
+        document.getElementById('adreca').classList.remove('border-danger');
     }
 
-    if (valid == 0) {
-        return true;
-    } else {
-        return false;
-    }
+    return valid;
 }
