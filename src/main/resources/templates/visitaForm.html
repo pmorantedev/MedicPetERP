@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>[[#{rrhh.fitxaTitol}]]</title>
+        <title>[[#{visites.fitxaTitol}]]</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <script src="/visita.js"></script>
     </head>
@@ -19,8 +19,8 @@
 
             <!-- Breadcrumb -->
             <div class="d-flex">
-                <h2 th:if="${visita.id != null}">[[#{visita.editarTitol}]]</h2>
-                <h2 th:if="${visita.id == null}">[[#{visita.crearTitol}]]</h2>
+                <h2 th:if="${visita.id != null}">[[#{visites.editarTitol}]]</h2>
+                <h2 th:if="${visita.id == null}">[[#{visites.crearTitol}]]</h2>
             </div>
 
             <!-- Botons per nova visita -->
@@ -46,7 +46,7 @@
             <!-- Botons editar visita -->            
             <div class="mt-4" th:if="${visita.id != null}">
                 <div id="btn_editar">
-                    <a href="javascript:history.go(-1)" name="Editar" class="btn btn-outline-danger p-2 me-3">Tornar enrere</a>
+                    <a href="javascript:history.go(-1)" name="Editar" class="btn btn-outline-danger p-2 me-3">[[#{generic.botoTornar}]]</a>
                     <a href="javascript:mostrar();" name="Editar" class="btn btn-outline-primary p-2 me-3">[[#{generic.botoEditar}]]</a>
                 </div>
                 <div id="btns_edicio" style="display:none;">
@@ -62,38 +62,38 @@
                     <input type="hidden" name="id" th:field="*{id}">
 
                     <div class="form-group row align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Diagnòstic</h5></label>
+                        <label class="col-sm-2 control-label"><h5>[[#{visites.campDiagnostic}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="diagnostic" name="diagnostic" type="text" class="form-control" style="background: none;" th:field="*{diagnostic}" disabled/>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Medicació</h5></label>
+                        <label class="col-sm-2 control-label"><h5>[[#{visites.campMedicacio}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="medicacio" name="medicacio" type="text" class="form-control" style="background: none;" th:field="*{medicacio}" disabled/>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Data de visita</h5></label>
+                        <label class="col-sm-2 control-label"><h5>[[#{visites.campData}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="dataVisita" name="data_visita" type="date" class="form-control" style="background: none;" th:field="*{data_visita}" disabled/>
-                            <span id="error-data" class="text-danger" style="display:none;">Has d'introduir una data</span>
+                            <span id="error-data" class="text-danger" style="display:none;">[[#{visites.errorValidacioData}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Veterinari</h5></label>
+                        <label class="col-sm-2 control-label"><h5>[[#{visites.campVeterinari}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <select class="form-select" style="background: none;" id="treballador" name="treballador_id" th:field="*{treballador_id}" disabled>
-                                <option value="">Seleccionar veterinari...</option>
+                                <option value="">[[#{generic.campSeleccionar}]]</option>
                                 <th:block th:each="veterinari : ${veterinaris}">
                                     <option th:value="${veterinari.getId}" th:text="${veterinari.getNomComplet}"></option>
                                 </th:block>
                             </select>
-                            <span id="error-veterinari" class="text-danger" style="display:none;">Has de seleccionar un veterinari per aquesta visita</span>
+                            <span id="error-veterinari" class="text-danger" style="display:none;">[[#{visites.errorValidacioVeterinari}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Mascota</h5></label>
+                        <label class="col-sm-2 control-label"><h5>[[#{visites.campMascota}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="nomMascota" name="animal" type="text" class="form-control" style="background: none;" th:field="${mascota.nom}" disabled/>
                             <input type="hidden" name="mascota.id_mascota" th:value="${mascota.getId_mascota}" />

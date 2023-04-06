@@ -41,6 +41,7 @@ public class VisitaServices implements ServicesInterface<Visita> {
     @Override
     public void delete(Visita v) {
         visitaDao.delete(v);
+        System.out.println("VISITA: "+v.toString());
     }
 
     @Transactional(readOnly = true)
