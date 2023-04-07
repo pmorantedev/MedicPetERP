@@ -27,12 +27,15 @@ function validar() {
     var valid = true;
     var nom = document.getElementById('nom').value;
     var nomError = document.getElementById('error-nom');
+    var nomBuitError = document.getElementById('errorBuit-nom');
 
     var especie = document.getElementById('especie').value;
     var especieError = document.getElementById('error-especie');
+    var especieBuitError = document.getElementById('errorBuit-especie');
 
     var raça = document.getElementById('raça').value;
     var raçaError = document.getElementById('error-raça');
+    var raçaBuitError = document.getElementById('errorBuit-raça');
 
     var data = document.getElementById('dataNaixement').value;
     var dataError = document.getElementById('error-data');
@@ -43,27 +46,48 @@ function validar() {
     if (nom.length > 45) {
         valid = false;
         nomError.style.display = 'block';
+        nomBuitError.style.display = 'none';
+        document.getElementById('nom').classList.add('border-danger');
+    } else if (nom.trim() === '' || nom.length === 0) {
+        valid = false;
+        nomError.style.display = 'none';
+        nomBuitError.style.display = 'block';
         document.getElementById('nom').classList.add('border-danger');
     } else {
         nomError.style.display = 'none';
+        nomBuitError.style.display = 'none';
         document.getElementById('nom').classList.remove('border-danger');
     }
 
     if (especie.length > 45) {
         valid = false;
         especieError.style.display = 'block';
+        especieBuitError.style.display = 'none';
+        document.getElementById('especie').classList.add('border-danger');
+    } else if (especie.trim() === '' || especie.length === 0) {
+        valid = false;
+        especieError.style.display = 'none';
+        especieBuitError.style.display = 'block';
         document.getElementById('especie').classList.add('border-danger');
     } else {
         especieError.style.display = 'none';
+        especieBuitError.style.display = 'none';
         document.getElementById('especie').classList.remove('border-danger');
     }
 
     if (raça.length > 45) {
         valid = false;
         raçaError.style.display = 'block';
+        raçaBuitError.style.display = 'none';
+        document.getElementById('raça').classList.add('border-danger');
+    } else if (raça.trim() === '' || raça.length === 0) {
+        valid = false;
+        raçaError.style.display = 'none';
+        raçaBuitError.style.display = 'block';
         document.getElementById('raça').classList.add('border-danger');
     } else {
         raçaError.style.display = 'none';
+        raçaBuitError.style.display = 'none';
         document.getElementById('raça').classList.remove('border-danger');
     }
 

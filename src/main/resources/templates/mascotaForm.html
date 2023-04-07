@@ -75,8 +75,9 @@
                     <div class="form-group row align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campNom}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="nom" name="nom" type="text" class="form-control" style="background: none;" th:field="*{nom}" required disabled />
+                            <input id="nom" name="nom" type="text" class="form-control" style="background: none;" th:field="*{nom}" disabled />
                             <span id="error-nom" class="text-danger" style="display:none;">[[#{mascotes.errorValidacioNom}]]</span>
+                            <span id="errorBuit-nom" class="text-danger" style="display:none;">Omplir el nom és obligatori</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
@@ -102,15 +103,17 @@
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campEspecie}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="especie" name="especie" type="text" class="form-control" style="background: none;" th:field="*{especie}" required disabled />
+                            <input id="especie" name="especie" type="text" class="form-control" style="background: none;" th:field="*{especie}" disabled />
                             <span id="error-especie" class="text-danger" style="display:none;">[[#{mascotes.errorValidacioEspecie}]]</span>
+                            <span id="errorBuit-especie" class="text-danger" style="display:none;">Omplir l'espècie és obligatori</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campRaca}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="raça" name="raça" type="text" class="form-control" style="background: none;" th:field="*{raca}" required disabled />
+                            <input id="raça" name="raça" type="text" class="form-control" style="background: none;" th:field="*{raca}" disabled />
                             <span id="error-raça" class="text-danger" style="display:none;">[[#{mascotes.errorValidacioRaca}]]</span>
+                            <span id="errorBuit-raça" class="text-danger" style="display:none;">Omplir la raça és obligatori</span>
                         </div>
                     </div>
                 </form>

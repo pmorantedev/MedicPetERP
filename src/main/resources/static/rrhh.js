@@ -1,3 +1,17 @@
+document.addEventListener('DOMContentLoaded', function() {
+    var select = document.getElementById("carrec-list");
+    select.oninvalid = function (event) {
+        event.target.setCustomValidity("Seleccionar un càrrec és obligatori");
+        select.classList.add('border-danger');
+        validar();
+    };
+    select.oninput = function (event) {
+        select.classList.remove('border-danger');
+        event.target.setCustomValidity("");
+    };
+});
+
+
 function formEditable() {
     var form = document.getElementById("treballadorForm");
     var elements = form.elements;
@@ -20,6 +34,7 @@ function mostrar() {
 }
 
 function validar() {
+    console.log("ENTRA VALIDAR CORRECTAMENTE");
     var valid = true;
     var nomComplet = document.getElementById('nomComplet').value;
     var nomCompletErrorBuit = document.getElementById('error-nomBuit');
