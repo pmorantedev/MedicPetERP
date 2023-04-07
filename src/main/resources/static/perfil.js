@@ -56,13 +56,21 @@ function validar() {
 
     var name = document.getElementById('nom').value;
     var nameError = document.getElementById('error-nom');
+    var nameBuitError = document.getElementById('errorBuit-nom');
 
     if (name.length > 45) {
         valid = false;
         nameError.style.display = 'block';
+        nameBuitError.style.display = 'none';
+        document.getElementById('nom').classList.add('border-danger');
+    } else if (name.trim() === '' || name.length === 0) {
+        valid = false;
+        nameError.style.display = 'none';
+        nameBuitError.style.display = 'block';
         document.getElementById('nom').classList.add('border-danger');
     } else {
         nameError.style.display = 'none';
+        nameBuitError.style.display = 'none';
         document.getElementById('nom').classList.remove('border-danger');
     }
 
