@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -104,19 +105,21 @@ public class VisitaController {
     
     //@PostMapping("/medicpet/visites/fitxa/eliminar/{id}")
     @PostMapping("/medicpet/clients/fitxa/{client_id}/mascotes/fitxa/{id_mascota}/visites/eliminar/{visita_id}")
-    public String eliminar(Visita visita, RedirectAttributes redirectAtr) {
-        
-        log.info("eliminant...");
+    public String eliminar(@PathVariable Long visita_id, RedirectAttributes redirectAtr) {
         
         // Recupero visita per mostrar la data per consola i passar-la a la vista
-        visita = visitaServices.getOne(visita.getId());
-        log.info("Executant controlador visites: VISITA ELIMINADA( ID:" + visita.getId() + ", " + visita.getData_visita() + ")...");
-        redirectAtr.addAttribute("nomRegistreEliminat", visita.getData_visita());       
+        Visita visita = visitaServices.getOne(visita_id);
+        
+        // Fa que l'atribut 'nomRegistreEliminat' estigui disponible a la vista redirigida i mostrar l'alerta.
+        redirectAtr.addFlashAttribute("nomRegistreEliminat", visita.getDiagnostic());
+        redirectAtr.addFlashAttribute("dataRegistreEliminat", visita.getData_visita());
+
         
         // Eliminem visita
+        log.info("Executant controlador visites: VISITA ELIMINADA( ID:" + visita.getId() + ", " + visita.getDiagnostic() + ", " + visita.getData_visita() + ")...");        
         visitaServices.delete(visita);
         redirectAtr.addAttribute("registreEliminat", true);
-
+        
         return "redirect:/medicpet/clients/fitxa/{client_id}/mascotes/fitxa/{id_mascota}/editar";
     }
 }

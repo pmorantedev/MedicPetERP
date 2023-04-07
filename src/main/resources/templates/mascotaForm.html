@@ -19,8 +19,8 @@
         <div class="container">
 
             <!-- TO-DO: Mostar Alerta -->
-            <div id="alertaEliminar" class="alert alert-info alert-dismissible fade text-center" style="display:none;" role="alert" data-nom-client-eliminat>
-                <strong>Info:</strong> La visita s'ha eliminat.
+            <div th:if="${nomRegistreEliminat}" id="alertaEliminar" class="alert alert-info alert-dismissible fade show text-center" role="alert">
+                <i class="bi bi-info-circle me-2"></i> [[#{visites.msgRegistreEliminat_1}]] <b th:text="${nomRegistreEliminat}">[[#{generic.modalTitolRegistre}]]</b> (<b th:text="${dataRegistreEliminat}">[[#{generic.modalTitolRegistre}]]</b>) [[#{generic.msgRegistreEliminada_2}]]
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
@@ -76,14 +76,14 @@
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campNom}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="nom" name="nom" type="text" class="form-control" style="background: none;" th:field="*{nom}" required disabled />
-                            <span id="error-nom" class="text-danger" style="display:none;">El nom ha de tenir com a màxim 45 caràcters</span>
+                            <span id="error-nom" class="text-danger" style="display:none;">[[#{mascotes.errorValidacioNom}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campAniversari}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="dataNaixement" name="data_naixement" type="date" class="form-control" style="background: none;" th:field="*{data_naixement}"  />
-                            <span id="error-data" class="text-danger" style="display:none;">S'ha de seleccionar data de naixament</span>
+                            <span id="error-data" class="text-danger" style="display:none;">[[#{mascotes.errorValidacioAniversari}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
@@ -96,21 +96,21 @@
                                 <option value="Femella">[[#{mascotes.campSexeFemella}]]</option>
                                 <option value="Desconegut">[[#{mascotes.campSexeDesconegut}]]</option>
                             </select>
-                             <span id="error-sexe" class="text-danger" style="display:none;">S'ha de seleccionar sexe</span>
+                             <span id="error-sexe" class="text-danger" style="display:none;">[[#{mascotes.errorValidacioSexe}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campEspecie}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="especie" name="especie" type="text" class="form-control" style="background: none;" th:field="*{especie}" required disabled />
-                            <span id="error-especie" class="text-danger" style="display:none;">L'espècie ha de tenir com a màxim 45 caràcters</span>
+                            <span id="error-especie" class="text-danger" style="display:none;">[[#{mascotes.errorValidacioEspecie}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{mascotes.campRaca}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="raça" name="raça" type="text" class="form-control" style="background: none;" th:field="*{raca}" required disabled />
-                            <span id="error-raça" class="text-danger" style="display:none;">La raça ha de tenir com a màxim 45 caràcters</span>
+                            <span id="error-raça" class="text-danger" style="display:none;">[[#{mascotes.errorValidacioRaca}]]</span>
                         </div>
                     </div>
                 </form>
@@ -122,44 +122,39 @@
             <!-- Llistat de visites en cas que n'hi hagi creades -->
             <div th:if="${visites != null and !visites.empty}">
 
-                <!-- Breadcrumb -->
-                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                    <ol class="breadcrumb fs-4  mt-5">
-                        <li class="breadcrumb-item"><h2>Llistat de visites</h2></li>
-                    </ol>
-                </nav>
+                 <h2 class="mt-5">[[#{visites.llistatTitol}]]</h2>
 
-                <a th:href="@{/medicpet/visites/{id_mascota}/fitxa(id_mascota=${mascota.id_mascota})}" class="btn btn-outline-success">[[#{visites.botoCrear}]]</a>
+                <a th:href="@{/medicpet/visites/{id_mascota}/fitxa(id_mascota=${mascota.id_mascota})}" class="btn btn-outline-success mt-4">[[#{visites.botoCrear}]]</a>
                 
                 <!-- Taula -->
                 <div class="table-responsive">
                     <table class="table align-middle table-striped table-responsive-xl mt-3">
                         <thead class="table-dark">
                             <tr class="text-center align-middle">
-                                <th scope="col" class="col-1">Id</th>
-                                <th scope="col" class="col-6">Diagnòstic</th>
-                                <th scope="col" class="col-3">Data de visita</th>
-                                <th scope="col-2"colspan="2">Accions</th>          
+                                <th scope="col" class="col-1">[[#{generic.colId}]]</th>
+                                <th scope="col" >[[#{visites.campData}]]</th>
+                                <th scope="col" >[[#{visites.campDiagnostic}]]</th>
+                                <th scope="col-2"colspan="2" class="col-1">[[#{generic.colAccions}]]</th>          
                             </tr>  
                         </thead>
                         <tbody>                 
                             <tr th:each="visita: ${visites}" class="text-center">
                                 <td th:text="${visita.getId}"></td>
-                                <td th:text="${visita.getDiagnostic}"></td>
                                 <td th:text="${visita.getData_visita}"></td>
+                                <td th:text="${visita.getDiagnostic}"></td>
                                 
+                                <!-- accions -->
                                 <td>
                                     <a th:attr="title=#{generic.botoMostrar}" class="btn btn-outline-primary" th:href="@{/medicpet/visites/{id_mascota}/fitxa/{id_visita}/editar(id_mascota=${mascota.getId_mascota}, id_visita=${visita.getId})}" ><i class="bi bi-eye-fill"></i></a>
                                 </td>
                                 <td>
                                     <!-- Button trigger modal -->
-                                    <!-- <form th:id="'eliminarVisita' + ${visita.getId}" method="post" th:action="@/medicpet/visites/fitxa/eliminar/{id}(id=${visita.getId})}">                                        
-                                        <button th:id="${visita.getId}" th:attr="title=#{generic.botoEliminar}" type="button" class="btn btn-outline-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-th-id="${visita.getId}" data-th-nom="${visita.getDataVisita}">
+                                    <form th:id="'eliminarRegistre' + ${visita.getId}" method="post" th:action="@{/medicpet/clients/fitxa/{client_id}/mascotes/fitxa/{id_mascota}/visites/eliminar/{visita_id}(client_id=${mascota.client_id.getIdclient}, id_mascota=${mascota.getId_mascota}, visita_id=${visita.getId})}">                                        
+                                        <button th:id="${visita.getId}" th:attr="title=#{generic.botoEliminar}" type="button" class="btn btn-outline-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-th-id="${visita.getId}" data-th-nom="${visita.getData_visita}">
                                             <i class="bi bi-trash3-fill"></i>
                                         </button>
-                                    </form> -->
-                                </td>
-                                
+                                    </form>
+                                </td>                                
                             </tr>
                         </tbody>
                     </table> 
@@ -171,12 +166,12 @@
                         <div class="modal-content">                               
 
                             <div class="modal-header">
-                                <h5 class="modal-title" id="confirmarEliminarLabel">[[#{clients.modalTitol}]]: <span class="text-danger">[[#{generic.modalTitolRegistre}]]</span></h5>
+                                <h5 class="modal-title" id="confirmarEliminarLabel">[[#{visites.modalTitol}]] <span class="text-danger">[[#{generic.modalTitolRegistre}]]</span></h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
                             <div class="modal-body">
-                                <p>[[#{clients.modalMsg}]]</p>
+                                <p>[[#{visites.modalMsg}]]</p>
                             </div>
 
                             <div class="modal-footer">
@@ -200,6 +195,98 @@
 
         <!-- Peu de pàgina -->
         <div th:insert="~{fragments/peuPagina :: footer}"/>
+        
+        <!-- Script per confirmar l'eliminació d'un registre -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script th:inline="javascript">
+
+                    // Script mostrar Modal confirmació (Eliminar registre)
+                    document.addEventListener("DOMContentLoaded", function () {
+
+                        // Inicialització del modal
+                        const modalEl = document.getElementById('confirmarEliminar');
+                        const modal = new bootstrap.Modal(modalEl, {
+                            keyboard: false
+                        });
+
+                        // Desar tots els botons que serveixen per eliminar un registre
+                        const botonsEliminar = document.querySelectorAll('.btn-eliminar');
+
+                        // Botons del modal
+                        const btnEliminarConfirmar = document.getElementById('btn_eliminarConfirmar');
+                        const btnEliminarCancelar = document.getElementById('btn_eliminarCancelar');
+
+                        // Funció per eliminar un registre
+                        function eliminarRegistre(idRegistre) {
+
+                            // Obtindre la ruta per l'acció 'Eliminar'
+                            const formEliminar = document.getElementById(`eliminarRegistre${idRegistre}`);
+                            console.log(">> formEliminar: ", formEliminar);
+                            const accioEliminar = formEliminar.getAttribute('action');
+                            const index = accioEliminar.indexOf('eliminar/');
+                            const url = accioEliminar.substring(0, index + 'eliminar/'.length);
+                            console.log(">> url registre (Eliminat): ", url + idRegistre);
+
+                            // Comprovar que l'ID sigui un Nombre
+                            if (!isNaN(idRegistre)) {
+
+                                idRegistre = Number(idRegistre);
+                                formEliminar.action = `${url}${idRegistre}`;
+                                formEliminar.submit();
+                                console.log(">> Registre nº (" + idRegistre + ") eliminat");
+
+                            } else {
+                                console.error(`El valor de 'data-th-id' no és un nombre vàlid: ${idRegistre}`);
+                            }
+                        }
+
+                        // Funció per confirmar l'eliminació
+                        function confirmarEliminar(idRegistre) {
+
+                            // Mostrar modal
+                            modal.show();
+                            console.log(">> Registre seleccionat (" + idRegistre + ")");
+
+                            btnEliminarConfirmar.addEventListener('click', function () {
+                                console.log(`Eliminant registre ${idRegistre} ...`);
+                                eliminarRegistre(idRegistre);
+                                modal.hide();
+                            });
+
+                            btnEliminarCancelar.addEventListener('click', function () {
+                                console.log(">> Acció cancel·lada");
+                                idRegistre = null;  // resetejo id per evitar acomular-los                        
+                                modal.hide();
+                            });
+
+                        }
+
+                        // Iterar sobre cada botó
+                        botonsEliminar.forEach(function (boto) {
+
+                            // En fer clic, es mostra el modal
+                            boto.addEventListener('click', function (event) {
+                                let nom = "";
+
+                                // Detectar quin botó s'ha clicat (Event) per establir l'ID
+                                let idRegistre = boto.getAttribute('id');
+                                console.log('>> ID registre: ' + idRegistre);
+
+                                // Recuperar el valor de l'atribut 'data-th-nom' del botó
+                                nom = boto.getAttribute('nom');
+                                console.log('>> Nom registre: ' + nom);
+                                // Actualitzar el contingut del títol del modal amb el valor de l'atribut
+                                document.querySelector('#confirmarEliminarLabel span').textContent = nom;
+
+                                confirmarEliminar(idRegistre);
+
+                            });
+
+
+                        });
+
+                    });
+        </script>
 
     </body>
 </html>
