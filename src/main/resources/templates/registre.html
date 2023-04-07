@@ -31,11 +31,14 @@
                             <div class="container mt-4">
                                 <div class="row justify-content-center">
 
-                                    <input id="name" type="text" name="Name" th:field="*{nom}" class="form-control mb-2" placeholder="Nom i cognoms" required autofocus="">
+                                    <input id="name" type="text" name="Name" th:field="*{nom}" class="form-control mb-2" placeholder="Nom i cognoms" autofocus="">
                                     <span id="error-nom" class="text-danger" style="display:none;">El nom ha de tenir com a màxim 45 caràcters</span>
+                                    <span id="errorBuit-nom" class="text-danger" style="display:none;">S'ha d'introduïr un nom</span>
                                     <input id="username" type="text" name="userName" th:field="*{username}" class="form-control mb-2" placeholder="Nom d'usuari">
                                     <span id="error-username" class="text-danger" style="display:none;">El nom d'usuari ha de tenir com a màxim 45 caràcters</span>
-                                    <input type="password" name="userPassword" th:field="*{contrasenya}" class="form-control mb-2" placeholder="Contrassenya" required> 
+                                    <span id="errorBuit-username" class="text-danger" style="display:none;">S'ha d'introduïr un nom d'usuari</span>
+                                    <input id="password" type="password" name="userPassword" th:field="*{contrasenya}" class="form-control mb-2" placeholder="Contrassenya"> 
+                                    <span id="error-password" class="text-danger" style="display:none;">S'ha d'introduïr una contrasenya</span>
                                     <select class="form-select" id="rol_usuari" name="rol_id" th:field="*{rol_id}" required>
                                         <option value="">Seleccionar rol...</option>
                                         <option value="2">Administratiu</option>
