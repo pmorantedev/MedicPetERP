@@ -36,12 +36,15 @@ function formEditable() {
     }
     document.getElementById('diagnostic').disabled = true;
     document.getElementById('medicacio').disabled = true;
+    document.getElementById('tractament').disabled = true;
     document.getElementById('dataVisita').style = "background-color: white;";
     document.getElementById('treballador').style = "background-color: white;";
     document.getElementById('nomMascota').disabled = true;
     document.getElementById('diagnostic').disabled = false;
+    document.getElementById('tractament').disabled = false;
     document.getElementById('medicacio').disabled = false;
     document.getElementById('diagnostic').style = "background-color: white;";
+    document.getElementById('tractament').style = "background-color: white;";
     document.getElementById('medicacio').style = "background-color: white;";
 }
 
