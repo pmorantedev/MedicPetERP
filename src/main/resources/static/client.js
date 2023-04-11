@@ -119,7 +119,7 @@ function validar() {
         telefonBuitError.style.display = 'none';
         telefonErrorLlarg.style.display = 'none';
         document.getElementById('telefon').classList.add('border-danger');
-    }  else if (telefon.length > 15) {
+    } else if (telefon.length > 15) {
         valid = false;
         telefonErrorLlarg.style.display = 'block';
         telefonErrorCar.style.display = 'none';
