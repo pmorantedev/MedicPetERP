@@ -51,7 +51,7 @@
                 </div>
                 <div id="btns_edicio" style="display:none;">
                     <button form="visitaForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">[[#{generic.botoDesarCanvis}]]</button>
-                    <a th:href="@{/medicpet/clients/fitxa/{client_id}(client_id=${mascota.client_id.getIdclient})}" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</a>
+                    <a href="javascript:history.go(-1)" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</a>
                 </div>
             </div>
             <!-- Formulari: Detalls visita -->
