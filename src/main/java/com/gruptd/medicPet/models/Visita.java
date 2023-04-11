@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import lombok.Data;
+import java.util.List;
 
 /**
  *
@@ -38,5 +39,13 @@ public class Visita implements Serializable {
     @JoinColumn(name = "mascota_id")
     //@NotEmpty
     private Mascota mascota;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "visita_has_tractament",
+        joinColumns = {@JoinColumn(name = "visita_id")},
+        inverseJoinColumns = {@JoinColumn(name = "tractament_id")}
+    )   
+    private List<Tractament> tractament_id;
 
 }

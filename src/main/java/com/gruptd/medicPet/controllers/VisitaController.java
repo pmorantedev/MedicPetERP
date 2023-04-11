@@ -2,11 +2,13 @@ package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.models.Carrec;
 import com.gruptd.medicPet.models.Mascota;
+import com.gruptd.medicPet.models.Tractament;
 import com.gruptd.medicPet.models.Treballador;
 import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.models.Visita;
 import com.gruptd.medicPet.services.CarrecServices;
 import com.gruptd.medicPet.services.MascotaServices;
+import com.gruptd.medicPet.services.TractamentServices;
 import com.gruptd.medicPet.services.TreballadorServices;
 import com.gruptd.medicPet.services.UsuariServices;
 import com.gruptd.medicPet.services.VisitaServices;
@@ -26,6 +28,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class VisitaController {
     
     @Autowired
+    private TractamentServices tractamentServices;
+    @Autowired
     private VisitaServices visitaServices;
     @Autowired
     private TreballadorServices treballadorServices;
@@ -37,14 +41,22 @@ public class VisitaController {
     private UsuariServices usuariService;
     
     @GetMapping("/medicpet/visites/{id_mascota}/fitxa")
-    public String principalVisita(Mascota mascota, Visita visita, Model model) {
+    public String principalVisita(Mascota mascota, Visita visita, Tractament tractament, Model model) {
+        
+        log.info("Executant controlador visites: FORMULARI");
+         
         Carrec carrec = carrecServices.getOne(1L);
         Iterable<Treballador> veterinaris = treballadorServices.getByCarrec(carrec);
         Mascota mascota2 = mascotaServices.getOne(mascota.getId_mascota());
         
+        log.info("tractamentServices...");
+        Iterable<Tractament> tractaments = tractamentServices.findAll();
+        log.info(tractaments.toString());
+        
         model.addAttribute("mascota", mascota2);
         model.addAttribute("pagina", "Clients");
         model.addAttribute("veterinaris", veterinaris);
+        model.addAttribute("tractaments", tractaments);
         
         // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -52,10 +64,8 @@ public class VisitaController {
         Usuari usuari = usuariService.getByUsername(username);
         // Accedir als atributs
         String nomUsuariComplert = usuari.getNom();
-        String rolUsuari = usuari.getRol_id().getNom();
         model.addAttribute("userName", username);
         model.addAttribute("nomUsuariComplert", nomUsuariComplert);
-        model.addAttribute("rolUsuari", rolUsuari);
         
         return "visitaForm";
     }
@@ -77,17 +87,24 @@ public class VisitaController {
     }
     
     @GetMapping("/medicpet/visites/{id_mascota}/fitxa/{id}/editar") 
-    public String modificarVisita(Mascota mascota, Visita visita, Model model) {
+    public String modificarVisita(Mascota mascota, Visita visita, Tractament tractament, Model model) {
 
+        log.info("Executant controlador visites: EDITANT FORMULARI");
+        
         visita = visitaServices.getOne(visita.getId());
         model.addAttribute("visita", visita);
         Carrec carrec = carrecServices.getOne(1L);
         Iterable<Treballador> veterinaris = treballadorServices.getByCarrec(carrec);
         Mascota mascota2 = mascotaServices.getOne(mascota.getId_mascota());
         
+        log.info("tractamentServices...");
+        Iterable<Tractament> tractaments = tractamentServices.findAll();
+        log.info(tractaments.toString());
+        
         model.addAttribute("mascota", mascota2);
         model.addAttribute("pagina", "Clients");
         model.addAttribute("veterinaris", veterinaris);
+        model.addAttribute("tractaments", tractaments);
         
         // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -95,10 +112,8 @@ public class VisitaController {
         Usuari usuari = usuariService.getByUsername(username);
         // Accedir als atributs
         String nomUsuariComplert = usuari.getNom();
-        String rolUsuari = usuari.getRol_id().getNom();
         model.addAttribute("userName", username);
         model.addAttribute("nomUsuariComplert", nomUsuariComplert);
-        model.addAttribute("rolUsuari", rolUsuari);
 
         return "visitaForm";
     }
