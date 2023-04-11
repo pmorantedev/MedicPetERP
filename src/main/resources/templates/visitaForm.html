@@ -12,7 +12,7 @@
     <body>
 
         <!-- Menú de navegació -->
-         <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, nomComplert=${nomUsuariComplert}, page=${pagina})}"></div>
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, nomComplert=${nomUsuariComplert}, page=${pagina})}"></div>
 
         <!-- Continguts -->
         <div class="container">
@@ -27,8 +27,7 @@
             <div class="mt-4" th:if="${visita.id == null}">
                 <script th:inline="javascript">
                     console.log(">> Visita nova...");
-                            var filtre = [[${visita.id == null
-                            }
+                            var filtre = [[${visita.id == null}
                             ]]; // Si la visita és nova...
                     window.onload = function () {
                         if (!filtre)
