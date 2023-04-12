@@ -10,15 +10,19 @@
              ======================================================================= -->
         <div th:fragment="header">
             <script th:inline="javascript">
-                function playAudio(url) {
-                    new Audio(url).play();
+                function playAudioAndRedirect(audioSrc, redirectUrl) {
+                    var audio = new Audio(audioSrc);
+                    audio.play();
+                    audio.onended = function () {
+                        window.location.href = redirectUrl;
+                    };
                 }
             </script>
             <header class="p-3 mb-5 border-bottom text-bg-dark">
 
                 <div class="container">
                     <div class="d-flex flex-wrap col-12 col-lg-auto align-items-center justify-content-center justify-content-lg-start">
-                        <a onclick="playAudio('/gerardromerobobi.mp3');" class="fs-4 d-flex align-items-center text-white text-decoration-none me-4">
+                        <a onclick="playAudioAndRedirect('/gerardromerobobi.mp3', '/medicpet/clients');" class="btn cursor-pointer fs-4 d-flex align-items-center text-white text-decoration-none me-4">
                             <img class="d-inline-block align-middle me-2" src="/logo.png" alt="MedicPet" width="40"  height="40" />
                             Medic Pet
                         </a>
