@@ -41,7 +41,8 @@
                 <script th:inline="javascript">
 
                     var filtre = [[${client.idclient == null}
-                    ]]; // Si el client és nou...
+                    ]];
+                    // Si el client és nou...
                     window.onload = function () {
                         if (!filtre)
                             return; // Exit/Return si la variable és 'false'
@@ -122,8 +123,11 @@
                 <!-- Mascotes -->
                 <h2 class="mt-5">[[#{mascotes.llistatTitol}]]</h2>
 
-                <!-- Botons -->
-                <a th:if="${rolUsuari != 'VETERINARI'}" th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa(idclient=${client.idclient})}" class="btn btn-outline-success mt-4">[[#{mascotes.botoCrear}]]</a>
+                <!-- Botons i Cercador-->
+
+                <div th:class="${rolUsuari != 'VETERINARI' ? 'd-flex justify-content-between mt-4' : 'd-flex justify-content-end mt-4'}">
+                    <a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa(idclient=${client.idclient})}" class="btn btn-outline-success" th:if="${rolUsuari != 'VETERINARI'}">[[#{mascotes.botoCrear}]]</a>
+                </div>
 
                 <!-- Taula -->
                 <div class="table-responsive">

@@ -12,6 +12,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
+ * Controlador per gestionar l'imatge de perfil de l'ususari
+ * 
  * @author pablomorante
  */
 @RestController
