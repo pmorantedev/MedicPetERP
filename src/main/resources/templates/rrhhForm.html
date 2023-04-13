@@ -67,40 +67,40 @@
                     <input type="hidden" name="id" th:field="*{id}">
 
                     <div class="form-group row align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Nom i cognoms</h5></label>
+                        <label class="col-sm-2 control-label"><h5>[[#{rrhh.nom}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="nomComplet" name="name" type="text" class="form-control" style="background: none;" th:field="*{nomComplet}" />
-                            <span id="error-nomBuit" class="text-danger" style="display:none;">El nom no pot estar buit</span>
-                            <span id="error-nomLlarg" class="text-danger" style="display:none;">El nom ha de tenir com a màxim 60 caràcters</span>
+                            <span id="error-nomBuit" class="text-danger" style="display:none;">[[#{rrhh.errorNom}]]</span>
+                            <span id="error-nomLlarg" class="text-danger" style="display:none;">[[#{rrhh.errorNomLlarg}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Telèfon</h5></label>
+                        <label class="col-sm-2 control-label"><h5>[[#{rrhh.telefon}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="telefon" name="phone" type="text" class="form-control" style="background: none;" th:field="*{telefon}" />
-                            <span id="error-telefonLlarg" class="text-danger" style="display:none;">El telèfon ha de tenir com a màxim 15 caràcters</span>
-                            <span id="error-telefonLletres" class="text-danger" style="display:none;">El telèfon no pot contenir lletres</span>
-                            <span id="error-telefonBuit" class="text-danger" style="display:none;">El telèfon no pot estar buit</span>
+                            <span id="error-telefonLlarg" class="text-danger" style="display:none;">[[#{rrhh.errorTelefonLlarg}]]</span>
+                            <span id="error-telefonLletres" class="text-danger" style="display:none;">[[#{rrhh.errorTelefonLletres}]]</span>
+                            <span id="error-telefonBuit" class="text-danger" style="display:none;">[[#{rrhh.errorTelefonBuit}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Correu electrònic</h5></label>
+                        <label class="col-sm-2 control-label"><h5>[[#{rrhh.email}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="email" name="email" type="email" class="form-control" style="background: none;" th:field="*{email}"  />
-                            <span id="error-emailBuit" class="text-danger" style="display:none;">L'email no pot estar buit</span>
-                            <span id="error-emailLlarg" class="text-danger" style="display:none;">L'email ha de tenir com a màxim 45 caràcters</span>
+                            <span id="error-emailBuit" class="text-danger" style="display:none;">[[#{rrhh.errorEmailBuit}]]</span>
+                            <span id="error-emailLlarg" class="text-danger" style="display:none;">[[#{rrhh.errorEmailLlarg}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Adreça</h5></label>
+                        <label class="col-sm-2 control-label"><h5>[[#{rrhh.carrec}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="adreca" name="address" type="text" class="form-control" style="background: none;" th:field="*{adreca}" />
-                            <span id="error-adrecaLlarg" class="text-danger" style="display:none;">L'adreça ha de tenir com a màxim 100 caràcters</span>
-                            <span id="error-adrecaBuit" class="text-danger" style="display:none;">L'adreça no pot estar buida</span>
+                            <span id="error-adrecaLlarg" class="text-danger" style="display:none;">[[#{rrhh.errorAdrecaLlarg}]]</span>
+                            <span id="error-adrecaBuit" class="text-danger" style="display:none;">[[#{rrhh.errorAdrecaBuit}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-2 control-label"><h5>Especialitat</h5></label>
+                        <label class="col-sm-2 control-label"><h5>[[#{rrhh.especialitat}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
                             <input id="carrecAux" name="carrecAux" type="text" class="form-control" style="background: none;" th:field="*{carrecAux}" />
                         </div>

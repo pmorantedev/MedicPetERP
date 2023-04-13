@@ -67,19 +67,19 @@
                     <input type="hidden" name="id" th:field="*{id}">
 
                     <div class="form-group row align-items-center">
-                        <label class="col-sm-3 control-label"><h5>Nom del tractament</h5></label>
+                        <label class="col-sm-3 control-label"><h5>[[#{tractament.nom}]]</h5></label>
                         <div class="col-sm-9 align-items-center">
                             <input id="nom" name="name" type="text" class="form-control" style="background: none;" th:field="*{nom}" disabled/>
-                            <span id="error-nom" class="text-danger" style="display:none;">El nom ha de tenir com a màxim 45 caràcters</span>
-                            <span id="error-buit" class="text-danger" style="display:none;">El nom no pot estar buit</span>
+                            <span id="error-nom" class="text-danger" style="display:none;">[[#{tractament.errorNom}]]</span>
+                            <span id="error-buit" class="text-danger" style="display:none;">[[#{tractament.errorBuit}]]</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
-                        <label class="col-sm-3 control-label"><h5>Preu del tractament</h5></label>
+                        <label class="col-sm-3 control-label"><h5>[[#{tractament.preu}]]</h5></label>
                         <div class="col-sm-9 align-items-center">
                             <input id="preu" name="price" type="text" class="form-control" style="background: none;" th:field="*{preu}" disabled />
-                            <span id="preu-error" class="text-danger" style="display:none;">El preu ha de ser mínim 0.01€</span>
-                            <span id="preu-lletres" class="text-danger" style="display:none;">El preu no poden ser lletres</span>
+                            <span id="preu-error" class="text-danger" style="display:none;">[[#{tractament.errorPreu}]]</span>
+                            <span id="preu-lletres" class="text-danger" style="display:none;">[[#{tractament.errorLletra}]]</span>
                         </div>
                     </div>
 
