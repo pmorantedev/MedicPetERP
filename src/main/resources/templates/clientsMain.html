@@ -185,7 +185,6 @@
                                     const accioEliminar = formEliminar.getAttribute('action');
                                     const index = accioEliminar.indexOf('eliminar/');
                                     const url = accioEliminar.substring(0, index + 'eliminar/'.length);
-                                    console.log(">> url registre (Eliminat): ", url + idRegistre);
 
                                     // Comprovar que l'ID sigui un Nombre
                                     if (!isNaN(idRegistre)) {
@@ -193,7 +192,6 @@
                                         idRegistre = Number(idRegistre);
                                         formEliminar.action = `${url}${idRegistre}`;
                                         formEliminar.submit();
-                                        console.log(">> Registre nº (" + idRegistre + ") eliminat");
 
                                     } else {
                                         console.error(`El valor de 'data-th-id' no és un nombre vàlid: ${idRegistre}`);
@@ -205,16 +203,13 @@
 
                                     // Mostrar modal
                                     modal.show();
-                                    console.log(">> Registre seleccionat (" + idRegistre + ")");
 
                                     btnEliminarConfirmar.addEventListener('click', function () {
-                                        console.log(`Eliminant registre ${idRegistre} ...`);
                                         eliminarRegistre(idRegistre);
                                         modal.hide();
                                     });
 
                                     btnEliminarCancelar.addEventListener('click', function () {
-                                        console.log(">> Acció cancel·lada");
                                         idRegistre = null;  // resetejo id per evitar acomular-los                        
                                         modal.hide();
                                     });
@@ -230,11 +225,9 @@
 
                                         // Detectar quin botó s'ha clicat (Event) per establir l'ID
                                         let idRegistre = boto.getAttribute('id');
-                                        console.log('>> ID registre: ' + idRegistre);
 
                                         // Recuperar el valor de l'atribut 'data-th-nom' del botó
                                         nom = boto.getAttribute('nom');
-                                        console.log('>> Nom registre: ' + nom);
                                         // Actualitzar el contingut del títol del modal amb el valor de l'atribut
                                         document.querySelector('#confirmarEliminarLabel span').textContent = nom;
 

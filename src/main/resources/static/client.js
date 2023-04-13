@@ -8,7 +8,7 @@ function formEditable() {
     document.getElementById('dni').style = "background-color: white;";
     document.getElementById('email').style = "background-color: white;";
     document.getElementById('telefon').style = "background-color: white;";
-    document.getElementById('adreça').style = "background-color: white;";
+    document.getElementById('address').style = "background-color: white;";
 }
 
 function mostrar() {
