@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Controlador per la vista de formulari de la MAscota, dins del mòdul de Clients.
+ * Permet visualitzar/editar la fitxa de la mascota i gestionar les seves visites.
+ * 
+ * @author Txell Llanas
+ */
 @Controller
 @Slf4j
 public class MascotaController {
