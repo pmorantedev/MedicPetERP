@@ -7,111 +7,7 @@
         <title>[[#{clients.fitxaTitol}]]</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-
-        <script language="javascript">
-
-            function formEditable() {
-                var form = document.getElementById("clientForm");
-                var elements = form.elements;
-                for (var i = 0, len = elements.length; i < len; ++i) {
-                    elements[i].disabled = false;
-                }
-                document.getElementById('nomComplert').style = "background-color: white;";
-                document.getElementById('dni').style = "background-color: white;";
-                document.getElementById('email').style = "background-color: white;";
-                document.getElementById('telefon').style = "background-color: white;";
-                document.getElementById('adreça').style = "background-color: white;";
-            }
-
-            function mostrar() {
-                div = document.getElementById('btns_edicio');
-                div.style.display = '';
-                div = document.getElementById('btn_editar');
-                div.style.display = 'none';
-
-                formEditable();
-            }
-            
-            function limpiarCampos() {
-                window.location = "/medicpet/clients/fitxa/{idclient}"
-            }
-
-            function validar() {
-                var valid = true;
-                var nomComplert = document.getElementById('nomComplert').value;
-                var nomComplertError = document.getElementById('error-nom');
-
-                var dni = document.getElementById('dni').value;
-                var dniError = document.getElementById('error-dni');
-
-                var telefon = document.getElementById('telefon').value;
-                var telefonErrorLlarg = document.getElementById('error-telefonLlarg');
-                var telefonErrorCar = document.getElementById('error-telefonCar');
-
-                var email = document.getElementById('email').value;
-                var emailError = document.getElementById('error-email');
-
-                var address = document.getElementById('address').value;
-                var addressError = document.getElementById('error-address');
-
-                if (nomComplert.length > 45) {
-                    valid = false;
-                    nomComplertError.style.display = 'block';
-                    document.getElementById('nomComplert').classList.add('border-danger');
-                } else {
-                    nomComplertError.style.display = 'none';
-                    document.getElementById('nomComplert').classList.remove('border-danger');
-                }
-
-                if (dni.length > 9) {
-                    valid = false;
-                    dniError.style.display = 'block';
-                    document.getElementById('dni').classList.add('border-danger');
-                } else {
-                    dniError.style.display = 'none';
-                    document.getElementById('dni').classList.remove('border-danger');
-                }
-
-                if (email.length > 45) {
-                    valid = false;
-                    emailError.style.display = 'block';
-                    document.getElementById('email').classList.add('border-danger');
-                } else {
-                    emailError.style.display = 'none';
-                    document.getElementById('email').classList.remove('border-danger');
-                }
-
-                if (address.length > 100) {
-                    valid = false;
-                    addressError.style.display = 'block';
-                    document.getElementById('address').classList.add('border-danger');
-                } else {
-                    addressError.style.display = 'none';
-                    document.getElementById('address').classList.remove('border-danger');
-                }
-
-                if (!/^[+\d]+$/.test(telefon)) {
-                    valid = false;
-                    telefonErrorCar.style.display = 'block';
-                    document.getElementById('telefon').classList.add('border-danger');
-                } else if (telefon.length > 15) {
-                    valid = false;
-                    telefonErrorLlarg.style.display = 'block';
-                    telefonErrorCar.style.display = 'none';
-                    document.getElementById('telefon').classList.add('border-danger');
-                } else {
-                    telefonErrorLlarg.style.display = 'none';
-                    telefonErrorCar.style.display = 'none';
-                    document.getElementById('telefon').classList.remove('border-danger');
-                }
-
-
-                return valid;
-            }
-
-
-        </script>
-
+        <script src="/client.js"></script>
     </head>
 
     <body>
@@ -144,7 +40,8 @@
             <div class="mt-4" th:if="${client.idclient == null and rolUsuari != 'VETERINARI'}">
                 <script th:inline="javascript">
 
-                    var filtre = [[${client.idclient == null}]];
+                    var filtre = [[${client.idclient == null}
+                    ]];
                     // Si el client és nou...
                     window.onload = function () {
                         if (!filtre)
@@ -178,37 +75,42 @@
                     <div class="form-group row align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{clients.campNom}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="nomComplert" name="name" type="text" class="form-control" style="background: none;" th:field="*{nomComplert}" required disabled />
+                            <input id="nomComplert" name="name" type="text" class="form-control" style="background: none;" th:field="*{nomComplert}" disabled />
                             <span id="error-nom" class="text-danger" style="display:none;">El nom ha de tenir com a màxim 45 caràcters</span>
+                            <span id="errorBuit-nom" class="text-danger" style="display:none;">Omplir el nom és obligatori</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{clients.campDni}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="dni" name="dni" type="text" class="form-control" style="background: none;" th:field="*{dni}" required disabled />
+                            <input id="dni" name="dni" type="text" class="form-control" style="background: none;" th:field="*{dni}" disabled />
                             <span id="error-dni" class="text-danger" style="display:none;">El DNI ha de tenir com a màxim 9 caràcters</span>
+                            <span id="errorBuit-dni" class="text-danger" style="display:none;">Omplir el DNI és obligatori</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{clients.campTelefon}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="telefon" name="phone" type="text" class="form-control" style="background: none;" th:field="*{telefon}" required disabled />
+                            <input id="telefon" name="phone" type="text" class="form-control" style="background: none;" th:field="*{telefon}" disabled />
                             <span id="error-telefonLlarg" class="text-danger" style="display:none;">El telèfon ha de tenir com a màxim 15 caràcters</span>
                             <span id="error-telefonCar" class="text-danger" style="display:none;">El telèfon només pot contenir números i símbols.</span>
+                            <span id="errorBuit-telefon" class="text-danger" style="display:none;">Omplir el telèfon és obligatori</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{clients.campEmail}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="email" name="email" type="email" class="form-control" style="background: none;" th:field="*{email}" required disabled />
+                            <input id="email" name="email" type="email" class="form-control" style="background: none;" th:field="*{email}" disabled />
                             <span id="error-email" class="text-danger" style="display:none;">L'email ha de tenir com a màxim 45 caràcters</span>
+                            <span id="errorBuit-email" class="text-danger" style="display:none;">Omplir l'email és obligatori</span>
                         </div>
                     </div>
                     <div class="form-group row mt-3 align-items-center">
                         <label class="col-sm-2 control-label"><h5>[[#{clients.campAdreca}]]</h5></label>
                         <div class="col-sm-10 align-items-center">
-                            <input id="address" name="address" type="text" class="form-control" style="background: none;" th:field="*{adreca}" required disabled />
+                            <input id="address" name="address" type="text" class="form-control" style="background: none;" th:field="*{adreca}" disabled />
                             <span id="error-address" class="text-danger" style="display:none;">La adreça ha de tenir com a màxim 100 caràcters</span>
+                            <span id="errorBuit-address" class="text-danger" style="display:none;">Omplir l'adreça és obligatori</span>
                         </div>
                     </div>
                 </form>
@@ -222,18 +124,11 @@
                 <h2 class="mt-5">[[#{mascotes.llistatTitol}]]</h2>
 
                 <!-- Botons i Cercador-->
-               
+
                 <div th:class="${rolUsuari != 'VETERINARI' ? 'd-flex justify-content-between mt-4' : 'd-flex justify-content-end mt-4'}">
-                <a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa(idclient=${client.idclient})}" class="btn btn-outline-success" th:if="${rolUsuari != 'VETERINARI'}">[[#{mascotes.botoCrear}]]</a>
-                <div class="float-right search btn-group">
-                    <form method="get" th:action="@{/medicpet/clients/fitxa/{idclient}}">
-                        <input required th:value="${paraulaClau}" style="width: auto!important; display: inline;" class="form-control search-input" type="search" aria-label="Search" placeholder="Cercar..." autocomplete="off" name="paraulaClau" id="paraulaClau">
-                        <button class="btn btn-outline-primary ms-2" type="submit">[[#{generic.botoCercar}]]</button>
-                        <button class="btn btn-outline-secondary ms-2" type="button" onclick="limpiarCampos()">[[#{generic.botoNetejar}]]</button>
-                    </form>
+                    <a th:href="@{/medicpet/clients/fitxa/{idclient}/mascotes/fitxa(idclient=${client.idclient})}" class="btn btn-outline-success" th:if="${rolUsuari != 'VETERINARI'}">[[#{mascotes.botoCrear}]]</a>
                 </div>
-            </div>
-                
+
                 <!-- Taula -->
                 <div class="table-responsive">
                     <table class="table align-middle table-striped table-responsive-xl mt-4">
@@ -314,96 +209,96 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script th:inline="javascript">
 
-                            // TO-DO: pendent d'implementar que quan s'esborri un registre mostri alerta de confirmació
-                            /* function mostrarAlerta() {
-                             document.getElementById("alertaEliminar").style.display = "block";
-                             }*/
+                    // TO-DO: pendent d'implementar que quan s'esborri un registre mostri alerta de confirmació
+                    /* function mostrarAlerta() {
+                     document.getElementById("alertaEliminar").style.display = "block";
+                     }*/
 
-                            // Script mostrar Modal confirmació (Eliminar registre)
-                            document.addEventListener("DOMContentLoaded", function () {
+                    // Script mostrar Modal confirmació (Eliminar registre)
+                    document.addEventListener("DOMContentLoaded", function () {
 
-                                // Inicialització del modal
-                                const modalEl = document.getElementById('confirmarEliminar');
-                                const modal = new bootstrap.Modal(modalEl, {
-                                    keyboard: false
-                                });
+                        // Inicialització del modal
+                        const modalEl = document.getElementById('confirmarEliminar');
+                        const modal = new bootstrap.Modal(modalEl, {
+                            keyboard: false
+                        });
 
-                                // Desar tots els botons que serveixen per eliminar un registre
-                                const botonsEliminar = document.querySelectorAll('.btn-eliminar');
+                        // Desar tots els botons que serveixen per eliminar un registre
+                        const botonsEliminar = document.querySelectorAll('.btn-eliminar');
 
-                                // Botons del modal
-                                const btnEliminarConfirmar = document.getElementById('btn_eliminarConfirmar');
-                                const btnEliminarCancelar = document.getElementById('btn_eliminarCancelar');
+                        // Botons del modal
+                        const btnEliminarConfirmar = document.getElementById('btn_eliminarConfirmar');
+                        const btnEliminarCancelar = document.getElementById('btn_eliminarCancelar');
 
-                                // Funció per eliminar un registre
-                                function eliminarRegistre(idRegistre) {
+                        // Funció per eliminar un registre
+                        function eliminarRegistre(idRegistre) {
 
-                                    // Obtindre la ruta per l'acció 'Eliminar'
-                                    const formEliminar = document.getElementById(`eliminarRegistre${idRegistre}`);
-                                    const accioEliminar = formEliminar.getAttribute('action');
-                                    const index = accioEliminar.indexOf('eliminar/');
-                                    const url = accioEliminar.substring(0, index + 'eliminar/'.length);
-                                    console.log(">> url registre (Eliminat): ", url + idRegistre);
+                            // Obtindre la ruta per l'acció 'Eliminar'
+                            const formEliminar = document.getElementById(`eliminarRegistre${idRegistre}`);
+                            const accioEliminar = formEliminar.getAttribute('action');
+                            const index = accioEliminar.indexOf('eliminar/');
+                            const url = accioEliminar.substring(0, index + 'eliminar/'.length);
+                            console.log(">> url registre (Eliminat): ", url + idRegistre);
 
-                                    // Comprovar que l'ID sigui un Nombre
-                                    if (!isNaN(idRegistre)) {
+                            // Comprovar que l'ID sigui un Nombre
+                            if (!isNaN(idRegistre)) {
 
-                                        idRegistre = Number(idRegistre);
-                                        formEliminar.action = `${url}${idRegistre}`;
-                                        formEliminar.submit();
-                                        console.log(">> Registre nº (" + idRegistre + ") eliminat");
+                                idRegistre = Number(idRegistre);
+                                formEliminar.action = `${url}${idRegistre}`;
+                                formEliminar.submit();
+                                console.log(">> Registre nº (" + idRegistre + ") eliminat");
 
-                                    } else {
-                                        console.error(`El valor de 'data-th-id' no és un nombre vàlid: ${idRegistre}`);
-                                    }
-                                }
+                            } else {
+                                console.error(`El valor de 'data-th-id' no és un nombre vàlid: ${idRegistre}`);
+                            }
+                        }
 
-                                // Funció per confirmar l'eliminació
-                                function confirmarEliminar(idRegistre) {
+                        // Funció per confirmar l'eliminació
+                        function confirmarEliminar(idRegistre) {
 
-                                    // Mostrar modal
-                                    modal.show();
-                                    console.log(">> Registre seleccionat (" + idRegistre + ")");
+                            // Mostrar modal
+                            modal.show();
+                            console.log(">> Registre seleccionat (" + idRegistre + ")");
 
-                                    btnEliminarConfirmar.addEventListener('click', function () {
-                                        console.log(`Eliminant registre ${idRegistre} ...`);
-                                        eliminarRegistre(idRegistre);
-                                        modal.hide();
-                                    });
+                            btnEliminarConfirmar.addEventListener('click', function () {
+                                console.log(`Eliminant registre ${idRegistre} ...`);
+                                eliminarRegistre(idRegistre);
+                                modal.hide();
+                            });
 
-                                    btnEliminarCancelar.addEventListener('click', function () {
-                                        console.log(">> Acció cancel·lada");
-                                        idRegistre = null;  // resetejo id per evitar acomular-los                        
-                                        modal.hide();
-                                    });
+                            btnEliminarCancelar.addEventListener('click', function () {
+                                console.log(">> Acció cancel·lada");
+                                idRegistre = null;  // resetejo id per evitar acomular-los                        
+                                modal.hide();
+                            });
 
-                                }
+                        }
 
-                                // Iterar sobre cada botó
-                                botonsEliminar.forEach(function (boto) {
+                        // Iterar sobre cada botó
+                        botonsEliminar.forEach(function (boto) {
 
-                                    // En fer clic, es mostra el modal
-                                    boto.addEventListener('click', function (event) {
-                                        let nom = "";
+                            // En fer clic, es mostra el modal
+                            boto.addEventListener('click', function (event) {
+                                let nom = "";
 
-                                        // Detectar quin botó s'ha clicat (Event) per establir l'ID
-                                        let idRegistre = boto.getAttribute('id');
-                                        console.log('>> ID registre: ' + idRegistre);
+                                // Detectar quin botó s'ha clicat (Event) per establir l'ID
+                                let idRegistre = boto.getAttribute('id');
+                                console.log('>> ID registre: ' + idRegistre);
 
-                                        // Recuperar el valor de l'atribut 'data-th-nom' del botó
-                                        nom = boto.getAttribute('nom');
-                                        console.log('>> Nom registre: ' + nom);
-                                        // Actualitzar el contingut del títol del modal amb el valor de l'atribut
-                                        document.querySelector('#confirmarEliminarLabel span').textContent = nom;
+                                // Recuperar el valor de l'atribut 'data-th-nom' del botó
+                                nom = boto.getAttribute('nom');
+                                console.log('>> Nom registre: ' + nom);
+                                // Actualitzar el contingut del títol del modal amb el valor de l'atribut
+                                document.querySelector('#confirmarEliminarLabel span').textContent = nom;
 
-                                        confirmarEliminar(idRegistre);
-
-                                    });
-
-
-                                });
+                                confirmarEliminar(idRegistre);
 
                             });
+
+
+                        });
+
+                    });
         </script>
 
     </body>
