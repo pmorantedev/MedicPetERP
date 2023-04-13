@@ -13,6 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * *
+ * Aquest seria el controlador de l'apartat de factures. Com no esta
+ * implementat, nomes s'ha gestionat la vista d'entrada. Si hi hagues modul de
+ * factures, les funcions i controladors estarien implementades aquí.
+ *
+ * @author izan
+ */
 @Controller
 @Slf4j
 public class FacturaController {
