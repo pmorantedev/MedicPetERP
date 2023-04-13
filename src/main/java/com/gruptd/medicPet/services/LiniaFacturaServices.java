@@ -60,7 +60,7 @@ public class LiniaFacturaServices implements ServicesInterface<LiniaFactura> {
 
     @Override
     public LiniaFactura getOne(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Encara no admès.");
     }
 
 }

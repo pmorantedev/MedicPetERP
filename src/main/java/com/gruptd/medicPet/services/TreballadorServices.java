@@ -3,7 +3,6 @@ package com.gruptd.medicPet.services;
 import com.gruptd.medicPet.dao.TreballadorDAO;
 import com.gruptd.medicPet.models.Carrec;
 import com.gruptd.medicPet.models.Treballador;
-import com.gruptd.medicPet.models.Usuari;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +50,6 @@ public class TreballadorServices implements ServicesInterface<Treballador> {
         Treballador treballadorBD = getOne(t.getId());
         if (treballadorBD != null) {
             treballadorBD.setAdreca(t.getAdreca());
-            //treballadorBD.setCarrec(t.getCarrec());
             treballadorBD.setCarrecAux(t.getCarrecAux());
             treballadorBD.setEmail(t.getEmail());
             treballadorBD.setNomComplet(t.getNomComplet());

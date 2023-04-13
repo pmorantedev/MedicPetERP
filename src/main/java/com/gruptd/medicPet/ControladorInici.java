@@ -5,11 +5,8 @@ import com.gruptd.medicPet.models.Rol;
 import com.gruptd.medicPet.models.Usuari;
 import com.gruptd.medicPet.services.RolServices;
 import com.gruptd.medicPet.services.UsuariServices;
-import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,18 +69,4 @@ public class ControladorInici {
     public String noAutoritzat() {
         return "error403";
     }
-
-    @GetMapping("/error/tornar")
-    public String tornarInici(Authentication auth) {
-        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-        for (GrantedAuthority authority : authorities) {
-            System.out.println(authority.getAuthority());
-            if (authority.getAuthority().equals("ADMIN")) {
-                return "redirect:/registre";
-            }
-        }
-        return "redirect:/medicpet/clients";
-
-    }
-
 }

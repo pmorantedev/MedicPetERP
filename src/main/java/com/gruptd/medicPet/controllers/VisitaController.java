@@ -118,7 +118,6 @@ public class VisitaController {
         return "visitaForm";
     }
     
-    //@PostMapping("/medicpet/visites/fitxa/eliminar/{id}")
     @PostMapping("/medicpet/clients/fitxa/{client_id}/mascotes/fitxa/{id_mascota}/visites/eliminar/{visita_id}")
     public String eliminar(@PathVariable Long visita_id, RedirectAttributes redirectAtr) {
         

@@ -60,7 +60,7 @@ function validar() {
         document.getElementById('preu').classList.remove('border-danger');
     }
 
-    if (formulariNotOk == 0) {
+    if (formulariNotOk === 0) {
         return true;
     } else {
         return false;

@@ -1,6 +1,5 @@
 package com.gruptd.medicPet.models;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 /**

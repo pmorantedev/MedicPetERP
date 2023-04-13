@@ -19,7 +19,7 @@ public class FacturaController {
 
     @Autowired
     private UsuariServices usuariService;
-    
+
     @Autowired
     private FacturaServices facturaService;
 
@@ -28,7 +28,7 @@ public class FacturaController {
 
     @GetMapping("/medicpet/factures")
     public String principalFactures(Model model) {
-        
+
         // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         // Recuperar l'objecte Usuari corresponent a l'usuari actual
@@ -37,9 +37,9 @@ public class FacturaController {
         String nomUsuariComplert = usuari.getNom();
         model.addAttribute("userName", username);
         model.addAttribute("nomUsuariComplert", nomUsuariComplert);
-        
+
         model.addAttribute("pagina", "Factures");
-        
+
         log.info("Executant el controlador de factures");
         Iterable<Factura> factures = facturaService.findAll();
         log.info(">>> Factures de la BBDD:");
@@ -53,11 +53,5 @@ public class FacturaController {
             log.info(t.getFactura().getMetodePagament());
         });
         return "facturacioMain";
-    }
-
-    @GetMapping("/medicpet/detall-factura")
-    public String detallFactura() {
-        log.info("Executant el controlador de facturació: Detall de factura");
-        return "facturacioDetall";
     }
 }

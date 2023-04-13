@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
@@ -32,12 +28,10 @@ public class Visita implements Serializable {
     
     @OneToOne
     @JoinColumn(name = "treballador_id")
-    //@NotEmpty
     private Treballador treballador_id;
     
     @OneToOne
     @JoinColumn(name = "mascota_id")
-    //@NotEmpty
     private Mascota mascota;
     
     @OneToMany(cascade = CascadeType.ALL)
