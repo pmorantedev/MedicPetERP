@@ -74,7 +74,6 @@ public class WebSecurityConfig {
                     .tokenRepository(tokenRepository(dataSource)))
                 .exceptionHandling( (ex) -> ex
                     .accessDeniedHandler(accessDeniedHandler())
-//                    .authenticationEntryPoint(authenticationEntryPoint())
                 )
                 .logout((logout) -> logout
                     .logoutUrl("/logout")

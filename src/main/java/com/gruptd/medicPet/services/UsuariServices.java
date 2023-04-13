@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gruptd.medicPet.services;
 
 import com.gruptd.medicPet.dao.UsuariDAO;
 import com.gruptd.medicPet.models.Usuari;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,7 +57,6 @@ public class UsuariServices implements ServicesInterface<Usuari> {
             if (u.getContrasenya() != null) {
                 usuariBD.setContrasenya(u.getContrasenya());
             }
-            //usuariBD.setRol_id(u.getRol_id());
 
             save(usuariBD);
         } else {

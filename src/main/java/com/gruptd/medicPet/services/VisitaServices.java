@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gruptd.medicPet.services;
 
 import com.gruptd.medicPet.dao.VisitaDAO;
@@ -57,6 +53,7 @@ public class VisitaServices implements ServicesInterface<Visita> {
             visitaDB.setMedicacio(v.getMedicacio());
             visitaDB.setData_visita(v.getData_visita());
 
+            visitaDB.setTractament_id(v.getTractament_id());
             visitaDB.setTreballador_id(v.getTreballador_id());
             visitaDB.setMascota(v.getMascota());
 

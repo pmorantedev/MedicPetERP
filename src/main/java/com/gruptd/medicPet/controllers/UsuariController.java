@@ -1,9 +1,7 @@
 package com.gruptd.medicPet.controllers;
 
 import com.gruptd.medicPet.models.CanviContrasenya;
-import com.gruptd.medicPet.models.ImageData;
 import com.gruptd.medicPet.models.Usuari;
-import com.gruptd.medicPet.services.RolServices;
 import com.gruptd.medicPet.services.UsuariServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +27,6 @@ public class UsuariController {
 
     @Autowired
     private UsuariServices usuariServices;
-
-    @Autowired
-    private RolServices rolServices;
 
     /**
      * *

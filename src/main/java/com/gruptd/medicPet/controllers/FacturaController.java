@@ -62,10 +62,4 @@ public class FacturaController {
         });
         return "facturacioMain";
     }
-
-    @GetMapping("/medicpet/detall-factura")
-    public String detallFactura() {
-        log.info("Executant el controlador de facturació: Detall de factura");
-        return "facturacioDetall";
-    }
 }
