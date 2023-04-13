@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[[#{rrhh.fitxaTitol}]]</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="/rrhh.js"></script>
+
+    </head>
+
+    <body>
+
+        <!-- Menú de navegació -->
+        <div th:insert="fragments/barraNavegacio :: header(user=${userName}, nomComplert=${nomUsuariComplert}, page=${pagina})"/>
+
+        <!-- Continguts -->
+        <div class="container">
+
+            <!-- Breadcrumb -->
+            <div class="d-flex">
+                <h2>
+                    <a th:href="@{/medicpet/rrhh}" class="link-secondary">[[#{rrhh.llistatTitol}]]</a>
+                    <span> / </span>                        
+                    <span th:if="${treballador.id != null}" class="text-dark ml-2">[[#{rrhh.fitxaTreballadorTitol}]] "<span th:text="${treballador.getNomComplet}"></span>"</span>
+                    <span th:if="${treballador.id == null}" class="text-dark ml-2">[[#{rrhh.fitxaNovaTitol}]]</span>
+                    <!-- TO-DO: detectar rol veterinari 
+                    <li th:if="${user.rol.id == 3}" class="breadcrumb-item mt-3 mb-3"><h2>Fitxa client</h2></li>-->                    
+                </h2>
+            </div>
+
+            <!-- Botons per TREBALLADOR NOU -->
+            <div class="mt-4" th:if="${treballador.id == null}">
+                <script th:inline="javascript">
+
+                    var filtre = [[${treballador.id == null
+                    }
+                    ]]; // Si el client és nou...
+                    window.onload = function () {
+                    if (!filtre)
+                            return; // Exit/Return si la variable és 'false'
+                    formEditable(); // ...torno inputs del formulari editables
+                    };
+                </script>
+                <div id="btns_edicio">
+                    <button form="treballadorForm" type="submit" name="Desar" class="btn btn-outline-success p-2 me-3">[[#{generic.botoDesar}]]</button>
+                    <a th:href="@{/medicpet/rrhh}" class="btn btn-outline-danger p-2">[[#{generic.botoDescartar}]]</a>
+                </div>
+            </div>
+            <!-- Botons EDITAR CLIENT -->            
+            <div class="mt-4" th:if="${treballador.id != null}">
+                <div id="btn_editar">
+                    <a href="javascript:mostrar();" name="Editar" class="btn btn-outline-primary p-2 me-3">[[#{generic.botoEditar}]]</a>
+                </div>
+                <div id="btns_edicio" style="display:none;">
+                    <button form="treballadorForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">[[#{generic.botoDesarCanvis}]]</button>
+                    <a th:href="@{/medicpet/rrhh}" class="btn btn-outline-danger p-2" >[[#{generic.botoDescartar}]]</a>
+                </div>
+            </div>
+
+            <!-- Formulari: Detalls factura -->
+            <div <div class="p-5 mt-4 bg-light rounded-3">
+
+                <form id="treballadorForm" method="POST" th:action="@{/medicpet/rrhh/guardar}" th:object="${treballador}" class="form-horizontal" onsubmit="return validar();">
+
+                    <input type="hidden" name="id" th:field="*{id}">
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-2 control-label"><h5>[[#{rrhh.nom}]]</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="nomComplet" name="name" type="text" class="form-control" style="background: none;" th:field="*{nomComplet}" />
+                            <span id="error-nomBuit" class="text-danger" style="display:none;">[[#{rrhh.errorNom}]]</span>
+                            <span id="error-nomLlarg" class="text-danger" style="display:none;">[[#{rrhh.errorNomLlarg}]]</span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>[[#{rrhh.telefon}]]</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="telefon" name="phone" type="text" class="form-control" style="background: none;" th:field="*{telefon}" />
+                            <span id="error-telefonLlarg" class="text-danger" style="display:none;">[[#{rrhh.errorTelefonLlarg}]]</span>
+                            <span id="error-telefonLletres" class="text-danger" style="display:none;">[[#{rrhh.errorTelefonLletres}]]</span>
+                            <span id="error-telefonBuit" class="text-danger" style="display:none;">[[#{rrhh.errorTelefonBuit}]]</span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>[[#{rrhh.email}]]</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="email" name="email" type="email" class="form-control" style="background: none;" th:field="*{email}"  />
+                            <span id="error-emailBuit" class="text-danger" style="display:none;">[[#{rrhh.errorEmailBuit}]]</span>
+                            <span id="error-emailLlarg" class="text-danger" style="display:none;">[[#{rrhh.errorEmailLlarg}]]</span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>[[#{rrhh.adreca}]]</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="adreca" name="address" type="text" class="form-control" style="background: none;" th:field="*{adreca}" />
+                            <span id="error-adrecaLlarg" class="text-danger" style="display:none;">[[#{rrhh.errorAdrecaLlarg}]]</span>
+                            <span id="error-adrecaBuit" class="text-danger" style="display:none;">[[#{rrhh.errorAdrecaBuit}]]</span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>[[#{rrhh.especialitat}]]</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="carrecAux" name="carrecAux" type="text" class="form-control" style="background: none;" th:field="*{carrecAux}" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>Càrrec</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <select class="form-select" id="carrec-list" name="carrec_id" th:field="*{carrec}" required disabled>
+                                <option value="">Seleccionar càrrec...</option>
+                                <th:block th:each="carrec : ${carrecs}">
+                                    <option th:value="${carrec.getId}" th:text="${carrec.getNom}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- Peu de pàgina -->
+        <div th:insert="~{fragments/peuPagina :: footer}"/>
+
+    </body>
+</html>

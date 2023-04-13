@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[[#{perfil.fitxaTitol}]]</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="/perfil.js"></script>
+    </head>
+
+    <body>
+
+        <!-- Menú de navegació -->
+        <div th:insert="~{fragments/barraNavegacio :: header(user=${userName}, nomComplert=${nomUsuariComplert}, rol=${rol})}"></div>
+
+        <!-- Continguts -->
+        <div class="container">
+
+            <!-- Alerta: imatge canviada -->
+            <div th:if="${imatge}" class="alert alert-info alert-dismissible fade show text-center" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle me-2" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                </svg>
+                [[#{perfil.alertaImatge}]]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <!-- Alerta: nova contrasenya invalida -->
+            <div th:if="${novaInvalida}" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>                                      
+                [[#{perfil.alertaContrasenya}]]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <!-- Alerta: contrasenya antiga -->
+            <div th:if="${incorrecta}" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>                                      
+                [[#{perfil.alertaContrasenyaIncorrecta}]]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <!-- Missatge contrasenya canviada -->
+            <div th:if="${correcta}" class="alert alert-info alert-dismissible fade show text-center" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle me-2" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                </svg>
+                [[#{perfil.alertaContrasenyaModificada}]]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <!-- Breadcrumb -->
+            <div class="d-flex">
+                <h2 class="mt-4">                    
+                    <span th:if="${treballador.id != null}" class="text-muted ml-2">[[#{perfil.perfil}]]</span>                
+                </h2>
+            </div>
+            <!-- Botons -->
+            <div class="mt-4">
+                <div id="btn_editar">
+                    <a id="btn_editar" href="javascript:mostrar();" name="Desar" class="btn btn-outline-primary p-2 me-3">[[#{perfil.editar}]]</a>
+                </div>
+                <div id="btns_edicio" style="display:none;">
+                    <button th:if="${treballador.id != null}" form="treballadorForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">Desar canvis</button>
+                    <a th:href="@{/medicpet/perfil}"><button type="button" class="btn btn-outline-danger p-2" >[[#{perfil.descartar}]]</button></a>
+                </div>
+            </div>
+
+            <!-- Formulari: Detalls perfil -->
+            <div <div class="p-5 mt-4 bg-light rounded-3">
+
+                <form id="treballadorForm" method="POST" th:action="@{/medicpet/perfil/guardar}" th:object="${treballador}" class="form-horizontal" onsubmit="return validar();">
+
+                    <input type="hidden" name="id" th:field="*{id}">
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-2 control-label"><h5>[[#{perfil.username}]]</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="username" name="username" type="text" class="form-control" style="background: none;" th:field="*{username}" required disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>[[#{perfil.nom}]]</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="nom" name="nom" type="text" class="form-control" style="background: none;" th:field="*{nom}" disabled />
+                            <span id="error-nom" class="text-danger" style="display:none;">[[#{perfil.errorNom}]]</span>
+                            <span id="errorBuit-nom" class="text-danger" style="display:none;">[[#{perfil.errorNomBuit}]]</span>
+                        </div>
+                    </div>
+
+                </form> 
+
+            </div>
+            <!-- CANVIAR CONTRASENYA -->
+            <div class="d-flex">
+                <h2 class="mt-4">                    
+                    <span class="text-muted ml-2">[[#{perfil.canviContrasenya}]]</span>                
+                </h2>
+            </div>
+            <div class="mt-4">
+                <div id="btn_editar">
+                    <a id="btn_editarCon" href="javascript:mostrarContrasenya();" name="DesarDos" class="btn btn-outline-primary p-2 me-3">[[#{perfil.canviar}]]</a>
+                </div>
+                <div id="btns_edicioCon" style="display:none;">
+                    <button id="submitContra" form="contrasenyaForm" type="submit" name="Desar canvis contrasenya" class="btn btn-outline-success p-2 me-3">[[#{perfil.desar}]]</button>
+                    <a th:href="@{/medicpet/perfil}"><button type="button" class="btn btn-outline-danger p-2" >[[#{perfil.descartar}]]</button></a>
+                </div>
+            </div>
+            <div class="p-5 mt-4 bg-light rounded-3">
+
+                <form id="contrasenyaForm" method="POST" th:action="@{/medicpet/perfical/canviarContrasenya}" th:object="${contrasenya}" class="form-horizontal">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-2 control-label"><h5>[[#{perfil.contrasenyaActual}]]</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="contraActual" name="contraActual" type="password" class="form-control" style="background: none;" th:field="*{contraActual}" required disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>[[#{perfil.contrasenyaNova}]]</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="contraNova" name="contraNova" type="password" class="form-control" style="background: none;" th:field="*{contraNova}" required disabled />
+                            <span id="contra1-error" class="text-danger" style="display:none;">[[#{perfil.contrasenyaDiferents}]]</span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3 align-items-center">
+                        <label class="col-sm-2 control-label"><h5>[[#{perfil.confirmacioContrasenya}]]</h5></label>
+                        <div class="col-sm-10 align-items-center">
+                            <input id="contraNovaConf" name="contraNovaConf" type="password" class="form-control" style="background: none;" th:field="*{contraNovaConf}" oninput="checkPassword()" required disabled />
+                            <span id="contra2-error" class="text-danger" style="display:none;">[[#{perfil.contrasenyaDiferents}]]</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- CANVIAR IMATGE USUARI -->
+            <div class="d-flex">
+                <h2 class="mt-4">                    
+                    <span th:if="${treballador.id != null}" class="text-muted ml-2">[[#{perfil.canviarImatge}]]</span>                
+                </h2>
+            </div>
+            <!-- Botons -->
+            <div class="mt-4">
+                <div id="btns_edicioImg" style="display:none;">
+                    <button th:if="${treballador.id != null}" form="imatgeForm" type="submit" name="Desar canvis" class="btn btn-outline-success p-2 me-3">[[#{perfil.desar}]]</button>
+                    <a th:href="@{/medicpet/perfil}"><button type="button" class="btn btn-outline-danger p-2" >[[#{perfil.descartar}]]</button></a>
+                </div>
+            </div>
+
+            <div <div class="p-5 mt-4 bg-light rounded-3">
+
+                <form id="imatgeForm" method="POST" th:action="@{/medicpet/perfil/guardarImatge}" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="d-flex justify-content-center mb-4">
+                        <img id="temp_image" th:src="@{/image/{name}(name=${userName})}"
+                             class="rounded-circle" alt="example placeholder" style="width: 200px;" />
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="btn btn-primary btn-rounded">
+                            <label class="form-label text-white m-1" for="imgFile">[[#{perfil.seleccionaImatge}]]</label>
+                            <input id="imgFile" name="image" type="file" class="form-control d-none" accept="image/png,image/jpeg, image/jpg" onchange="previewImage(event)" />
+                        </div>
+                    </div>
+
+
+                </form> 
+
+            </div>
+
+        </div>
+
+        <!-- Peu de pàgina -->
+        <div th:insert="~{fragments/peuPagina :: footer}"/>
+
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div th:fragment="construccio">
+            <script th:inline="javascript">
+                function playAudio(url) {
+                    new Audio(url).play();
+                }
+            </script>
+            <body>
+                <div class="container text-center py-5">
+                    <h1 class="mb-4">En construcció</h1>
+                    <p class="lead">Estem treballant en una nova secció! Aviat estarà disponible.</p>
+                    <img onclick="playAudio('/sorpresa.mp3');" src="https://i.pinimg.com/originals/f4/84/c8/f484c84c96d1258efd45b586e7dda74a.jpg" class="img-fluid my-4 rounded-3" alt="Under construction" style="width: 800px;">
+                </div>
+
+                <!-- Bootstrap JS -->
+                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            </body>
+</html>
+
+</div>
+</body>
+</html>
