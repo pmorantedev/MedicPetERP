@@ -21,6 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Controlador per la vista del mòdul de Clients.
+ * Contempla dues vistes: Llistat i formulari. Permet gestionar els clients 
+ * i les seves mascotes.
+ * 
+ * @author Txell Llanas
+ */
 @Controller
 @Slf4j
 public class ClientController {
