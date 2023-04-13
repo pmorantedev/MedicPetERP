@@ -13,13 +13,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * *
+ * Aquest seria el controlador de l'apartat de factures. Com no esta
+ * implementat, nomes s'ha gestionat la vista d'entrada. Si hi hagues modul de
+ * factures, les funcions i controladors estarien implementades aquí.
+ *
+ * @author izan
+ */
 @Controller
 @Slf4j
 public class FacturaController {
 
     @Autowired
     private UsuariServices usuariService;
-    
+
     @Autowired
     private FacturaServices facturaService;
 
@@ -28,7 +36,7 @@ public class FacturaController {
 
     @GetMapping("/medicpet/factures")
     public String principalFactures(Model model) {
-        
+
         // Recuperar el nom de l'usuari actual
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         // Recuperar l'objecte Usuari corresponent a l'usuari actual
@@ -37,9 +45,9 @@ public class FacturaController {
         String nomUsuariComplert = usuari.getNom();
         model.addAttribute("userName", username);
         model.addAttribute("nomUsuariComplert", nomUsuariComplert);
-        
+
         model.addAttribute("pagina", "Factures");
-        
+
         log.info("Executant el controlador de factures");
         Iterable<Factura> factures = facturaService.findAll();
         log.info(">>> Factures de la BBDD:");
