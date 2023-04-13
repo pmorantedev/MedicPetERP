@@ -79,10 +79,12 @@ public class VisitaController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         // Recuperar l'objecte Usuari corresponent a l'usuari actual
         Usuari usuari = usuariService.getByUsername(username);
+        String rolUsuari = usuari.getRol_id().getNom();
         // Accedir als atributs
         String nomUsuariComplert = usuari.getNom();
         model.addAttribute("userName", username);
         model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
 
         return "visitaForm";
     }
@@ -146,10 +148,12 @@ public class VisitaController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         // Recuperar l'objecte Usuari corresponent a l'usuari actual
         Usuari usuari = usuariService.getByUsername(username);
+        String rolUsuari = usuari.getRol_id().getNom();
         // Accedir als atributs
         String nomUsuariComplert = usuari.getNom();
         model.addAttribute("userName", username);
         model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("rolUsuari", rolUsuari);
 
         return "visitaForm";
     }
