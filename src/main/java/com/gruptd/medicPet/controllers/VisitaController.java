@@ -109,7 +109,7 @@ public class VisitaController {
         }
 
         return "redirect:/medicpet/clients";
-    }
+    } 
 
     /**
      * *
