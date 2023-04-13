@@ -9,14 +9,23 @@
              es faci un 'th:insert="fragments/barraNavegacio :: header"'.
              ======================================================================= -->
         <div th:fragment="header">
+            <script th:inline="javascript">
+                function playAudioAndRedirect(audioSrc, redirectUrl) {
+                    var audio = new Audio(audioSrc);
+                    audio.play();
+                    audio.onended = function () {
+                        window.location.href = redirectUrl;
+                    };
+                }
+            </script>
             <header class="p-3 mb-5 border-bottom text-bg-dark">
+
                 <div class="container">
                     <div class="d-flex flex-wrap col-12 col-lg-auto align-items-center justify-content-center justify-content-lg-start">
-                        <a href="/medicpet/clients" class="fs-4 d-flex align-items-center text-white text-decoration-none me-4">
+                        <a onclick="playAudioAndRedirect('/gerardromerobobi.mp3', '/medicpet/clients');" class="btn cursor-pointer fs-4 d-flex align-items-center text-white text-decoration-none me-4">
                             <img class="d-inline-block align-middle me-2" src="/logo.png" alt="MedicPet" width="40"  height="40" />
                             Medic Pet
                         </a>
-
                         <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
                             <li th:if="${rol != 'VETERINARI'}" class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" th:class="${page == 'Factures' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Facturació</a></li>
                             <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" th:class="${page == 'Clients' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Clients</a></li>
