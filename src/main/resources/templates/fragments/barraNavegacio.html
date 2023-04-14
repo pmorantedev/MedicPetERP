@@ -26,7 +26,7 @@
                             <img class="d-inline-block align-middle me-2" src="/logo.png" alt="MedicPet" width="40"  height="40" />
                             Medic Pet
                         </a>
-                        <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto my-4 justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4">
+                        <ul class="nav col-12 col-lg-auto me-lg-auto my-lg-auto justify-content-center mb-lg-0 text-uppercase ps-0 ps-lg-4" style="margin-top: 0!important;">
                             <li th:if="${rol != 'VETERINARI'}" class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/factures" th:class="${page == 'Factures' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Facturació</a></li>
                             <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/clients" th:class="${page == 'Clients' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Clients</a></li>
                             <li class="col-12 col-lg-auto text-center mx-1"><a href="/medicpet/tractaments" th:class="${page == 'Tractaments' ? 'nav-link px-2 text-warning' : 'nav-link px-2 text-white'}">Tractaments</a></li>
