@@ -89,6 +89,7 @@ public class TractamentController {
         model.addAttribute("nomUsuariComplert", nomUsuariComplert);
         model.addAttribute("rolUsuari", rolUsuari);
         model.addAttribute("pagina", "Tractaments");
+        model.addAttribute("paraulaClau", paraulaClau);
 
         return "tractamentsMain";
     }

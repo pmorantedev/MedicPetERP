@@ -11,32 +11,33 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name="Treballador")
+@Table(name = "Treballador")
 public class Treballador implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotEmpty
     private String nomComplet;
-    
+
     @NotEmpty
     private String telefon;
-    
+
     @NotEmpty
     private String email;
-    
+
     @NotEmpty
     private String adreca;
-    
+
     private String carrecAux;
-    
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "carrec_id")
     private Carrec carrec;
-    
+
     @OneToOne
     @JoinColumn(name = "usuari_id")
     private Usuari usuari;

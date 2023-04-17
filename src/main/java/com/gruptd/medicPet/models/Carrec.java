@@ -2,6 +2,7 @@ package com.gruptd.medicPet.models;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -19,4 +20,7 @@ public class Carrec implements Serializable {
     private Long id;
     
     private String nom;
+    
+//    @OneToMany(mappedBy="carrec")
+//    private List<Treballador> treballadors;
 }

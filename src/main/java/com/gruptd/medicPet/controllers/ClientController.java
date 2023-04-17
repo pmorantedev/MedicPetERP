@@ -86,6 +86,7 @@ public class ClientController {
         model.addAttribute("nomUsuariComplert", nomUsuariComplert);
         model.addAttribute("rolUsuari", rolUsuari);
         model.addAttribute("pagina", "Clients");
+        model.addAttribute("paraulaClau", paraulaClau);
 
         return "clientsMain";
     }

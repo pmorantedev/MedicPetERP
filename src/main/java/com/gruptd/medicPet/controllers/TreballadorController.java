@@ -76,12 +76,13 @@ public class TreballadorController {
         Usuari usuari = usuariService.getByUsername(username);
         // Accedir a l'atribut 'Nom' per mostrar-lo al header
         String nomUsuariComplert = usuari.getNom();
-        model.addAttribute("userName", username);
-        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
 
         // Codi pel cercador
         if (paraulaClau != null) {
-            String sql = "SELECT * FROM treballador t WHERE CONCAT(t.nom_complet, t.telefon, t.email, t.adreca, t.carrec_aux, t.carrec_id) LIKE '%" + paraulaClau + "%'";
+            System.out.println("\n<< CERCADOR ACTIU >>");
+            
+            String sql = "SELECT t.*, c.* FROM medicpet.treballador t, medicpet.carrec c WHERE t.carrec_id = c.id AND (t.nom_complet LIKE '%" + paraulaClau + "%'  OR t.telefon LIKE '%" + paraulaClau + "%' OR t.email LIKE '%" + paraulaClau + "%' OR c.nom LIKE '%" + paraulaClau + "%');";
+            
             treballadors = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Treballador.class));
         } else {
             treballadors = treballadorService.findAll();
@@ -90,6 +91,9 @@ public class TreballadorController {
         // Passar variables a la vista
         model.addAttribute("treballadors", treballadors);
         model.addAttribute("pagina", "RRHH");
+        model.addAttribute("userName", username);
+        model.addAttribute("nomUsuariComplert", nomUsuariComplert);
+        model.addAttribute("paraulaClau", paraulaClau);
 
         return "rrhhMain";
     }
