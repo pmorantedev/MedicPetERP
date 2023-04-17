@@ -64,7 +64,18 @@
                                 <td><a th:attr="title=#{generic.botoMostrar}" th:href="@{/medicpet/rrhh/fitxa/} + ${treballador.getId}" th:text="${treballador.getNomComplet}" class="text-decoration-none" /></td>
                                 <td th:text="${treballador.getTelefon}"></td>
                                 <td th:text="${treballador.getEmail}"></td>
-                                <td th:text="${treballador.getCarrec.getNom}"></td>
+                                <td th:if="${treballador.getCarrec() != null}" th:text="${treballador.getCarrec.getNom}"></td>
+                                <td th:if="${treballador.getCarrec() == null}" class="col-2">
+                                    <span th:if="${treballador.getId == 1}">Veterinari</span>
+                                    <span th:if="${treballador.getId == 2}">Administratiu</span>
+                                    <span th:if="${treballador.getId == 3}">Auxiliar de clínica</span>
+                                    <span th:if="${treballador.getId == 4}">Recepcionista</span>
+                                    <span th:if="${treballador.getId == 5}">Gerent</span>
+                                    <span th:if="${treballador.getId == 6}">Supervisor de clínica</span>
+                                    <span th:if="${treballador.getId == 7}">Coordinador de serveis</span>
+                                    <span th:if="${treballador.getId == 8}">Personal de neteja</span>
+                                    <span th:if="${treballador.getId == 9}">Transportista</span>
+                                </td>
 
                                 <!-- accions -->
                                 <td>
@@ -72,7 +83,8 @@
                                 </td>
                                 <td>
                                     <!-- Button trigger modal -->
-                                    <form th:id="'eliminarRegistre' + ${treballador.getId}" method="post" th:action="@{/medicpet/rrhh/eliminar/ + ${treballador.getId}}">                                        
+                                    <form th:id="'eliminarRegistre' + ${treballador.getId}" method="post" th:action="@{/medicpet/rrhh/eliminar/ + ${treballador.getId}}">
+                                        <!--<input type="hidden" name="carrec" th:field="*{carrec}">-->
                                         <button th:id="${treballador.getId}" th:attr="title=#{generic.botoEliminar}" type="button" class="btn btn-outline-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#confirmarEliminar" data-th-id="${treballador.getId}" data-th-nom="${treballador.getNomComplet}">
                                             <i class="bi bi-trash3-fill"></i>
                                         </button>

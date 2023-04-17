@@ -11,16 +11,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <body>
         <div th:fragment="construccio">
-            <script th:inline="javascript">
-                function playAudio(url) {
-                    new Audio(url).play();
-                }
-            </script>
             <body>
                 <div class="container text-center py-5">
-                    <h1 class="mb-4">En construcció</h1>
-                    <p class="lead">Estem treballant en una nova secció! Aviat estarà disponible.</p>
-                    <img onclick="playAudio('/sorpresa.mp3');" src="https://i.pinimg.com/originals/f4/84/c8/f484c84c96d1258efd45b586e7dda74a.jpg" class="img-fluid my-4 rounded-3" alt="Under construction" style="width: 800px;">
+                    <h1 class="mb-4">[[#{construccio.enConstruccio}]]</h1>
+                    <p class="lead">[[#{construccio.treballantSeccio}]]</p>
+                    <img src="https://i.pinimg.com/originals/f4/84/c8/f484c84c96d1258efd45b586e7dda74a.jpg" class="img-fluid my-4 rounded-3" alt="Under construction" style="width: 800px;">
                 </div>
 
                 <!-- Bootstrap JS -->
